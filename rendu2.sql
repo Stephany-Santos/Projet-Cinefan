@@ -102,12 +102,17 @@ CREATE VIEW filmsParActeur AS (
 -- le nombre de critiques écrites par chaque membre du club.
 
 CREATE VIEW nbCritiques AS (
+    SELECT count(note)  
+    FROM commente;
+    
 
 )
 
 -- Le nombre moyen de critiques écrites par utilisateur pour chaque genre.
 
 CREATE VIEW moyenneCritiques AS (
+     SELECT sum(note*genre)/sum(genre) AS moyenne
+ FROM commente NATURAL JOIN media;
 
 )
 
