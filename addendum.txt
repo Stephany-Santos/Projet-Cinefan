@@ -2,3 +2,6 @@ Le client souhaite savoir :
 — pour chaque acteur, le nombre de films de chaque genre dans lesquels il a joué, trié par nombre de films descendant.
 — le nombre de critiques écrites par chaque membre du club.
 - Le nombre moyen de critiques écrites par utilisateur pour chaque genre.
+
+
+modification 
