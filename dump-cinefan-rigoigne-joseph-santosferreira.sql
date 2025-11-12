@@ -2,7 +2,7 @@
  *	-------- Projet CINEFAN -----
  *              TP 12
  *  par Flore Rigoigne, Niekita Joseph
- *  et Stephany Santos Fereira de Sousa
+ *  et Stephany Santos Ferreira de Sousa
  * -------------------------------
 **/
 
@@ -44,7 +44,7 @@ CREATE TABLE utilisateur (
     biographie TEXT,
     typeDeCompte VARCHAR(20) DEFAULT 'standard',
     mail VARCHAR(255) UNIQUE NOT NULL,
-    mdp VARCHAR(100) UNIQUE NOT NULL,
+    mdp VARCHAR(100) NOT NULL,
     dateDeCreation DATE NOT NULL DEFAULT CURRENT_DATE,
 
     favori INT REFERENCES media(id)
