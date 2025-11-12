@@ -6,6 +6,8 @@
  * voili voilou
 **/
 
+-- METTRE A JOUR SELON LE RENDU SQL
+
 CREATE TABLE genre (
     intitule VARCHAR(50) PRIMARY KEY,
     description TEXT
@@ -69,28 +71,28 @@ ALTER TABLE artiste
 ADD COLUMN cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL;
 
 ALTER TABLE media
-ADD COLUMN artiste SERIAL REFERENCES artiste(id) NOT NULL;
+ADD COLUMN artiste INT REFERENCES artiste(id) NOT NULL;
 ALTER TABLE media
-ADD COLUMN suite SERIAL REFERENCES media(id);
+ADD COLUMN suite INT REFERENCES media(id);
 ALTER TABLE media
 ADD COLUMN genre VARCHAR(50) REFERENCES genre(intitule) ;
 ALTER TABLE media
 ADD COLUMN cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL;
 
 ALTER TABLE utilisateur
-ADD COLUMN favori SERIAL REFERENCES media(id);
+ADD COLUMN favori INT REFERENCES media(id);
 
 ALTER TABLE personnage
 ADD COLUMN cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL;
 ALTER TABLE personnage
-ADD COLUMN media SERIAL REFERENCES media(id) NOT NULL;
+ADD COLUMN media INT REFERENCES media(id) NOT NULL;
 
 ALTER TABLE image
-ADD COLUMN media SERIAL REFERENCES media(id);
+ADD COLUMN media INT REFERENCES media(id);
 ALTER TABLE image
-ADD COLUMN artiste SERIAL REFERENCES artiste(id);
+ADD COLUMN artiste INT REFERENCES artiste(id);
 ALTER TABLE image
-ADD COLUMN personnage SERIAL REFERENCES personnage(id);
+ADD COLUMN personnage INT REFERENCES personnage(id);
 ALTER TABLE image
 ADD COLUMN cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL;
 

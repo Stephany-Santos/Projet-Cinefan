@@ -121,3 +121,52 @@ CREATE VIEW moyenneCritiques AS (
 /**
  *	Remplissages de tables SQL
 **/
+INSERT INTO genre (intitule, description) VALUES
+('Aventure', 'Médias dédiés à l\'exploration et l\'action'),
+('Animation', 'Films ou séries réalisés en images animées'),
+('Science-fiction', 'Œuvres se déroulant dans un contexte futuriste ou technologique');
+
+INSERT INTO utilisateur (pseudo, nom, biographie, typeDeCompte, mail, mdp, dateDeCreation)
+VALUES
+('alice', 'Dupont', 'Passionnée de cinéma et de séries.', 'administrateur', 'alice@exemple.fr', 'passwdalice', '2024-02-10'),
+('bob42', 'Martin', 'Critique amateur, aime la SF.', 'standard', 'bob42@email.fr', 'passwd42bob', '2025-10-04'),
+('charly', 'Leclerc', 'Dessinateur freelance.', 'créateur', 'charly@freelance.fr', 'passwdCharly', '2025-09-22');
+
+INSERT INTO artiste (nom, prenom, role, cree_par)
+VALUES
+('Spielberg', 'Steven', 'réalisateur', 'alice'),
+('Durand', 'Sophie', 'actrice', 'bob42'),
+('Smith', 'John', 'doubleur', 'charly');
+-- ids générés : 1, 2, 3
+
+INSERT INTO media (titre, description, parution, type, realise, suite, genre, cree_par)
+VALUES
+('Voyage Stellaire', "Un équipage se lance dans l'espace.", '2023-03-01', 'film', 1, NULL, 'Science-fiction', 'alice'),
+('Le Royaume Caché', 'Un jeune garçon découvre un monde secret.', '2022-10-15', 'film', 1, NULL, 'Aventure', 'bob42'),
+('Animaliens', 'Une planète habitée par des animaux animés.', '2024-04-20', 'série', 1, NULL, 'Animation', 'charly');
+-- ids générés : 1, 2, 3
+
+INSERT INTO personnage (nom, prenom, description, cree_par, media)
+VALUES
+('Stone', 'Elena', 'Capitaine du vaisseau', 'alice', 1),
+('Martin', 'Lucas', 'Héros du royaume caché', 'bob42', 2),
+('Tigrou', 'Maxwell', 'Tigre doué de parole', 'charly', 3);
+-- ids générés : 1, 2, 3
+
+INSERT INTO image (fichier, lien, alt, media, artiste, personnage, cree_par)
+VALUES
+('vs_affiche.jpg', NULL, 'Affiche du film Voyage Stellaire', 1, NULL, NULL, 'alice'),
+('tgr_maxwell.png', NULL, 'Portrait du personnage Tigrou Maxwell', 3, 3, 3, 'charly'),
+('lrk_affiche.jpg', NULL, 'Affiche Le Royaume Caché', 2, NULL, NULL, 'bob42');
+
+INSERT INTO commente (date, texte, note, utilisateur, id_media)
+VALUES
+('2025-10-10', 'Très beau film, concept original !', 9, 'bob42', 1),
+('2025-11-01', "Décors superbes, manque d'action", 7, 'alice', 2),
+('2025-11-11', 'Animation bluffante', 8, 'charly', 3);
+
+INSERT INTO participe (id_artiste, id_media, id_perso)
+VALUES
+(2, 2, 2),
+(3, 3, 3),
+(1, 1, 1);
