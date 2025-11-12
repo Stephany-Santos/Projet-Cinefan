@@ -10,7 +10,7 @@
  *	Tables SQL
 **/
 -- Notes : Impossible de mettre le cree_par dans table Media car cause des problèmes de non définition des tables (les deux se référenceraient mutuellement, et la présence de Favori dans utilisateur est plus importante)
-------------------------- ADD CONSTRAINT !!!
+
 CREATE TABLE genre (
     intitule VARCHAR(50) PRIMARY KEY,
     description TEXT
