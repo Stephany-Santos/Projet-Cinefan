@@ -18,8 +18,8 @@ CREATE TABLE genre (
 
 CREATE TABLE artiste (
     id SERIAL PRIMARY KEY,
-    nom CHAR(20),
-    prenom CHAR(20) NOT NULL,
+    nom CHAR(100),
+    prenom CHAR(100) NOT NULL,
     role CHAR(20) NOT NULL,
     
     cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL
@@ -32,8 +32,8 @@ CREATE TABLE media (
     parution DATE,
     type VARCHAR(50) NOT NULL,
 
-    realise SERIAL REFERENCES artiste(id)NOT NULL,
-    suite SERIAL REFERENCES media(id), 
+    realise INT REFERENCES artiste(id) NOT NULL,
+    suite INT REFERENCES media(id), 
     genre VARCHAR(50) REFERENCES genre(intitule),
     cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL
 );
@@ -47,7 +47,7 @@ CREATE TABLE utilisateur (
     mdp VARCHAR(100) UNIQUE NOT NULL,
     dateDeCreation DATE NOT NULL DEFAULT CURRENT_DATE,
 
-    favori SERIAL REFERENCES media(id)
+    favori INT REFERENCES media(id)
 );
 
 CREATE TABLE personnage (
@@ -57,7 +57,7 @@ CREATE TABLE personnage (
     description TEXT,
 
     cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL,
-    media SERIAL REFERENCES media(id) NOT NULL
+    media INT REFERENCES media(id) NOT NULL
 );
 
 CREATE TABLE image (
@@ -65,9 +65,9 @@ CREATE TABLE image (
     lien BYTEA,
     alt TEXT,
 
-    media SERIAL REFERENCES media(id),
-    artiste SERIAL REFERENCES artiste(id),
-    personnage SERIAL REFERENCES personnage(id),
+    media INT REFERENCES media(id),
+    artiste INT REFERENCES artiste(id),
+    personnage INT REFERENCES personnage(id),
     cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL
 
 );
@@ -77,14 +77,14 @@ CREATE TABLE commente (
     texte TEXT,
     note INT NOT NULL,
     utilisateur VARCHAR(20) REFERENCES utilisateur(pseudo),
-    id_media SERIAL REFERENCES media(id),
+    id_media INT REFERENCES media(id),
     PRIMARY KEY (utilisateur, id_media, date)
 );
 
 CREATE TABLE participe (
-    id_artiste SERIAL REFERENCES artiste(id) NOT NULL,
-    id_media SERIAL REFERENCES media(id) NOT NULL,
-    id_perso SERIAL REFERENCES personnage(id),
+    id_artiste INT REFERENCES artiste(id) NOT NULL,
+    id_media INT REFERENCES media(id) NOT NULL,
+    id_perso INT REFERENCES personnage(id),
     PRIMARY KEY (id_artiste, id_media, id_perso)
 );
 

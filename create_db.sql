@@ -129,38 +129,25 @@ INSERT INTO media (titre, description, parution, type, artiste, suite, genre, cr
 
 -- 5. Créer les personnages
 INSERT INTO personnage (nom, prenom, description, cree_par, media) VALUES
-('Cobb', 'Dom', 'Extracteur professionnel hanté par le souvenir de sa femme décédée', 'niekitaj', 1),
-('Durden', 'Tyler', 'Personnalité charismatique et anarchiste, alter ego du narrateur', 'niekitaj', 2),
-('Graham', 'Annie', 'Mère de famille tourmentée par des secrets familiaux obscurs', 'niekitaj', 3),
-('Wayne', 'Bruce', 'Milliardaire philanthrope qui combat le crime sous l''identité de Batman', 'niekitaj', 4),
-('Tenma', 'Kenzo', 'Neurochirurgien japonais brillant qui sauve la vie d''un jeune garçon', 'niekitaj', 5),
-('Liebert', 'Johan', 'Tueur en série manipulateur aux capacités psychologiques extraordinaires', 'niekitaj', 5);
+('Cobb', 'Dom', 'Extracteur professionnel hanté par le souvenir de sa femme décédée', 'niekitaj', 3),
+('Durden', 'Tyler', 'Personnalité charismatique et anarchiste, alter ego du narrateur', 'niekitaj', 4),
+('Graham', 'Annie', 'Mère de famille tourmentée par des secrets familiaux obscurs', 'niekitaj', 5),
+('Wayne', 'Bruce', 'Milliardaire philanthrope qui combat le crime sous l''identité de Batman', 'niekitaj', 6),
+('Tenma', 'Kenzo', 'Neurochirurgien japonais brillant qui sauve la vie d''un jeune garçon', 'niekitaj', 7),
+('Liebert', 'Johan', 'Tueur en série manipulateur aux capacités psychologiques extraordinaires', 'niekitaj', 7);
 
 -- 6. Créer les images (avec données BYTEA simulées)
--- Note: En production, vous devriez utiliser de vraies données binaires d'images
 INSERT INTO image (fichier, lien, alt, media, artiste, personnage, cree_par) VALUES
-('inception_poster.jpg', E'\\x89504E470D0A1A0A'::bytea, 'Affiche du film Inception montrant les personnages dans un décor onirique', 1, NULL, NULL, 'niekitaj'),
-('inception_cobb.jpg', E'\\x89504E470D0A1A0B'::bytea, 'Dom Cobb regardant une toupie', NULL, NULL, 1, 'niekitaj'),
-('fightclub_poster.jpg', E'\\x89504E470D0A1A0C'::bytea, 'Affiche de Fight Club avec Tyler Durden', 2, NULL, NULL, 'niekitaj'),
-('fightclub_tyler.jpg', E'\\x89504E470D0A1A0D'::bytea, 'Portrait de Tyler Durden avec cigarette', NULL, NULL, 2, 'niekitaj'),
-('hereditary_poster.jpg', E'\\x89504E470D0A1A0E'::bytea, 'Affiche d''Hereditary avec une maison sinistre', 3, NULL, NULL, 'niekitaj'),
-('hereditary_annie.jpg', E'\\x89504E470D0A1A0F'::bytea, 'Annie Graham dans un moment de détresse', NULL, NULL, 3, 'niekitaj'),
-('darkknight_poster.jpg', E'\\x89504E470D0A1A10'::bytea, 'Affiche de The Dark Knight avec Batman et le Joker', 4, NULL, NULL, 'niekitaj'),
-('darkknight_batman.jpg', E'\\x89504E470D0A1A11'::bytea, 'Batman sur un toit de Gotham', NULL, NULL, 4, 'niekitaj'),
-('monster_poster.jpg', E'\\x89504E470D0A1A12'::bytea, 'Affiche de la série Monster avec Johan Liebert', 5, NULL, NULL, 'niekitaj'),
-('monster_tenma.jpg', E'\\x89504E470D0A1A13'::bytea, 'Dr. Kenzo Tenma en blouse médicale', NULL, NULL, 5, 'niekitaj'),
-('monster_johan.jpg', E'\\x89504E470D0A1A14'::bytea, 'Johan Liebert avec un sourire énigmatique', NULL, NULL, 6, 'niekitaj'),
-('nolan_photo.jpg', E'\\x89504E470D0A1A15'::bytea, 'Photo de Christopher Nolan sur un plateau de tournage', NULL, 1, NULL, 'niekitaj'),
-('dicaprio_photo.jpg', E'\\x89504E470D0A1A16'::bytea, 'Portrait professionnel de Leonardo DiCaprio', NULL, 4, NULL, 'niekitaj'),
-('fincher_photo.jpg', E'\\x89504E470D0A1A17'::bytea, 'David Fincher dirigeant une scène', NULL, 2, NULL, 'niekitaj');
+('inception_poster.jpg', decode('89504E470D0A1A0A0000000D49484452000000...', 'hex'), 'Affiche du film Inception', 1, NULL, NULL, 'niekitaj')
+
 
 -- 7. Créer les commentaires
 INSERT INTO commente (date, texte, note, utilisateur, id_media) VALUES
-('2025-11-05', 'Chef-d''œuvre absolu ! La complexité narrative et les effets visuels sont époustouflants.', 10, 'niekitaj', 1),
-('2025-11-05', 'Un film qui déconstruit la société de consommation avec brio. Brad Pitt est parfait.', 9, 'niekitaj', 2),
-('2025-11-05', 'Film d''horreur psychologique terrifiant. L''ambiance est oppressante du début à la fin.', 9, 'niekitaj', 3),
-('2025-11-05', 'Le meilleur film de super-héros jamais réalisé. Heath Ledger est inoubliable en Joker.', 10, 'niekitaj', 4),
-('2025-11-05', 'Anime exceptionnel qui explore les limites de la morale humaine. Johan est un antagoniste fascinant.', 10, 'niekitaj', 5);
+('2025-11-05', 'Chef-d''œuvre absolu ! La complexité narrative et les effets visuels sont époustouflants.', 10, 'niekitaj', 3),
+('2025-11-05', 'Un film qui déconstruit la société de consommation avec brio. Brad Pitt est parfait.', 9, 'niekitaj', 4),
+('2025-11-05', 'Film d''horreur psychologique terrifiant. L''ambiance est oppressante du début à la fin.', 9, 'niekitaj', 5),
+('2025-11-05', 'Le meilleur film de super-héros jamais réalisé. Heath Ledger est inoubliable en Joker.', 10, 'niekitaj', 6),
+('2025-11-05', 'Anime exceptionnel qui explore les limites de la morale humaine. Johan est un antagoniste fascinant.', 10, 'niekitaj', 7);
 
 -- 8. Mettre à jour l'utilisateur avec son média favori
 UPDATE utilisateur SET favori = 1 WHERE pseudo = 'niekitaj';
