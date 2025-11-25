@@ -108,8 +108,11 @@ CREATE TABLE participe (
 -- Pour chaque acteur, le nombre de films de chaque genre dans lesquels il a joué,
 -- trié par nombre de films descendant.
 CREATE VIEW filmsParActeur AS (
-    SELECT count(media.genre) AS nombreDeFilms, artiste.nom, artiste.prenom, media.genre
-    FROM artiste
+    SELECT a.nom, a.prenom, m.genre, COUNT(*) AS nombreDeFilms
+    FROM artiste a
+    JOIN participe p ON p.id_artiste = a.id
+    JOIN media m ON m.id = p.id_media
+    GROUP BY a.nom, a.prenom, m.genre;
 )
 
 -- le nombre de critiques écrites par chaque membre du club.
