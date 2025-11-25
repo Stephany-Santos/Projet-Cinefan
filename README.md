@@ -1,3 +1,3 @@
 # Projet-Cinefan
 
-![CineFan.png](CineFan.png)
+![CineFan.png](sujet/CineFan.png)

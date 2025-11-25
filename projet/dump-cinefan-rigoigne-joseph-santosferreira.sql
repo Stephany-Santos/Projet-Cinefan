@@ -9,7 +9,6 @@
 /**
  *	Tables SQL
 **/
--- Notes : Impossible de mettre le cree_par dans table Media car cause des problèmes de non définition des tables (les deux se référenceraient mutuellement, et la présence de Favori dans utilisateur est plus importante)
 
 CREATE TABLE genre (
     intitule VARCHAR(50) PRIMARY KEY,
@@ -17,47 +16,49 @@ CREATE TABLE genre (
 );
 
 CREATE TABLE artiste (
-    id SERIAL PRIMARY KEY,
-    nom CHAR(100),
-    prenom CHAR(100) NOT NULL,
-    role CHAR(20) NOT NULL,
+    id_artiste SERIAL PRIMARY KEY,
+    nom VARCHAR(100),
+    prenom VARCHAR(100) NOT NULL,
     
-    cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL
+    cree_par VARCHAR(20) DEFAULT 'deleted-user' REFERENCES utilisateur(pseudo) ON DELETE SET DEFAULT NOT NULL
 );
 
 CREATE TABLE media (
-    id SERIAL PRIMARY KEY,
+    id_media SERIAL PRIMARY KEY,
     titre VARCHAR(100) UNIQUE NOT NULL,
     description TEXT,
     parution DATE,
     type VARCHAR(50) NOT NULL,
 
-    realise INT REFERENCES artiste(id) NOT NULL,
-    suite INT REFERENCES media(id), 
+    realise INT REFERENCES artiste(id_artiste) NOT NULL ON DELETE RESTRICT,
+    suite INT REFERENCES media(id_media), 
     genre VARCHAR(50) REFERENCES genre(intitule),
-    cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL
+    cree_par VARCHAR(20) DEFAULT 'deleted-user' REFERENCES utilisateur(pseudo) ON DELETE SET DEFAULT NOT NULL
 );
 
 CREATE TABLE utilisateur (
-    pseudo VARCHAR(20) PRIMARY KEY,
-    nom VARCHAR(20),
+    pseudo VARCHAR(50) PRIMARY KEY,
+    nom VARCHAR(50),
     biographie TEXT,
     typeDeCompte VARCHAR(20) DEFAULT 'standard',
     mail VARCHAR(255) UNIQUE NOT NULL,
     mdp VARCHAR(100) NOT NULL,
     dateDeCreation DATE NOT NULL DEFAULT CURRENT_DATE,
 
-    favori INT REFERENCES media(id)
+
+    CHECK (
+        typeDeCompte IN ('standard', 'admin', 'source')
+    )
 );
 
 CREATE TABLE personnage (
-    id SERIAL PRIMARY KEY,
-    nom CHAR(40),
-    prenom CHAR(40) NOT NULL,
+    id_perso SERIAL PRIMARY KEY,
+    nom VARCHAR(40),
+    prenom VARCHAR(40) NOT NULL,
     description TEXT,
-
-    cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL,
-    media INT REFERENCES media(id) NOT NULL
+    
+    cree_par VARCHAR(20) DEFAULT 'deleted-user' REFERENCES utilisateur(pseudo) ON DELETE SET DEFAULT NOT NULL,
+    media INT REFERENCES media(id_media) NOT NULL ON DELETE RESTRICT
 );
 
 CREATE TABLE image (
@@ -65,27 +66,39 @@ CREATE TABLE image (
     lien BYTEA,
     alt TEXT,
 
-    media INT REFERENCES media(id),
-    artiste INT REFERENCES artiste(id),
-    personnage INT REFERENCES personnage(id),
-    cree_par VARCHAR(20) REFERENCES utilisateur(pseudo) NOT NULL
-
+    media INT REFERENCES media(id_media),
+    artiste INT REFERENCES artiste(id_artiste),
+    personnage INT REFERENCES personnage(id_perso),
+    cree_par VARCHAR(20) DEFAULT 'deleted-user' REFERENCES utilisateur(pseudo) ON DELETE SET DEFAULT NOT NULL, 
+    
+    CHECK (
+        (media IS NOT NULL)::int +
+        (artiste IS NOT NULL)::int +
+        (personnage IS NOT NULL)::int = 1
+    )
 );
 
 CREATE TABLE commente (
     date DATE NOT NULL DEFAULT CURRENT_DATE,
     texte TEXT,
-    note INT NOT NULL,
-    utilisateur VARCHAR(20) REFERENCES utilisateur(pseudo),
-    id_media INT REFERENCES media(id),
-    PRIMARY KEY (utilisateur, id_media, date)
+    note DECIMAL(2, 1) NOT NULL,
+    utilisateur VARCHAR(20) DEFAULT 'deleted-user' REFERENCES utilisateur(pseudo) ON DELETE SET DEFAULT,
+    id_media INT REFERENCES media(id_media),
+    favori BOOLEAN DEFAULT FALSE,
+    PRIMARY KEY (utilisateur, id_media, date),
+
+    CHECK (note BETWEEN 0 AND 5),
+    CONSTRAINT fk_commente_media FOREIGN KEY (id_media) REFERENCES media(id_media) ON DELETE CASCADE
+
 );
 
 CREATE TABLE participe (
-    id_artiste INT REFERENCES artiste(id) NOT NULL,
-    id_media INT REFERENCES media(id) NOT NULL,
-    id_perso INT REFERENCES personnage(id),
-    PRIMARY KEY (id_artiste, id_media, id_perso)
+    id_artiste INT REFERENCES artiste(id_artiste) NOT NULL,
+    id_media INT REFERENCES media(id_media) NOT NULL,
+    id_perso INT REFERENCES personnage(id_perso),
+    role VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_artiste, id_media, id_perso, role),
+    ON DELETE CASCADE
 );
 
 /**
@@ -128,6 +141,7 @@ INSERT INTO genre (intitule, description) VALUES
 
 INSERT INTO utilisateur (pseudo, nom, biographie, typeDeCompte, mail, mdp, dateDeCreation)
 VALUES
+('deleted-user', 'Supprimé', 'Compte système pour utilisateur supprimé.', 'standard', 'deleted@local', 'Deleted123', '2025-11-24'),
 ('alice', 'Dupont', 'Passionnée de cinéma et de séries.', 'administrateur', 'alice@exemple.fr', 'passwdalice', '2024-02-10'),
 ('bob42', 'Martin', 'Critique amateur, aime la SF.', 'standard', 'bob42@email.fr', 'passwd42bob', '2025-10-04'),
 ('charly', 'Leclerc', 'Dessinateur freelance.', 'créateur', 'charly@freelance.fr', 'passwdCharly', '2025-09-22');
