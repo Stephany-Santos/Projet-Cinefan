@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ film.titre }} - CinéFan</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Les "..." je changerais après, avec le fichier css -->
+    <nav class="barre-de-navigation">
+        <div class="...">
+            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+        </div>
+    </nav>
+
+    <div class="...">
+        <div class="...">
+            <div class="...">
+                {% if film.image %}
+                <img src="{{ url_for('static', filename=film.image) }}" class="..." alt="{{ film.titre }}">
+                {% else %}
+                <div class="...">📺 Pas d'affiche</div>
+                {% endif %}
+            </div>
+            <div class="...">
+                <h1>{{ film.titre }}</h1>
+                <p class="...">{{ film.genre }} • {{ film.annee }}</p>
+                <p class="...">...</p>
+                <button class="...">❤️ Ajouter aux favoris</button>
+                <button class="...">✍️ Commenter</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
