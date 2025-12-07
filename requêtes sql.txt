@@ -1,9 +1,31 @@
 
 Les 10 films qui ont reçu le plus de bonnes notes depuis un mois/depuis une semaine
 
+SELECT m.id_media, m.titre, COUNT(*) AS nb_bonnes_notes
+FROM commente c
+JOIN media m ON c.id_media = m.id_media
+WHERE m.type = 'film'
+  AND c.date >= CURRENT_DATE - INTERVAL '1 month'
+  AND c.note >= 4
+GROUP BY m.id_media, m.titre
+ORDER BY nb_bonnes_notes DESC
+LIMIT 10;
+
+
 Les 10 séries qui ont reçu le plus de bonnes notes depuis un mois/depuis une semaine
 
+SELECT m.id_media, m.titre, COUNT(*) AS nb_bonnes_notes
+FROM commente c
+JOIN media m ON c.id_media = m.id_media
+WHERE m.type = 'serie'
+  AND c.date >= CURRENT_DATE - INTERVAL '1 month'
+  AND c.note >= 4
+GROUP BY m.id_media, m.titre
+ORDER BY nb_bonnes_notes DESC
+LIMIT 10;
+
 Les 10 films les plus vus depuis un mois/depuis une semaine
+
 
 Les 10 séries les plus regardées depuis un mois/depuis une semaine
 
@@ -15,9 +37,30 @@ Les 10 images les plus liées aux comptes des utilisateurs, laissées visibles p
 
 Nombre moyen de critiques laissées par un utilisateur
 
+SELECT AVG(nb) AS moyenne_critiques_par_utilisateur
+FROM (
+    SELECT utilisateur, COUNT(*) AS nb
+    FROM commente
+    GROUP BY utilisateur
+) t;
+
+
 Nombre moyen de critiques écrit par l’ensemble des utilisateurs du site 
 
+SELECT COUNT(*) / COUNT(DISTINCT utilisateur)::float AS moyenne;
+
+
 Le nombre moyen de critiques écrites par utilisateur pour chaque film.
+
+SELECT id_media,
+       AVG(nb_critiques) AS moyenne_par_utilisateur
+FROM (
+    SELECT id_media, utilisateur, COUNT(*) AS nb_critiques
+    FROM commente
+    GROUP BY id_media, utilisateur
+) t
+GROUP BY id_media;
+
 
 Les termes les plus recherchés par les utilisateurs
 
@@ -33,11 +76,35 @@ Les films avec une date de sortie postérieure à la date actuelle
 
 Les critiques avec le plus de caractères par film
 
+SELECT id_media, utilisateur, date,
+       texte,
+       LENGTH(texte) AS nb_caracteres
+FROM commente
+ORDER BY id_media, nb_caracteres DESC;
+
+
 Les films regroupés par un réalisateur
+
+SELECT a.nom, a.prenom, m.*
+FROM media m
+JOIN artiste a ON m.realise = a.id_artiste
+WHERE m.type = 'film'
+ORDER BY a.nom, a.prenom;
+
 
 Les films regroupés par un acteur
 
+SELECT a.nom, a.prenom, m.*
+FROM participe p
+JOIN artiste a ON p.id_artiste = a.id_artiste
+JOIN media m ON p.id_media = m.id_media
+WHERE m.type = 'film'
+  AND p.role = 'acteur'
+ORDER BY a.nom, a.prenom;
+
 Les films dont les critiques ont pour thème majoritairement l’enfance
+
+
 
 /**
  *	Vues SQL pour les Addendums
