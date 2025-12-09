@@ -10,5 +10,9 @@ vue fonctionnel ou technique), leur fonctionnement et leur utilité ;
 
 https://docs.google.com/document/d/134HCWOzy-UONLayhUGksziHZzYdiSGNq53A3eRsAtik/edit?pli=1&tab=t.0#heading=h.10csz1mg6t89
 
+Liens vers des rapports de projet de groupe :
 
+https://horizon.documentation.ird.fr/exl-doc/pleins_textes/divers21-03/010027686.pdf
+https://fr.scribd.com/document/489053348/Rapport-Projet-BD-groupe-25
+https://largo.lip6.fr/~cecile/enseig/PL/projet_long_li_rousseau.pdf
 
