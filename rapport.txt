@@ -1,3 +1,13 @@
+Le rapport final de 5 à 10 pages environ obligatoirement au format pdf. Ce
+rapport contiendra :
+— Une petite présentation du projet avec un petit manuel utilisateur ;
+— Une section technique reprenant les présentations des étapes 1 et 2 ;
+— Une description technique des fonctionnalités du site web, présentant notamment
+quelques unes des requêtes SQL utilisées (les plus intéressantes d’un point de
+vue fonctionnel ou technique), leur fonctionnement et leur utilité ;
+— D’éventuelles pistes d’améliorations de votre travail ;
+— L’organisation et la répartition du travail entre les deux membres du binôme
+
 https://docs.google.com/document/d/134HCWOzy-UONLayhUGksziHZzYdiSGNq53A3eRsAtik/edit?pli=1&tab=t.0#heading=h.10csz1mg6t89
 
 
