@@ -12,8 +12,18 @@ corps {
 }
 
 .barre-de-navigation {
-    background-color: #212529; 
-    padding: 1rem 0;         
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #212529;
+    padding: 0.75rem 1rem;
+}
+
+.barre-de-navigation > div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
 }
 
 .struct-de-navigation {
@@ -21,4 +31,31 @@ corps {
     font-weight: bold;           
     color: #fff;             
     text-decoration: none;         
+}
+
+/* push the site title to the far left so .navig-mini links stay to the right */
+.struct-de-navigation {
+    margin-right: auto;
+}
+
+.navig-mini {
+    font-size: 1rem;               
+    font-weight: bold;           
+    color: #fff;             
+    text-decoration: none;
+    
+}
+
+.titre {
+    font-size: 2rem;               
+    font-weight: bold;           
+    color: #212529;             
+    text-align: center;         
+    margin: 2rem 0;
+}
+
+.container-formulaire {
+    /* text-align: center; */
+    flex: auto;
+    flex-direction: column;
 }

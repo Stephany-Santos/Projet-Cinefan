@@ -7,7 +7,7 @@
 <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
-</body>
+<body>
 <nav class="barre-de-navigation">
         <div class="...">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
@@ -17,22 +17,11 @@
             <a class="navig-mini" href="profil">Profil</a>
         </div>
 </nav>
+<p class="titre">Bienvenue !</p>
+<p>{{note}}</p>
+<p>Merci de commencer cette exploration de notre catalogue de films et série avec nous.</p>
+<span><a href="/login">Connectez-vous</a></span>
 
-<p class="titre">Connexion</p>
-<form class="container-formulaire" method='POST' action='profil'>
-    <div class="container-formulaire">
-        <label for="user">Nom d'utilisateur/Adresse mail</label>
-        <input type="text" placeholder="Username/Mail" name="user" required>
-
-        <label for="password">Mot de passe</label>
-        <input type="password" placeholder="Entrez le mot de passe" name="password" required>
-
-        <button type="submit">Se connecter</button>
-    </div>
-
-    <div class="container-inscription">
-        <span>Vous n'avez pas de compte ? <a href="/creationcompte">Inscrivez-vous ici</a></span>
-    </div>
 </body>
 
 </html>

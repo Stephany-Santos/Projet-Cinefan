@@ -56,7 +56,7 @@ CREATE TABLE personnage (
 
 CREATE TABLE image (
     fichier VARCHAR(50) PRIMARY KEY,
-    lien BYTEA,
+    lien TEXT,
     alt TEXT,
     media INT REFERENCES media(id_media),
     artiste INT REFERENCES artiste(id_artiste),

@@ -6,7 +6,7 @@ def connect():
 		dbname = "postgres",
         user = "postgres",
         password = "mdp",
-		cursor_factory = psycopg2.extras.NamedTupeCursor
+		cursor_factory = psycopg2.extras.NamedTupleCursor
 	)
 	conn.autocommit = True
 	return conn
