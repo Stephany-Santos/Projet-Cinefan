@@ -8,7 +8,6 @@ CREATE TABLE artiste (
 );
 
 
-INSERT INTO artiste VALUES (0, 'Nom', 'Prénom', 'deleted-user');
 
 INSERT INTO artiste (nom, prenom, cree_par) VALUES
 
