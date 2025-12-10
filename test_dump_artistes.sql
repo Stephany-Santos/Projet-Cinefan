@@ -8,3 +8,18 @@ CREATE TABLE artiste (
 );
 
 
+INSERT INTO artiste VALUES (0, 'Nom', 'Prénom', 'deleted-user');
+
+INSERT INTO artiste (nom, prenom, cree_par) VALUES
+
+-- Réalisateurs célèbres
+('Nolan', 'Christopher', 'alice'),
+('Spielberg', 'Steven', 'alice'),
+('Tarantino', 'Quentin', 'bob42'),
+-- Acteurs principaux
+('DiCaprio', 'Leonardo', 'luna'),
+('Hanks', 'Tom', 'luna'),
+('Freeman', 'Morgan', 'neo'),
+('Pitt', 'Brad', 'luna'),
+('Cruise', 'Tom', 'pixelboy'),
+('Gadot', 'Gal', 'tempo');
