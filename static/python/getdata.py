@@ -101,4 +101,10 @@ def user(user):
     return {'pseudo': temp[0], 'mdp': temp[1], 'nom': temp[2], 'bio': temp[3]}
 
 def comms(user):
+    '''
+    Fonction récupérant les commentaires laissés par un utilisateur
+    '''
+    request = ("""select id_media, note, texte, date
+                from commente
+                where utilisateur = %s""", (user,))
     

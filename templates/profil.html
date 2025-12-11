@@ -17,10 +17,11 @@
             <a class="navig-mini" href="profil">Profil</a>
         </div>
 </nav>
-<section class="profil">
+<section class="mainProfile">
+<article class="profil">
     <div>
-        <p id='nom_user'>{{info['pseudo']}}</p>
-        <p>{{info['nom']}}</p>
+        <p id='nom_user'>{{info['nom']}}</p>
+        <p>@{{info['pseudo']}}</p>
         {%if info['bio'] == None: %}
         <p>Pas de biographie pour le moment.</p>
         {%else%}
@@ -28,21 +29,40 @@
         {%endif%}
     </div>
 
-</section>
-
+</article>
 <article id='favs'>
-    {%for movie in favs%}
-        <p class='movie'> <p>
-    {%endfor%}
-</arcticle>
+    <p>Favoris</p>
+    {%if favs == {}%}
+        <p>{{info['nom']}} n'a pas encore ajouté de favoris.</p>
+    {%else%}
+        {%for movie in favs%}
+            <p class='movie'> <p>
+        {%endfor%}
+    {%endif%}
+</article>
 
 <aside class='user_activity'>
     <div>
-        <h2>Derniers commentaires</h2>
+        <p>Derniers commentaires</p>
+        {%if comms == {}%}
+            <p>{{info['nom']}} n'a pas encore commenté.</p>
+        {%else%}
+            {%for text in comms%}
+                <p class='commentaire'> <p>
+            {%endfor%}
+        {%endif%}
     </div>
     <div>
-        <h2>Statistiques perso </h2>
+        <p>Statistiques perso </p>
+        {%if stats == {}%}
+            <p>{{info['nom']}} n'a pas assez d'activité pour avoir de statistiques.</p>
+        {%else%}
+            {%for text in comms%}
+                <p class='stats'> <p>
+            {%endfor%}
+        {%endif%}
     </div>
 </aside>
+</section>
 </body>
 </html>

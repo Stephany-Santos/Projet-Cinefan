@@ -60,18 +60,56 @@ corps {
     flex-direction: column;
 }
 
-.profil {
+/* Main profile layout: flex container for section + aside side-by-side */
+body {
+}
 
+section.mainProfile {
+    margin:5%;
+    display: flex;
+    flex-direction:row;
+    gap: 1rem;
+}
+
+.profil {
+    margin: 0;
+    box-shadow: 0 2px 8px #333;
+    border-radius: 10px;
+    padding: 1.5rem;
 }
 
 #nom_user {
-
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 #favs {
-
+    margin: 0;
+    box-shadow: 0 2px 8px #333;
+    border-radius: 10px;
+    padding: 1.5rem;
 }
 
-.user-activity {
-    
+aside.user_activity {
+    position: fixed;
+    right: 2%;
+    top: 100px;
+    width: 25%;
+    max-width: 350px;
+    margin: 0;
+    box-shadow: 0 2px 8px #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: #fff;
 }
+
+
+/* @media (max-width: 768px) {
+    /* On smaller screens, stack aside below section */
+    /* aside.user_activity {
+        position: static;
+        width: 100%;
+        max-width: none;
+        margin-top: 1rem;
+    }
+} */    

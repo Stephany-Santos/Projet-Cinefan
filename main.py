@@ -24,16 +24,16 @@ def login():
     return render_template("login.html")
 
 @app.route("/profil", methods = ['POST'])
-def profil(): #DEPLACER LE CUR MACIN DANS GETDATA
+def profil():
     global current_user
     if current_user['pseudo'] != '': #si on est déjà connecté afficher le profil..?
-        return render_template("profil.html", info = current_user, favs = get.getfavs(current_user['pseudo']))
+        return render_template("profil.html", info = current_user, favs = {}, comms = {}, stats = {})#get.favs(current_user['pseudo']))
     else:
         user, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
-        current_user = get.getuser(user)       
-        user_favs = get.getfavs(user)
+        current_user = get.user(user)       
+        # user_favs = get.favs(user)
         if current_user['mdp'] == pass2:
-            return render_template("profil.html", info = current_user, favs = user_favs)
+            return render_template("profil.html", info = current_user, favs = {}, comms = {}, stats = {})
         else:
             return url_for('login')
             
