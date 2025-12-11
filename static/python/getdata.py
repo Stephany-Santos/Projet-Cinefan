@@ -47,28 +47,41 @@ def all_media():
             conn.close()
 
 
-def getfavs(pseudo):
+def getfilm(titre):
+    '''
+    Fonction renvoyant un dictionnaire contenant les informations nécessaires pour un film
+    Arguments:
+        titre (str): Le titre du film à rechercher
+    Return:
+        item (dict): dictionnaire des informations du film
+    '''
+    all = all_media()
+    for item in all:
+        if item == titre:
+            return item
+        
+def favs(pseudo): #UNFINISHED
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
     Arguments:
         pseudo (str): Le pseudo de l'utilisateur
     Return:
-        liste des médias favoris
+        favoris (dict): dico des médias favoris
     '''
     favoris = []
     final = {}
     with db.connect() as conn:
         with conn.cursor() as cur:
-            cur.execute("""select titre from commente
-                        where utilisateur = %s
-                        and favori = TRUE""", (pseudo,))
+            cur.execute("""select media.titre from media NATURAL JOIN commente 
+                        where commente.utilisateur = %s
+                        and commente.favori = TRUE""", (pseudo,))
             for record in cur.fetchall():
                 favoris.append(record)
             for item in favoris: #in favoris, u got id_medias
-                final[item] = all_media(item.titre)
-    return favoris
+                final[item] = all_media(item)
+    return final
 
-def getuser(user):
+def user(user):
     '''
     Récupère les informations d'un utilisateur à partir de son pseudo
     Arguments:
@@ -86,3 +99,6 @@ def getuser(user):
                 for record in cur.fetchone():
                     temp.append(record)
     return {'pseudo': temp[0], 'mdp': temp[1], 'nom': temp[2], 'bio': temp[3]}
+
+def comms(user):
+    
