@@ -12,12 +12,17 @@ current_user = {'pseudo': '', 'nom': '', 'bio': '', 'mdp': ''}
 
 # ----- Application Flask
 @app.route('/')
-def index():
-    return render_template('accueil.html')
+def accueil():
+    return render_template("accueil.html", medias=get.all_media())
 
 @app.route("/accueil")
 def accueil():
-    return render_template("accueil.html")
+    return render_template("accueil.html", medias=get.all_media())
+
+@app.route('/media/<int:media_id>')
+def detail_media(media_id):
+    for media in get.infos_media(media_id):
+        return render_template("media.html", media=media)
 
 @app.route("/login")
 def login():

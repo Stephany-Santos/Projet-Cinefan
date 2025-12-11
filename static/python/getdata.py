@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 import db
 
-def all_media():
+def all_infos(commande):
     '''
     à remplir
     '''
@@ -11,34 +11,16 @@ def all_media():
     try:
         conn = db.connect()
         cur = conn.cursor()
-        cur.execute("""
-            SELECT DISTINCT
-                m.id_media, m.titre, m.description,
-                m.parution, m.type, m.genre,
-                i.fichier AS nom_image,
-                i.lien AS url_image,
-                i.alt AS alt_image
-            FROM media m
-            LEFT JOIN image i ON m.id_media = i.media;
-        """)
+        cur.execute(commande)
 
         lignes = cur.fetchall()
-
-        films = []
+        colonnes = [e[0] for e in cur.description]
+        
+        infos = []
         for row in lignes:
-            film = {
-                "id": int(row[0]),
-                "titre": row[1],
-                "description": row[2],
-                "parution": row[3],
-                "type": row[4],
-                "genre": row[5],
-                "nom_image": row[6],
-                "url_image": row[7],
-                "alt": row[8] or row[1],
-            }
-            films.append(film)
-        return films
+            info = {colonnes[i]: row[i] for i in range(len(colonnes))}
+            infos.append(info)
+        return infos
     
     except Exception as e:
         return f"Erreur BDD : {e}", 500
@@ -47,18 +29,57 @@ def all_media():
             conn.close()
 
 
-def getfilm(titre):
+def all_media():
     '''
-    Fonction renvoyant un dictionnaire contenant les informations nécessaires pour un film
+    à remplir
+    '''
+    return all_infos("""
+        SELECT DISTINCT
+            m.id_media AS id,
+            m.titre, m.description,
+            m.parution, m.type, m.genre,
+            i.fichier AS nom_image,
+            i.lien AS url_image,
+            i.alt AS alt
+        FROM media m
+        LEFT JOIN image i ON m.id_media = i.media;
+    """)
+
+
+def infos_media(media_id):
+    '''
+    Récupère les infos d'un media spécifique
     Arguments:
-        titre (str): Le titre du film à rechercher
+        ...
     Return:
-        item (dict): dictionnaire des informations du film
+        ...
     '''
-    all = all_media()
-    for item in all:
-        if item == titre:
-            return item
+    return all_infos(f"""
+        SELECT
+            m.id_media AS id,
+            m.titre, m.description,
+            m.parution, m.type, m.genre,
+            i.fichier AS nom_image,
+            i.lien AS url_image,
+            i.alt AS alt
+        FROM media m
+        LEFT JOIN image i ON m.id_media = i.media
+        WHERE m.id_media = {media_id};
+    """)
+
+
+# def getfilm(titre):
+#     '''
+#     Fonction renvoyant un dictionnaire contenant les informations nécessaires pour un film
+#     Arguments:
+#         titre (str): Le titre du film à rechercher
+#     Return:
+#         item (dict): dictionnaire des informations du film
+#     '''
+#     all = all_media()
+#     for item in all:
+#         if item == titre:
+#             return item
         
 def favs(pseudo): #UNFINISHED
     '''
