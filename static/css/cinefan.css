@@ -12,18 +12,8 @@ corps {
 }
 
 .barre-de-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #212529;
-    padding: 0.75rem 1rem;
-}
-
-.barre-de-navigation > div {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
+    background-color: #212529; 
+    padding: 1rem 0;         
 }
 
 .struct-de-navigation {
@@ -33,45 +23,59 @@ corps {
     text-decoration: none;         
 }
 
-/* push the site title to the far left so .navig-mini links stay to the right */
-.struct-de-navigation {
-    margin-right: auto;
+.cadre {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
-.navig-mini {
-    font-size: 1rem;               
-    font-weight: bold;           
-    color: #fff;             
-    text-decoration: none;
-    
+.style-titre {
+    color: #212529;
+    margin-bottom: 2rem;
+    font-weight: 600;
 }
 
-.titre {
-    font-size: 2rem;               
-    font-weight: bold;           
-    color: #212529;             
-    text-align: center;         
-    margin: 2rem 0;
+.ligne {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem;
 }
 
-.container-formulaire {
-    /* text-align: center; */
-    flex: auto;
-    flex-direction: column;
+.colonne-3 {
+    flex: 0 0 20%;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
 }
 
-.profil {
-
+.colonne-4 {
+    flex: 0 0 33%;
 }
 
-#nom_user {
-
+.colonne-8 {
+    flex: 0 0 66%;
 }
 
-#favs {
-
+@media (max-width: 768px) {
+    .colonne-3 {
+        flex: 0 0 50%;
+    }
+    .colonne-4, .colonne-8 {
+        flex: 0 0 50%;
+    }
 }
 
-.user-activity {
-    
+@media (max-width: 480px) {
+    .colonne-3 {
+        flex: 0 0 50%;
+    }
+}
+
+.affiche {
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    overflow: hidden;
+    max-width: 250px;
+    height: 100%;              
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
