@@ -5,7 +5,7 @@ def connect():
   conn = psycopg2.connect(
     dbname = 'postgres',
     user = 'postgres',
-    password = "mdp",
+    password = "...",
     cursor_factory = psycopg2.extras.NamedTupleCursor
   )
   conn.set_client_encoding('UTF8')
