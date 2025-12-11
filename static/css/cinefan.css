@@ -12,15 +12,24 @@ corps {
 }
 
 .barre-de-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #212529; 
-    padding: 1rem 0;         
+    padding: 0.75rem 1rem;           
 }
-
+.barre-de-navigation > div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
 .struct-de-navigation {
     font-size: 1.5rem;               
     font-weight: bold;           
     color: #fff;             
-    text-decoration: none;         
+    text-decoration: none;
+    margin-right: auto;        
 }
 
 .cadre {
@@ -40,7 +49,9 @@ corps {
     font-weight: bold;           
     color: #fff;             
     text-decoration: none;
-    
+}
+
+body {
 }
 
 .titre {
@@ -52,25 +63,59 @@ corps {
 }
 
 .container-formulaire {
-    /* text-align: center; */
+    display: flex;
     flex: auto;
     flex-direction: column;
+    margin: 5%;
+    margin-top: 2%;
 }
 
-.profil {
+section.mainProfile {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction:row;
+    margin: 0 -1rem;
+    margin:5%;
+    gap: 1rem;
+}
 
+.basicInfo {
+    margin: 0;
+    box-shadow: 0 2px 8px #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.mainP {
+    display:block;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
 }
 
 #nom_user {
-
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 #favs {
-
+    margin: 0;
+    box-shadow: 0 2px 8px #333;
+    border-radius: 10px;
+    padding: 1.5rem;
 }
 
-.user-activity {
-    
+aside.user_activity {
+    position: fixed;
+    right: 2%;
+    top: 100px;
+    width: 25%;
+    max-width: 350px;
+    margin: 0;
+    box-shadow: 0 2px 8px #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: #fff;
 }
 .ligne {
     display: flex;
@@ -92,13 +137,11 @@ corps {
     flex: 0 0 66%;
 }
 
-@media (max-width: 768px) {
-    .colonne-3 {
-        flex: 0 0 50%;
-    }
-    .colonne-4, .colonne-8 {
-        flex: 0 0 50%;
-    }
+.colonne-3 {
+    flex: 0 0 50%;
+}
+.colonne-4, .colonne-8 {
+    flex: 0 0 50%;
 }
 
 @media (max-width: 480px) {
