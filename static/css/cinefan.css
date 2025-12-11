@@ -12,24 +12,15 @@ corps {
 }
 
 .barre-de-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: #212529; 
-    padding: 0.75rem 1rem;           
+    padding: 1rem 0;         
 }
-.barre-de-navigation > div {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
-}
+
 .struct-de-navigation {
     font-size: 1.5rem;               
     font-weight: bold;           
     color: #fff;             
-    text-decoration: none;
-    margin-right: auto;        
+    text-decoration: none;         
 }
 
 .cadre {
@@ -42,6 +33,51 @@ corps {
     color: #212529;
     margin-bottom: 2rem;
     font-weight: 600;
+}
+
+.ligne {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem;
+}
+
+.colonne-3 {
+    flex: 0 0 20%;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.colonne-4 {
+    flex: 0 0 33%;
+}
+
+.colonne-8 {
+    flex: 0 0 66%;
+}
+
+@media (max-width: 768px) {
+    .colonne-3 {
+        flex: 0 0 50%;
+    }
+    .colonne-4, .colonne-8 {
+        flex: 0 0 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .colonne-3 {
+        flex: 0 0 50%;
+    }
+}
+
+.affiche {
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    overflow: hidden;
+    max-width: 250px;
+    height: 100%;              
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navig-mini {

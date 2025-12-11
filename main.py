@@ -1,12 +1,12 @@
 # ----- Imports
 from flask import Flask, render_template, request, redirect, url_for, session
-from passlib.context import CryptContext
+# from passlib.context import CryptContext
 import db as db
 import static.python.getdata as get
 
 # ----- Variables globales
 conn = db.connect()
-password_ctx = CryptContext(schemes=['bcrypt'])
+# password_ctx = CryptContext(schemes=['bcrypt'])
 app = Flask(__name__)
 current_user = {'pseudo': '', 'nom': '', 'bio': '', 'mdp': ''}
 
@@ -15,9 +15,9 @@ current_user = {'pseudo': '', 'nom': '', 'bio': '', 'mdp': ''}
 def accueil():
     return render_template("accueil.html", medias=get.all_media())
 
-@app.route("/accueil")
-def accueil():
-    return render_template("accueil.html", medias=get.all_media())
+# @app.route("/accueil")
+# def accueil():
+#     return render_template("accueil.html", medias=get.all_media())
 
 @app.route('/media/<int:media_id>')
 def detail_media(media_id):
