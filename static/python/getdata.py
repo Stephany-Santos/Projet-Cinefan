@@ -14,7 +14,7 @@ def all_infos(commande):
         cur.execute(commande)
 
         lignes = cur.fetchall()
-        colonnes = [desc[0] for desc in cur.description]
+        colonnes = [e[0] for e in cur.description]
         
         infos = []
         for row in lignes:
