@@ -12,18 +12,8 @@ corps {
 }
 
 .barre-de-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #212529;
-    padding: 0.75rem 1rem;
-}
-
-.barre-de-navigation > div {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
+    background-color: #212529; 
+    padding: 1rem 0;         
 }
 
 .struct-de-navigation {
@@ -33,9 +23,16 @@ corps {
     text-decoration: none;         
 }
 
-/* push the site title to the far left so .navig-mini links stay to the right */
-.struct-de-navigation {
-    margin-right: auto;
+.cadre {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.style-titre {
+    color: #212529;
+    margin-bottom: 2rem;
+    font-weight: 600;
 }
 
 .navig-mini {
@@ -60,56 +57,62 @@ corps {
     flex-direction: column;
 }
 
-/* Main profile layout: flex container for section + aside side-by-side */
-body {
-}
-
-section.mainProfile {
-    margin:5%;
-    display: flex;
-    flex-direction:row;
-    gap: 1rem;
-}
-
 .profil {
-    margin: 0;
-    box-shadow: 0 2px 8px #333;
-    border-radius: 10px;
-    padding: 1.5rem;
+
 }
 
 #nom_user {
-    font-size: 1.5rem;
-    font-weight: bold;
+
 }
 
 #favs {
-    margin: 0;
-    box-shadow: 0 2px 8px #333;
-    border-radius: 10px;
-    padding: 1.5rem;
+
 }
 
-aside.user_activity {
-    position: fixed;
-    right: 2%;
-    top: 100px;
-    width: 25%;
-    max-width: 350px;
-    margin: 0;
-    box-shadow: 0 2px 8px #333;
-    border-radius: 10px;
-    padding: 1.5rem;
-    background-color: #fff;
+.user-activity {
+    
+}
+.ligne {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem;
 }
 
+.colonne-3 {
+    flex: 0 0 20%;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
 
-/* @media (max-width: 768px) {
-    /* On smaller screens, stack aside below section */
-    /* aside.user_activity {
-        position: static;
-        width: 100%;
-        max-width: none;
-        margin-top: 1rem;
+.colonne-4 {
+    flex: 0 0 33%;
+}
+
+.colonne-8 {
+    flex: 0 0 66%;
+}
+
+@media (max-width: 768px) {
+    .colonne-3 {
+        flex: 0 0 50%;
     }
-} */    
+    .colonne-4, .colonne-8 {
+        flex: 0 0 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .colonne-3 {
+        flex: 0 0 50%;
+    }
+}
+
+.affiche {
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    overflow: hidden;
+    max-width: 250px;
+    height: 100%;              
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
