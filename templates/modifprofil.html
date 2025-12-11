@@ -17,15 +17,17 @@
             <a class="navig-mini" href="profil">Profil</a>
         </div>
 </nav>
-
-<form method="post" action="modifprofil">
+<p class='titre'>Modifier le profil</p>
+<form method="post" action="modifprofil<{{info['pseudo']}}>">
+    <div class="container-formulaire">
     <label for="nom">Nom :</label>
-    <input type="text" id="nom" name="nom" value="{{info[2]}}" required><br>
+    <input type="text" id="nom" name="nom" placeholder="{{info['nom']}}" ><br>
 
     <label for="biographie">Biographie :</label>
-    <textarea id="biographie" name="biographie" rows="4" cols="50">{{info[3]}}</textarea><br>
-
+    <textarea id="biographie" name="biographie" rows="4" cols="50" placeholder="{{info['bio']}}">{{info['bio']}}</textarea><br>
+        
     <input type="submit" value="Mettre à jour le profil">
+    </div>
 </form>
 </body>
 </html>

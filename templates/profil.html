@@ -18,51 +18,55 @@
         </div>
 </nav>
 <section class="mainProfile">
-<article class="profil">
-    <div>
-        <p id='nom_user'>{{info['nom']}}</p>
-        <p>@{{info['pseudo']}}</p>
-        {%if info['bio'] == None: %}
-        <p>Pas de biographie pour le moment.</p>
-        {%else%}
-        <p>{{info[bio]}}</p>
-        {%endif%}
-    </div>
-
-</article>
-<article id='favs'>
-    <p>Favoris</p>
-    {%if favs == {}%}
-        <p>{{info['nom']}} n'a pas encore ajouté de favoris.</p>
-    {%else%}
-        {%for movie in favs%}
-            <p class='movie'> <p>
-        {%endfor%}
-    {%endif%}
-</article>
-
-<aside class='user_activity'>
-    <div>
-        <p>Derniers commentaires</p>
-        {%if comms == {}%}
-            <p>{{info['nom']}} n'a pas encore commenté.</p>
-        {%else%}
-            {%for text in comms%}
-                <p class='commentaire'> <p>
-            {%endfor%}
-        {%endif%}
-    </div>
-    <div>
-        <p>Statistiques perso </p>
-        {%if stats == {}%}
-            <p>{{info['nom']}} n'a pas assez d'activité pour avoir de statistiques.</p>
-        {%else%}
-            {%for text in comms%}
-                <p class='stats'> <p>
-            {%endfor%}
-        {%endif%}
-    </div>
-</aside>
+    <section class="mainP">
+        <article class="basicInfo">
+            <div>
+                <p id='nom_user'>{{info['nom']}}</p>
+                <p>@{{info['pseudo']}}</p>
+                {%if info['bio'] == '': %}
+                    <p>Pas de biographie pour le moment.</p>
+                {%else%}
+                    <p>{{info['bio']}}</p>
+                {%endif%}
+            </div>
+        </article>
+        <article id='favs'>
+            <p>Favoris</p>
+            {%if favs == {}%}
+                <p>{{info['nom']}} n'a pas encore ajouté de favoris.</p>
+            {%else%}
+                {%for movie in favs%}
+                    <p class='movie'> <p>
+                {%endfor%}
+            {%endif%}
+        </article>
+    </section>
+    <aside class='user_activity'>
+        <button onclick="location.href='modifprofil'">Modifier profil</button>
+        <br>    
+        <div>
+            <p>Derniers commentaires</p>
+            {%if comms == {}%}
+                <p>{{info['nom']}} n'a pas encore commenté.</p>
+            {%else%}
+                {%for text in comms%}
+                    <p class='commentaire'> <p>
+                {%endfor%}
+            {%endif%}
+        </div>
+        <br>
+        <div>
+            <p>Statistiques personelles </p>
+            {%if stats == {}%}
+                <p>{{info['nom']}} n'a pas assez d'activité pour avoir de statistiques.</p>
+            {%else%}
+                {%for text in comms%}
+                    <p class='stats'> <p>
+                {%endfor%}
+            {%endif%}
+        </div>
+    </aside>
 </section>
+
 </body>
 </html>

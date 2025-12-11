@@ -40,9 +40,23 @@ def profil():
     # hash_pw = "mdp crypté stocké!"
     # password_ctx.verify("inputmdp", hash_pw)
 
-@app.route("/modifprofil", methods = ['POST'])
+@app.route("/modifprofil")
 def modifprofil():
-    return
+    return render_template("modifprofil.html", info = current_user)
+
+@app.route("/modifprofil/<user>", methods=['POST'])
+def modifprofilend():
+    global current_user
+    #faire ton update des nv infos ici
+    newName, newBio = request.form.get('nom', type=str), request.form.get('biographie', type=str)
+    req = f"""update utilisateur
+            set nom = {newName},
+            biographie = {newBio}
+            where pseudo = {current_user['pseudo']}"""
+    current_user['bio'], current_user['nom']= newBio, newName
+        
+    return render_template("profil.html", info = current_user, favs = {}, comms = {}, stats = {})
+
 
 @app.route("/creationcompte")
 def creationcompte():
