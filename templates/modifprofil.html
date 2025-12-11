@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profil de {{info[0]}}</title>
+<title>Modification du profil</title>
 <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
@@ -17,32 +17,15 @@
             <a class="navig-mini" href="profil">Profil</a>
         </div>
 </nav>
-<section class="profil">
-    <div>
-        <p id='nom_user'>{{info['pseudo']}}</p>
-        <p>{{info['nom']}}</p>
-        {%if info['bio'] == None: %}
-        <p>Pas de biographie pour le moment.</p>
-        {%else%}
-        <p>{{info[bio]}}</p>
-        {%endif%}
-    </div>
 
-</section>
+<form method="post" action="modifprofil">
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" value="{{info[2]}}" required><br>
 
-<article id='favs'>
-    {%for movie in favs%}
-        <p class='movie'> <p>
-    {%endfor%}
-</arcticle>
+    <label for="biographie">Biographie :</label>
+    <textarea id="biographie" name="biographie" rows="4" cols="50">{{info[3]}}</textarea><br>
 
-<aside class='user_activity'>
-    <div>
-        <h2>Derniers commentaires</h2>
-    </div>
-    <div>
-        <h2>Statistiques perso </h2>
-    </div>
-</aside>
+    <input type="submit" value="Mettre à jour le profil">
+</form>
 </body>
 </html>

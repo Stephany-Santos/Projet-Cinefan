@@ -1,15 +1,16 @@
-import psycopg2
-import psycopg2.extras
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 import db
 
-def media(titre):
+def getmedia(titre):
     '''
     Récupère les informations d'un média à partir de son titre
     Arguments:
         titre (str) ou (int): Le titre du média à rechercher OU son identifiant
     Return:
     '''
-    with db.connect as conn:
+    with db.connect() as conn:
         with conn.cursor() as cur:
             if type(titre) is str:
                 cur.execute(f'select * from media where titre = {titre}')
@@ -20,7 +21,42 @@ def media(titre):
             resultat = cur.fetchone()
     return resultat
 
-if __name__ == "__main__":
-    print(media("Inception"))
+def getfavs(pseudo):
+    '''
+    Récupère les médias favoris d'un utilisateur à partir de son pseudo
+    Arguments:
+        pseudo (str): Le pseudo de l'utilisateur
+    Return:
+        liste des médias favoris
+    '''
+    favoris = []
+    final = {}
+    with db.connect() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""select titre from commente
+                        where utilisateur = %s
+                        and favori = TRUE""", (pseudo,))
+            for record in cur.fetchall():
+                favoris.append(record)
+            for item in favoris: #in favoris, u got id_medias
+                final[item] = getmedia(item.titre)
+    return favoris
 
-
+def getuser(user):
+    '''
+    Récupère les informations d'un utilisateur à partir de son pseudo
+    Arguments:
+        pseudo (str): Le pseudo de l'utilisateur
+    Return:
+        dictionnaire des informations de l'utilisateur
+    '''
+    with db.connect() as conn:
+    
+        with conn.cursor() as cur:
+                cur.execute(""" select pseudo, mdp, nom, biographie from utilisateur
+                            where pseudo = %s
+                            or mail = %s""", (user, user,))
+                temp = []
+                for record in cur.fetchone():
+                    temp.append(record)
+    return {'pseudo': temp[0], 'mdp': temp[1], 'nom': temp[2], 'bio': temp[3]}

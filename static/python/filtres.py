@@ -1,6 +1,6 @@
 import psycopg2
 import psycopg2.extras
-import db
+import db as db
 
 def critiques_per_user(user):
     '''

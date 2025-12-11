@@ -1,15 +1,16 @@
 # ----- Imports
 from flask import Flask, render_template, request, redirect, url_for, session
 from passlib.context import CryptContext
-import db
+import db as db
+import static.python.getdata as get
 
 # ----- Variables globales
 conn = db.connect()
 password_ctx = CryptContext(schemes=['bcrypt'])
 app = Flask(__name__)
-current_user = []
+current_user = {'pseudo': '', 'nom': '', 'bio': '', 'mdp': ''}
 
-# Ouverture directe sur l'accueil
+# ----- Application Flask
 @app.route('/')
 def index():
     return render_template('accueil.html')
@@ -23,28 +24,25 @@ def login():
     return render_template("login.html")
 
 @app.route("/profil", methods = ['POST'])
-def profil():
+def profil(): #DEPLACER LE CUR MACIN DANS GETDATA
     global current_user
-    if current_user != []: #si on est déjà connecté afficher le profil..?
-        return render_template("profil.html", info = current_user)
+    if current_user['pseudo'] != '': #si on est déjà connecté afficher le profil..?
+        return render_template("profil.html", info = current_user, favs = get.getfavs(current_user['pseudo']))
     else:
         user, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
-        with conn.cursor() as cur:
-            cur.execute(""" select pseudo, mdp, nom, biographie from utilisateur
-                        where pseudo = %s
-                        or mail = %s""", (user, user,))
-            for record in cur.fetchone():
-                current_user.append(record)
-            if current_user[1] == pass2:
-                return render_template("profil.html", info = current_user)
-            else:
-                current_user = []
-                return url_for('login')
-        return render_template("profil.html", info = current_user)
+        current_user = get.getuser(user)       
+        user_favs = get.getfavs(user)
+        if current_user['mdp'] == pass2:
+            return render_template("profil.html", info = current_user, favs = user_favs)
+        else:
+            return url_for('login')
             
     # hash_pw = "mdp crypté stocké!"
     # password_ctx.verify("inputmdp", hash_pw)
-    
+
+@app.route("/modifprofil", methods = ['POST'])
+def modifprofil():
+    return
 
 @app.route("/creationcompte")
 def creationcompte():
