@@ -15,4 +15,4 @@ Liens vers des rapports de projets de groupe :
 https://horizon.documentation.ird.fr/exl-doc/pleins_textes/divers21-03/010027686.pdf
 https://fr.scribd.com/document/489053348/Rapport-Projet-BD-groupe-25
 https://largo.lip6.fr/~cecile/enseig/PL/projet_long_li_rousseau.pdf
-
+http://seb.france.free.fr/eseo/I2/sql/rapport-mp-bdd-I2.pdf
