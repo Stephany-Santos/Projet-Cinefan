@@ -21,7 +21,13 @@ def getmedia(titre):
             resultat = cur.fetchone()
     return resultat
 
-def getfavs(pseudo):
+def getfilm(titre):
+    all = getmedia()
+    for item in all:
+        if item == titre:
+            return titre
+        
+def favs(pseudo):
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
     Arguments:
@@ -33,16 +39,16 @@ def getfavs(pseudo):
     final = {}
     with db.connect() as conn:
         with conn.cursor() as cur:
-            cur.execute("""select titre from commente
-                        where utilisateur = %s
-                        and favori = TRUE""", (pseudo,))
+            cur.execute("""select media.titre from media NATURAL JOIN commente 
+                        where commente.utilisateur = %s
+                        and commente.favori = TRUE""", (pseudo,))
             for record in cur.fetchall():
                 favoris.append(record)
             for item in favoris: #in favoris, u got id_medias
-                final[item] = getmedia(item.titre)
+                final[item] = getmedia(item)
     return favoris
 
-def getuser(user):
+def user(user):
     '''
     Récupère les informations d'un utilisateur à partir de son pseudo
     Arguments:
