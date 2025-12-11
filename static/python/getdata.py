@@ -22,18 +22,25 @@ def getmedia(titre):
     return resultat
 
 def getfilm(titre):
+    '''
+    Fonction renvoyant un dictionnaire contenant les informations nécessaires pour un film
+    Arguments:
+        titre (str): Le titre du film à rechercher
+    Return:
+        item (dict): dictionnaire des informations du film
+    '''
     all = getmedia()
     for item in all:
         if item == titre:
-            return titre
+            return item
         
-def favs(pseudo):
+def favs(pseudo): #UNFINISHED
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
     Arguments:
         pseudo (str): Le pseudo de l'utilisateur
     Return:
-        liste des médias favoris
+        favoris (dict): dico des médias favoris
     '''
     favoris = []
     final = {}
@@ -46,7 +53,7 @@ def favs(pseudo):
                 favoris.append(record)
             for item in favoris: #in favoris, u got id_medias
                 final[item] = getmedia(item)
-    return favoris
+    return final
 
 def user(user):
     '''
@@ -66,3 +73,6 @@ def user(user):
                 for record in cur.fetchone():
                     temp.append(record)
     return {'pseudo': temp[0], 'mdp': temp[1], 'nom': temp[2], 'bio': temp[3]}
+
+def comms(user):
+    
