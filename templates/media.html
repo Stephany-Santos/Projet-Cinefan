@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ film.titre }} - CinéFan</title>
+    <title>{{ media.titre }} - CinéFan</title>
     <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
-
 <body>
-<nav class="barre-de-navigation">
+    <!-- Les "..." je changerais après, avec le fichier css -->
+    <nav class="barre-de-navigation">
         <div class="...">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
             <a class="navig-mini" href="commu">Communauté</a>
@@ -16,28 +16,21 @@
             <a class="navig-mini" href="chercher">Chercher</a>
             <a class="navig-mini" href="profil">Profil</a>
         </div>
-</nav>
-
-    <!-- Les "..." je changerais après, avec le fichier css -->
-    <nav class="barre-de-navigation">
-        <div class="...">
-            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
-        </div>
     </nav>
 
     <div class="...">
         <div class="...">
             <div class="...">
-                {% if film.image %}
-                <img src="{{ url_for('static', filename=film.image) }}" class="..." alt="{{ film.titre }}">
+                {% if media.url_image %}
+                <img src="{{ media.url_image }}" class="..." alt="{{ media.alt }}">
                 {% else %}
-                <div class="...">📺 Pas d'affiche</div>
+                <div class="...">📺</div>
                 {% endif %}
             </div>
             <div class="...">
-                <h1>{{ film.titre }}</h1>
-                <p class="...">{{ film.genre }} • {{ film.annee }}</p>
-                <p class="...">...</p>
+                <h1>{{ media.titre }}</h1>
+                <p class="...">{{ media.genre }} • {{ media.parution }}</p>
+                <p class="...">{{ media.description }}</p>
                 <button class="...">❤️ Ajouter aux favoris</button>
                 <button class="...">✍️ Commenter</button>
             </div>

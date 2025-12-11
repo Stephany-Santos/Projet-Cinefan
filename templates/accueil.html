@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CinéFan - Films</title>
+    <title>CinéFan - Medias</title>
     <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 <body>
     <nav class="barre-de-navigation">
-        <div class="...">
+        <div class="cadre">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
             <a class="navig-mini" href="commu">Communauté</a>
             <a class="navig-mini" href="stats">Statistiques</a>
@@ -16,22 +16,21 @@
             <a class="navig-mini" href="profil">Profil</a>
         </div>
     </nav>
-
-    <div class="...">
-        <h1 class="...">Films</h1>
-        <div class="...">
-            {% for film in films %}
-            <div class="...">
-                <div class="...">
-                    {% if film.image %}
-                    <img src="{{ url_for('static', filename=film.image) }}" class="image-carte-haut" alt="{{ film.titre }}">
+    <div class="cadre">
+        <h1 class="style-titre">Medias</h1>
+        <div class="ligne">
+            {% for media in medias %}
+            <div class="colonne-3">
+                <div class="affiche">
+                    {% if media.url_image %}
+                    <img src="{{ media.url_image }}" class="..." alt="{{ media.alt }}">
                     {% else %}
                     <div class="...">📺</div>
                     {% endif %}
                     <div class="...">
-                        <h5 class="...">{{ film.titre }}</h5>
-                        <p class="...">{{ film.genre }} • {{ film.annee }}</p>
-                        <a href="/film/{{ film.id }}" class="...">Voir plus</a>
+                        <h5 class="...">{{ media.titre }}</h5>
+                        <p class="...">{{ media.genre }} • {{ media.parution }}</p>
+                        <a href="/media/{{ media.id }}" class="...">Voir plus</a>
                     </div>
                 </div>
             </div>
