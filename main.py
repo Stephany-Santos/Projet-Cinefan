@@ -15,10 +15,6 @@ current_user = {'pseudo': '', 'nom': '', 'bio': '', 'mdp': ''}
 def accueil():
     return render_template("accueil.html", medias=get.all_media())
 
-@app.route("/accueil")
-def accueil():
-    return render_template("accueil.html", medias=get.all_media())
-
 @app.route('/media/<int:media_id>')
 def detail_media(media_id):
     for media in get.infos_media(media_id):
@@ -30,17 +26,21 @@ def login():
 
 @app.route("/profil", methods = ['POST'])
 def profil():
-    global current_user
-    if current_user['pseudo'] != '': #si on est déjà connecté afficher le profil..?
-        return render_template("profil.html", info = current_user, favs = {}, comms = {}, stats = {})#get.favs(current_user['pseudo']))
-    else:
-        user, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
-        current_user = get.user(user)       
-        # user_favs = get.favs(user)
-        if current_user['mdp'] == pass2:
-            return render_template("profil.html", info = current_user, favs = {}, comms = {}, stats = {})
-        else:
-            return url_for('login')
+    # global current_user
+    user, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
+    for current_user in get.user(user):
+        return render_template("profil.html", info = current_user, favs = get.favs(user), comms = get.comms(user), stats = {})
+    # if current_user['pseudo'] != '': #si on est déjà connecté afficher le profil..?
+    #     return render_template("profil.html", info = current_user, favs = get.favs(user), comms = get.comms(user), stats = {})#get.favs(current_user['pseudo']))
+    # else:
+    #     user, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
+    #     for u in get.user(user):
+    #         current_user = u
+    #     print(current_user)
+    #     if current_user['mdp'] == pass2:
+    #         return render_template("profil.html", info = current_user, favs = get.favs(user), comms = get.comms(user), stats = {})
+    #     else:
+    #         return url_for('login')
             
     # hash_pw = "mdp crypté stocké!"
     # password_ctx.verify("inputmdp", hash_pw)
@@ -52,12 +52,14 @@ def modifprofil():
 @app.route("/modifprofil/<user>", methods=['POST'])
 def modifprofilend():
     global current_user
-    #faire ton update des nv infos ici
     newName, newBio = request.form.get('nom', type=str), request.form.get('biographie', type=str)
-    req = f"""update utilisateur
-            set nom = {newName},
-            biographie = {newBio}
-            where pseudo = {current_user['pseudo']}"""
+    with db.connect() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""update utilisateur
+                set nom = %s,
+                biographie = %s
+                where pseudo = %s""", (newName, newBio,current_user['pseudo'],))
+
     current_user['bio'], current_user['nom']= newBio, newName
         
     return render_template("profil.html", info = current_user, favs = {}, comms = {}, stats = {})

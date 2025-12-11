@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profil de {{info[0]}}</title>
+<title>Profil de {{info.nom}}</title>
 <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
@@ -17,23 +17,24 @@
             <a class="navig-mini" href="profil">Profil</a>
         </div>
 </nav>
+<p>{{info}}</p>
 <section class="mainProfile">
     <section class="mainP">
         <article class="basicInfo">
             <div>
-                <p id='nom_user'>{{info['nom']}}</p>
-                <p>@{{info['pseudo']}}</p>
-                {%if info['bio'] == '': %}
+                <p id='nom_user'>{{info.nom}}</p>
+                <p>@{{info.pseudo}}</p>
+                {%if info.bio == '': %}
                     <p>Pas de biographie pour le moment.</p>
                 {%else%}
-                    <p>{{info['bio']}}</p>
+                    <p>{{info.bio}}</p>
                 {%endif%}
             </div>
         </article>
         <article id='favs'>
             <p>Favoris</p>
             {%if favs == {}%}
-                <p>{{info['nom']}} n'a pas encore ajouté de favoris.</p>
+                <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
             {%else%}
                 {%for movie in favs%}
                     <p class='movie'> <p>
@@ -47,7 +48,7 @@
         <div>
             <p>Derniers commentaires</p>
             {%if comms == {}%}
-                <p>{{info['nom']}} n'a pas encore commenté.</p>
+                <p>{{info.nom}} n'a pas encore commenté.</p>
             {%else%}
                 {%for text in comms%}
                     <p class='commentaire'> <p>
@@ -58,7 +59,7 @@
         <div>
             <p>Statistiques personelles </p>
             {%if stats == {}%}
-                <p>{{info['nom']}} n'a pas assez d'activité pour avoir de statistiques.</p>
+                <p>{{info.nom}} n'a pas assez d'activité pour avoir de statistiques.</p>
             {%else%}
                 {%for text in comms%}
                     <p class='stats'> <p>
