@@ -82,7 +82,7 @@ def favs(pseudo): #UNFINISHED
                         where commente.utilisateur = {pseudo}
                         and commente.favori = TRUE """)
 
-def user(user):
+def info_user(user_pseudo):
     '''
     Récupère les informations d'un utilisateur à partir de son pseudo
     Arguments:
@@ -90,9 +90,11 @@ def user(user):
     Return:
         dictionnaire des informations de l'utilisateur
     '''
-    return all_infos(f""" select pseudo, mdp, nom, biographie from utilisateur
-                            where pseudo = {user}
-                            or mail = {user}""")
+    return all_infos(f"""
+        SELECT pseudo, mdp, nom, biographie 
+        FROM utilisateur
+        WHERE pseudo = '{user_pseudo}'
+    """)
 
 def comms(user):
     '''
