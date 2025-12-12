@@ -20,6 +20,10 @@ def detail_media(media_id):
     for media in get.infos_media(media_id):
         return render_template("media.html", media=media)
 
+@app.route('/rechercher')
+def chercher():
+    return render_template("rechercher.html")
+
 @app.route("/login")
 def login():
     return render_template("login.html")

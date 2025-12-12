@@ -1,13 +1,14 @@
+{% comment %} page de recherche {% endcomment %}
 <!doctype html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connexion</title>
+<title>Recherche</title>
 <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
-</body>
+<body>
     <nav class="barre-de-navigation">
         <div class="cadre-nav">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
@@ -23,21 +24,5 @@
         </div>
     </nav>
 
-    <p class="titre">Connexion</p>
-    <form class="container-formulaire" method='POST' action='profil'>
-        <div class="container-formulaire">
-            <label for="user">Nom d'utilisateur/Adresse mail</label>
-            <input type="text" placeholder="Username/Mail" name="user" required>
-
-            <label for="password">Mot de passe</label>
-            <input type="password" placeholder="Entrez le mot de passe" name="password" required>
-
-            <button type="submit">Se connecter</button>
-        </div>
-
-        <div class="container-inscription">
-            <span>Vous n'avez pas de compte ? <a href="/creationcompte">Inscrivez-vous ici</a></span>
-        </div>
-    </form>
 </body>
 </html>

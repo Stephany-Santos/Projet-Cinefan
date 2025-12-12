@@ -8,20 +8,23 @@
 </head>
 
 <body>
-<nav class="barre-de-navigation">
-        <div class="...">
+    <nav class="barre-de-navigation">
+        <div class="cadre-nav">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
-            <a class="navig-mini" href="commu">Communauté</a>
-            <a class="navig-mini" href="stats">Statistiques</a>
-            <a class="navig-mini" href="chercher">Chercher</a>
-            <a class="navig-mini" href="profil">Profil</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                <a class="navig-mini" href="/profil">Profil</a>
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
         </div>
-</nav>
-<p class="titre">Bienvenue !</p>
-<p>{{note}}</p>
-<p>Merci de commencer cette exploration de notre catalogue de films et série avec nous.</p>
-<span><a href="/login">Connectez-vous</a></span>
-
+    </nav>
+    <p class="titre">Bienvenue !</p>
+    <p>{{note}}</p>
+    <p>Merci de commencer cette exploration de notre catalogue de films et série avec nous.</p>
+    <span><a href="/login">Connectez-vous</a></span>
 </body>
-
 </html>

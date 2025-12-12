@@ -8,42 +8,47 @@
 </head>
 
 <body>
-<nav class="barre-de-navigation">
-        <div class="...">
+    <nav class="barre-de-navigation">
+        <div class="cadre-nav">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
-            <a class="navig-mini" href="commu">Communauté</a>
-            <a class="navig-mini" href="stats">Statistiques</a>
-            <a class="navig-mini" href="chercher">Chercher</a>
-            <a class="navig-mini" href="profil">Profil</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                <a class="navig-mini" href="/profil">Profil</a>
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
         </div>
-</nav>
+    </nav>
 
-<p class="titre">Connexion</p>
-<form method='POST' action='comptecree'>
-    <div class="container-formulaire">
-        <label for="nom">Nom </label>
-        <input type="text" placeholder="Entrez votre email" name="nom" required>
+    <p class="titre">Connexion</p>
+    <form method='POST' action='comptecree'>
+        <div class="container-formulaire">
+            <label for="nom">Nom </label>
+            <input type="text" placeholder="Entrez votre email" name="nom" required>
 
 
-        <label for="email">Adresse e-mail</label>
-        <input type="text" placeholder="Entrez votre email" name="email" required>
+            <label for="email">Adresse e-mail</label>
+            <input type="text" placeholder="Entrez votre email" name="email" required>
 
-        <label for="username">Nom d'utilisateur</label>
-        <input type="text" placeholder="Entrez le nom d'utilisateur" name="username" required>
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" placeholder="Entrez le nom d'utilisateur" name="username" required>
 
-        <label for="password">Mot de passe</label>
-        <input type="password" placeholder="Entrez le mot de passe" name="password" required>
+            <label for="password">Mot de passe</label>
+            <input type="password" placeholder="Entrez le mot de passe" name="password" required>
 
-        <label for="passwordConfirm">Confirmation</label>
-        <input type="password" placeholder="Confirmez votre mot de passe" name="passwordConfirm" required>
-        <button type="submit">S'inscrire</button>
-    </div>
+            <label for="passwordConfirm">Confirmation</label>
+            <input type="password" placeholder="Confirmez votre mot de passe" name="passwordConfirm" required>
+            <button type="submit">S'inscrire</button>
+        </div>
 
-    <div class="container-inscription">
-        <span>Vous avez déjà un compte ? <a href="/login">Connectez-vous</a></span>
-    </div>
-</form>
-<p>{{note}}</p>
+        <div class="container-inscription">
+            <span>Vous avez déjà un compte ? <a href="/login">Connectez-vous</a></span>
+        </div>
+    </form>
+    <p>{{note}}</p>
 </body>
 
 </html>

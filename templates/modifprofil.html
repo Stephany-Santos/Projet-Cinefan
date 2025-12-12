@@ -8,26 +8,31 @@
 </head>
 
 <body>
-<nav class="barre-de-navigation">
-        <div class="...">
+    <nav class="barre-de-navigation">
+        <div class="cadre-nav">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
-            <a class="navig-mini" href="commu">Communauté</a>
-            <a class="navig-mini" href="stats">Statistiques</a>
-            <a class="navig-mini" href="chercher">Chercher</a>
-            <a class="navig-mini" href="profil">Profil</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                <a class="navig-mini" href="/profil">Profil</a>
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
         </div>
-</nav>
-<p class='titre'>Modifier le profil</p>
-<form method="post" action="modifprofil<{{info['pseudo']}}>">
-    <div class="container-formulaire">
-    <label for="nom">Nom :</label>
-    <input type="text" id="nom" name="nom" placeholder="{{info['nom']}}" ><br>
+    </nav>
+    <p class='titre'>Modifier le profil</p>
+    <form method="post" action="modifprofil<{{info['pseudo']}}>">
+        <div class="container-formulaire">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" placeholder="{{info['nom']}}" ><br>
 
-    <label for="biographie">Biographie :</label>
-    <textarea id="biographie" name="biographie" rows="4" cols="50" placeholder="{{info['bio']}}">{{info['bio']}}</textarea><br>
-        
-    <input type="submit" value="Mettre à jour le profil">
-    </div>
-</form>
+        <label for="biographie">Biographie :</label>
+        <textarea id="biographie" name="biographie" rows="4" cols="50" placeholder="{{info['bio']}}">{{info['bio']}}</textarea><br>
+            
+        <input type="submit" value="Mettre à jour le profil">
+        </div>
+    </form>
 </body>
 </html>
