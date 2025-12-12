@@ -82,5 +82,20 @@ def comptecree():
         print("User inserted ! try connecting now.")
     return render_template('comptecree.html')
 
+@app.route("/genres")
+def genres():
+    return render_template("genres.html")
+    
+@app.route("/genres/<genre_name>")
+def genre_detail(genre_name):
+    medias = get.medias_by_genre(genre_name)
+    return render_template("genre_detail.html", genre=genre_name, medias=medias)
+
+    
+@app.route("/artistes")
+def artistes():
+    return render_template("artistes.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
