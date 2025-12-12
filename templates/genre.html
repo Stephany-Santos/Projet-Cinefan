@@ -1,86 +1,49 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Genres</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background: #909090;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-        nav {
-            background: #333;
-            padding: 0.5rem;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            margin: 0 1rem;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            padding: 2rem;
-            max-width: 900px;
-            margin: auto;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cinefan.css') }}">
 </head>
 <body>
 
-    <header>
-        <h1>GENRES</h1>
+    <!-- Header -->
+    <header class="barre-de-navigation">
+        <div class="cadre">
+            <a href="#" class="struct-de-navigation">GENRES</a>
+        </div>
     </header>
 
-    <nav>
-        <a href="#">Horreur</a>
-        <a href="#">Comédie</a>
-        <a href="#">Drame</a>
-        <a href="#">Policier</a>
-        <a href="#">Enfance</a>
-        <a href="#">Thriller</a>
-        <a href="#">Historique</a>
-        <a href="#">Animation</a>
-        <a href="#">Aventure</a>
-        <a href="#">Romantique</a>
+    <!-- Navigation principale : genres classiques -->
+    <main class="cadre">
+        <h1 class="titre">Genres</h1>
 
-    </nav>
+        <nav class="ligne">
+            <div class="colonne-3"><a class="navig-mini" href="#">Horreur</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Comédie</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Drame</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Policier</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Enfance</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Thriller</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Historique</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Animation</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Aventure</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Romantique</a></div>
+        </nav>
 
-    <main>
-        <h1> Genres </h1>
-        
-    <nav>
-        <a href="#">En famille</a>
-        <a href="#">Entre filles</a>
-        <a href="#">Entre mecs</a>
-        <a href="#">Soirée coup de blues</a>
-        <a href="#">Films culturels</a>
-    </nav>
+        <!-- Navigation secondaire : catégories spéciales -->
+        <h2 class="titre">Catégories spéciales</h2>
+        <nav class="ligne">
+            <div class="colonne-3"><a class="navig-mini" href="#">En famille</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Entre filles</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Entre mecs</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Soirée coup de blues</a></div>
+            <div class="colonne-3"><a class="navig-mini" href="#">Films culturels</a></div>
+        </nav>
 
-
-</ul>
-
+    </main>
 
 </body>
 </html>
+
