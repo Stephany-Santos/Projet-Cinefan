@@ -506,7 +506,7 @@ INSERT INTO personnage ( nom, prenom, description, cree_par, media) VALUES
 -- INSERTION DES IMAGES (avec URLs réelles)
 -- =============================================
 
--- Images de films (fichier, lien, alt, artiste, media, personnage, cree_par) VALUES
+INSERT INTO image (fichier, lien, alt, artiste, media, personnage, cree_par) VALUES
 -- Images d'acteurs (utilisant des URLs Wikimedia Commons)
 ('dicaprio_01.jpg', 'https://upload.wikimedia.org/wikipedia/commons/4/46/Leonardo_Dicaprio_Cannes_2019.jpg', 'Leonardo DiCaprio au Festival de Cannes 2019', 11, NULL, NULL, 'luna'),
 ('hanks_01.jpg', 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Tom_Hanks_TIFF_2019.jpg', 'Tom Hanks au Festival International du Film de Toronto 2019', 12, NULL, NULL, 'luna'),
@@ -560,39 +560,6 @@ INSERT INTO participe (id_artiste, id_media, id_perso, role) VALUES
 (16, 2, 7, 'Acteur principal'),
 (45, 2, 8, 'Acteur principal'),
 (13, 2, 10, 'Acteur secondaire'),
-  ('dunkirk_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/e/e9/Dunkirk_Teaser_Poster.jpg', 'Affiche du film Dunkirk', NULL, 4, NULL, 'pixelboy'),
-  ('oppenheimer_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/4/4c/Oppenheimer_%282023_film%29.jpg', 'Affiche du film Oppenheimer', NULL, 5, NULL, 'mira'),
-('schindlerslist_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_poster.jpg', 'Affiche du film Schindler''s List', NULL, 7, NULL, 'shadowfox'),
-('savingprivateryan_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/a/ac/Saving_Private_Ryan_poster.jpg', 'Affiche du film Saving Private Ryan', NULL, 8, NULL, 'akira'),
-('et_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/a/a7/ET_the_extra_Terrestrial_Poster_1982.jpg', 'Affiche du film E.T. the Extra-Terrestrial', NULL, 9, NULL, 'eliora'),
-('catchmeifyoucan_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/a/a7/Catch_Me_If_You_Can_poster.jpg', 'Affiche du film Catch Me If You Can', NULL, 10, NULL, 'toma'),
-('killbillvol1_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/b/b5/Kill_Bill_Vol_1.jpg', 'Affiche du film Kill Bill: Vol. 1', NULL, 13, NULL, 'ghost'),
-('inglourious_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/c/c3/Inglourious_Basterds_poster.jpg', 'Affiche du film Inglourious Basterds', NULL, 14, NULL, 'ragnar'),
-('reservoirdogs_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/9/96/Reservoir_Dogs_poster.jpg', 'Affiche du film Reservoir Dogs', NULL, 15, NULL, 'sybel'),
-('wolfofwallstreet_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/0/0f/The_Wolf_of_Wall_Street_poster.jpg', 'Affiche du film The Wolf of Wall Street', NULL, 16, NULL, 'mattix'),
-('taxidriver_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/9/97/Taxi_Driver.jpg', 'Affiche du film Taxi Driver', NULL, 19, NULL, 'liv'),
-('shutterisland_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/d/d5/Shutter_Island_Theatrical_Poster.jpg', 'Affiche du film Shutter Island', NULL, 20, NULL, 'mecha'),
-('thesocialnetwork_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/1/1f/The_Social_Network_poster.jpg', 'Affiche du film The Social Network', NULL, 23, NULL, 'tigra'),
-('gonegirl_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/8/8e/Gone_Girl_Poster.jpg', 'Affiche du film Gone Girl', NULL, 24, NULL, 'noctis'),
-('zodiac_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/8/8d/Zodiac_%282007%29.png', 'Affiche du film Zodiac', NULL, 25, NULL, 'cass'),
-('bladerunner2049_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/0/0c/Blade_Runner_2049_poster.jpg', 'Affiche du film Blade Runner 2049', NULL, 27, NULL, 'iris_bl'),
-('arrival_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/3/37/Arrival_2016_film_poster.jpg', 'Affiche du film Arrival', NULL, 28, NULL, 'tango'),
-('sicario_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/f/ff/Sicario_2015_poster.jpg', 'Affiche du film Sicario', NULL, 29, NULL, 'nova'),
-('prisoners_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/a/a1/Prisoners_%282013%29_Poster.jpg', 'Affiche du film Prisoners', NULL, 30, NULL, 'ariel'),
-('terminator2_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/8/85/Terminator2-judgmentday.jpg', 'Affiche du film Terminator 2: Judgment Day', NULL, 33, NULL, 'omega'),
-('aliens_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/f/f1/Aliens_poster.jpg', 'Affiche du film Aliens', NULL, 34, NULL, 'silvio'),
-('theabyss_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/f/f3/The_Abyss_poster.jpg', 'Affiche du film The Abyss', NULL, 35, NULL, 'kaya'),
-('2001spaceoddyssey_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/d/df/2001-A-Space-Odyssey-%281968%29-Poster.jpg', 'Affiche du film 2001: A Space Odyssey', NULL, 37, NULL, 'lux'),
-('clockworkorange_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/1/13/Clockwork_Orange_%28poster%29.jpg', 'Affiche du film A Clockwork Orange', NULL, 38, NULL, 'hazel'),
-('fullmetaljacket_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/1/1f/Full_Metal_Jacket_poster.jpg', 'Affiche du film Full Metal Jacket', NULL, 39, NULL, 'marlow'),
-('drstrangelove_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/6/6a/Dr_Strangelove_poster.jpg', 'Affiche du film Dr. Strangelove', NULL, 40, NULL, 'gaia'),
-('godfatherpart2_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/6/6f/The_Godfather_Part_II.jpg', 'Affiche du film The Godfather Part II', NULL, 42, NULL, 'serena'),
-('apocalypsenow_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/0/0d/Apocalypse_Now_%281979%29_poster.jpg', 'Affiche du film Apocalypse Now', NULL, 43, NULL, 'atlas'),
-('theconversation_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/a/a8/Theconversation.jpg', 'Affiche du film The Conversation', NULL, 44, NULL, 'julian'),
-('dracula_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/f/ff/Bram_Stoker%27s_Dracula_%281992%29_poster.jpg', 'Affiche du film Bram Stoker''s Dracula', NULL, 45, NULL, 'crystal'),
-('themartian_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/c/cd/The_Martian_film_poster.jpg', 'Affiche du film The Martian', NULL, 49, NULL, 'pixelboy'),
-('blackhawkdown_poster.jpg', 'https://upload.wikimedia.org/wikipedia/en/e/e9/Black_Hawk_Down_poster.jpg', 'Affiche du film Black Hawk Down', NULL, 50, NULL, 'mira');
-
 (42, 2, 11, 'Acteur secondaire'),
 
 -- Interstellar
