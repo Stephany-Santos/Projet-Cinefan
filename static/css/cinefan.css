@@ -23,6 +23,30 @@ corps {
     text-decoration: none;         
 }
 
+.cadre-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navig-mini {
+    font-size: 1rem;               
+    font-weight: bold;           
+    color: #fff;             
+    text-decoration: none;
+}
+
+.nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.barre-recherche input {
+    width: 160px;
+}
+
+
 .cadre {
     max-width: 1500px;
     margin: 0 auto;
@@ -80,15 +104,8 @@ corps {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.navig-mini {
-    font-size: 1rem;               
-    font-weight: bold;           
-    color: #fff;             
-    text-decoration: none;
-}
-
-body {
-}
+/* body {
+} */
 
 .titre {
     font-size: 2rem;               

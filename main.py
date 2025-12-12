@@ -21,6 +21,10 @@ def detail_media(media_id):
     for media in get.infos_media(media_id):
         return render_template("media.html", media=media)
 
+@app.route('/rechercher')
+def chercher():
+    return render_template("rechercher.html")
+
 @app.route("/login")
 def login():
     return render_template("login.html")
@@ -78,6 +82,21 @@ def comptecree():
                     values (%s, %s, %s, %s, 'standard') """, (pseudo, nom, mail, pass1,))
         print("User inserted ! try connecting now.")
     return render_template('comptecree.html')
+
+@app.route("/genres")
+def genres():
+    return render_template("genres.html")
+    
+@app.route("/genres/<genre_name>")
+def genre_detail(genre_name):
+    medias = get.medias_by_genre(genre_name)
+    return render_template("genre_detail.html", genre=genre_name, medias=medias)
+
+    
+@app.route("/artistes")
+def artistes():
+    return render_template("artistes.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)

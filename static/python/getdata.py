@@ -5,7 +5,12 @@ import db
 
 def all_infos(commande):
     '''
-    à remplir
+    Fonction qui crée une liste de dictionnaires contenant les informations renvoyées
+    par commande
+    Arguments :
+        commande : la requête SQL à exécuter
+    Retour :
+        Liste de dictionnaires avec les résultats, ou tuple (erreur, code)
     '''
     conn = None
     try:
@@ -32,7 +37,10 @@ def all_infos(commande):
 
 def all_media():
     '''
-    à remplir
+    Récupère TOUS les médias de la base de données
+    Arguments : aucun
+    Retour :
+        Liste de dictionnaires avec tous les médias
     '''
     return all_infos("""
         SELECT DISTINCT
@@ -51,9 +59,9 @@ def infos_media(media_id):
     '''
     Récupère les infos d'un media spécifique
     Arguments:
-        ...
+        media_id: l'ID du media à récupérer
     Return:
-        ...
+        Liste contenant un dictionnaire avec les infos du media
     '''
     return all_infos(f"""
         SELECT
@@ -82,17 +90,19 @@ def favs(pseudo): #UNFINISHED
                         where commente.utilisateur = '{pseudo}'
                         and commente.favori = TRUE """)
 
-def user(user):
+def info_user(user_pseudo):
     '''
     Récupère les informations d'un utilisateur à partir de son pseudo
     Arguments:
-        pseudo (str): Le pseudo de l'utilisateur
+        user_pseudo (str): Le pseudo de l'utilisateur
     Return:
         dictionnaire des informations de l'utilisateur
     '''
-    return all_infos(f""" select pseudo, mdp, nom, biographie from utilisateur
-                            where pseudo = '{user}'
-                            or mail = '{user}'""")
+    return all_infos(f"""
+        SELECT pseudo, mdp, nom, biographie 
+        FROM utilisateur
+        WHERE pseudo = '{user_pseudo}'
+    """)
 
 def comms(user):
     '''

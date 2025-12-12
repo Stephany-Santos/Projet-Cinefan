@@ -9,12 +9,17 @@
 <body>
     <!-- Les "..." je changerais après, avec le fichier css -->
     <nav class="barre-de-navigation">
-        <div class="...">
+        <div class="cadre-nav">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
-            <a class="navig-mini" href="commu">Communauté</a>
-            <a class="navig-mini" href="stats">Statistiques</a>
-            <a class="navig-mini" href="chercher">Chercher</a>
-            <a class="navig-mini" href="profil">Profil</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                <a class="navig-mini" href="/profil">Profil</a>
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
         </div>
     </nav>
 
