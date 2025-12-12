@@ -15,34 +15,33 @@
         </div>
     </header>
 
-    <!-- Navigation principale : genres classiques -->
     <main class="cadre">
-        <h1 class="titre">Genres</h1>
+        <h1 class="titre">Genres classiques</h1>
 
         <nav class="ligne">
-            <div class="colonne-3"><a class="navig-mini" href="#">Horreur</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Comédie</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Drame</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Policier</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Enfance</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Thriller</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Historique</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Animation</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Aventure</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Romantique</a></div>
+            {% set genres = ['Horreur', 'Comédie', 'Drame', 'Policier', 'Enfance', 'Thriller', 'Historique', 'Animation', 'Aventure', 'Romantique'] %}
+            {% for genre in genres %}
+                <div class="colonne-3">
+                    <a class="navig-mini" href="{{ url_for('genre_detail', genre_name=genre) }}">{{ genre }}</a>
+                </div>
+            {% endfor %}
         </nav>
 
-        <!-- Navigation secondaire : catégories spéciales -->
         <h2 class="titre">Catégories spéciales</h2>
         <nav class="ligne">
-            <div class="colonne-3"><a class="navig-mini" href="#">En famille</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Entre filles</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Entre mecs</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Soirée coup de blues</a></div>
-            <div class="colonne-3"><a class="navig-mini" href="#">Films culturels</a></div>
+            {% set categories = ['En famille', 'Entre filles', 'Entre mecs', 'Soirée coup de blues', 'Films culturels'] %}
+            {% for cat in categories %}
+                <div class="colonne-3">
+                    <a class="navig-mini" href="{{ url_for('genre_detail', genre_name=cat) }}">{{ cat }}</a>
+                </div>
+            {% endfor %}
         </nav>
 
     </main>
+
+</body>
+</html>
+
 
 </body>
 </html>
