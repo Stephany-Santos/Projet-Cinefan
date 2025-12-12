@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artistes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cinefan.css') }}">
-</head>
-<body>
+<header class="barre-de-navigation">
+    <div class="cadre">
+        <a href="#" class="struct-de-navigation">ARTISTES</a>
+    </div>
+</header>
 
-    <header>
-        <h1>ARTISTES</h1>
-    </header>
+<main class="cadre">
+    <h1 class="titre">Artistes</h1>
 
-    <!-- Navigation principale -->
-    <nav>
-        <a href="#">Réalisateurs</a>
-        <a href="#">Acteurs</a>
+    <nav class="ligne">
+        <div class="colonne-3"><a class="navig-mini" href="#">Réalisateurs</a></div>
+        <div class="colonne-3"><a class="navig-mini" href="#">Acteurs</a></div>
     </nav>
 
-    <main>
-        <h2>Artistes</h2>
-        <p>Découvrez de nouveaux acteurs et réalisateurs !</p>
-
-        <!-- Navigation secondaire / catégories -->
-        <nav>
-            <a href="#">Les mieux notés</a>
-            <a href="#">Les plus regardés</a>
-            <a href="#">Coups de coeur récents</a>
-            <a href="#">Les étoiles montantes</a>
-        </nav>
-    </main>
-
-</body>
-</html>
+    <section class="ligne">
+        <div class="colonne-3"><a class="navig-mini" href="#">Les mieux notés</a></div>
+        <div class="colonne-3"><a class="navig-mini" href="#">Les plus regardés</a></div>
+        <div class="colonne-3"><a class="navig-mini" href="#">Coups de coeur récents</a></div>
+        <div class="colonne-3"><a class="navig-mini" href="#">Les étoiles montantes</a></div>
+    </section>
+</main>
