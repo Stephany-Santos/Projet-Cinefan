@@ -79,7 +79,7 @@ def favs(pseudo): #UNFINISHED
         favoris (dict): dico des médias favoris
     '''
     return all_infos(f"""select media.titre from media NATURAL JOIN commente 
-                        where commente.utilisateur = {pseudo}
+                        where commente.utilisateur = '{pseudo}'
                         and commente.favori = TRUE """)
 
 def user(user):
@@ -91,8 +91,8 @@ def user(user):
         dictionnaire des informations de l'utilisateur
     '''
     return all_infos(f""" select pseudo, mdp, nom, biographie from utilisateur
-                            where pseudo = {user}
-                            or mail = {user}""")
+                            where pseudo = '{user}'
+                            or mail = '{user}'""")
 
 def comms(user):
     '''
@@ -100,7 +100,7 @@ def comms(user):
     '''
     return all_infos(f"""select id_media, note, texte, date
                 from commente
-                where utilisateur = {user}""")
+                where utilisateur = '{user}'""")
     
     
 # def getfilm(titre):
