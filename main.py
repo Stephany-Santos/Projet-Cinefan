@@ -86,6 +86,12 @@ def comptecree():
 def genres():
     return render_template("genres.html")
     
+@app.route("/genres/<genre_name>")
+def genre_detail(genre_name):
+    medias = get.medias_by_genre(genre_name)
+    return render_template("genre_detail.html", genre=genre_name, medias=medias)
+
+    
 @app.route("/artistes")
 def artistes():
     return render_template("artistes.html")
