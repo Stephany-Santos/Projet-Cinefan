@@ -106,15 +106,51 @@ def info_user(user_pseudo):
         WHERE pseudo = '{user_pseudo}'
     """)
 
-def comms(user):
+def commUser(user):
     '''
     Fonction récupérant les commentaires laissés par un utilisateur
     '''
-    return all_infos(f"""select id_media, media.titre, commente.note, commente.texte, commente.date, commente.favori
+    lst = all_infos(f"""select id_media, media.titre, commente.note, commente.texte, commente.date, commente.favori
                 from commente natural join media
                 where utilisateur = '{user}'""")
+    toRemove = []
+    for comm in lst:
+        if comm['texte'] == None or comm['texte'] == '':
+            toRemove.append(comm)
+    for rem in toRemove:
+        lst.remove(rem)
+    return lst
     
-    
+def commMedia(id):
+    '''
+    Fonction récupérant les commentaires laissés sur un media
+    Argument - id (int) : id_media
+    '''
+    lst = all_infos(f"""select id_media, commente.utilisateur, commente.note, commente.texte, commente.date, commente.favori
+                from commente natural join media
+                where id_media = '{id}'""")
+    toRemove = []
+    for comm in lst:
+        if comm['texte'] == None or comm['texte'] == '':
+            toRemove.append(comm)
+    for rem in toRemove:
+        lst.remove(rem)
+    return lst
+
+def genComms():
+    '''
+    Fonction récupérant tout les commentaires triés par ordre chronologique
+    '''
+    lst = all_infos("""select * from commente natural join media
+                    order by commente.date desc limit 10""")
+    toRemove = []
+    for comm in lst:
+        if comm['texte'] == None or comm['texte'] == '':
+            toRemove.append(comm)
+    for rem in toRemove:
+        lst.remove(rem)
+    return lst
+
 # def getfilm(titre):
 #     '''
 #     Fonction renvoyant un dictionnaire contenant les informations nécessaires pour un film

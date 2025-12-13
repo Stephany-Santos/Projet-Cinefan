@@ -26,7 +26,7 @@
             </div>
         </div>
     </nav>
-    <main class="pageProfil">
+    <main class="mainPage">
         <section class="userProfile">
             <article id="basicInfo">
                 <div>
@@ -65,7 +65,7 @@
                 {%endif%}
             </article>
         </section>
-        <aside class='userActivity'>
+        <aside class='activity'>
             <button onclick="location.href='modifprofil'" id='ProfilBouton'>Modifier profil</button>
             <br>    
             <div>
@@ -74,16 +74,18 @@
                     <p>{{info.nom}} n'a pas encore commenté.</p>
                 {%else%}
                     {%for elt in comms%}
-                        <div class='commentaire'>
-                        <a href="/media/{{ elt.id }}"><b>{{elt.titre}}</b><a>
-                        <p>{{elt.date}} <p>
-                        <p><i>"{{elt.texte}}"</i><p>
-                        {%if elt.favori == TRUE%}
-                        <p>❤️ - Note : {{elt.note}}/5<p>
-                        {%else%}
-                        <p>Note : {{elt.note}}/5<p>
+                        {%if elt.texte != '' or elt.texte != None%}
+                            <div class='commentaire'>
+                            <a href="/media/{{ elt.id }}"><b>{{elt.titre}}</b><a>
+                            <p>{{elt.date}} <p>
+                            <p><i>"{{elt.texte}}"</i><p>
+                            {%if elt.favori == TRUE%}
+                            <p>❤️ - Note : {{elt.note}}/5<p>
+                            {%else%}
+                            <p>Note : {{elt.note}}/5<p>
+                            {%endif%}
+                            </div>
                         {%endif%}
-                        </div>
                     {%endfor%}
                 {%endif%}
             </div>

@@ -18,7 +18,7 @@ def accueil():
 @app.route('/media/<int:media_id>')
 def detail_media(media_id):
     for media in get.infos_media(media_id):
-        return render_template("media.html", media=media, UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
+        return render_template("media.html", media=media, comms = get.commMedia(media_id) ,UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
 
 @app.route('/rechercher')
 def chercher():
@@ -36,7 +36,7 @@ def deconnexion():
 @app.route("/profil", methods = ['POST', 'GET'])
 def profil():
     if 'active' in session: #si on est déjà connecté afficher le profil..?
-        return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.comms(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
+        return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
         if request.method == 'POST':
             user_input, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
@@ -44,7 +44,7 @@ def profil():
                 session['active']=u
                 app.secret_key = session['active']['mdp']
             if pass2 == app.secret_key:
-                return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.comms(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
+                return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
             else:
                 app.secret_key= None
                 return redirect(url_for('login'))
@@ -97,13 +97,50 @@ def comptecree():
 
 @app.route("/ajouterEnFavori/<int:mediaId>")
 def ajouterEnFavori(mediaId):
-    #le bouton redirect ici. on doit récupérer id du media.
-    print(f"AJOUTER EN FAV {mediaId}")
-    with conn.cursor() as cur:
-        cur.execute("""insert into commente (date, utilisateur, id_media, favori) VALUES
-                    (CURRENT_DATE(), %s, %s, TRUE)""", (session['active']['pseudo'], mediaId, ))
-    #requete sql, puis redirect sur la page de media.
-    return redirect(url_for(f'media/{mediaId}'))
+    if 'active' in session:
+        for favori in get.favs(session['active']['pseudo']):
+            if mediaId in favori:
+                req, vals= """update commente
+                set favori = TRUE
+                where utilisateur = %s, id_media = %s""", (session['active']['pseudo'], mediaId,)
+            else:
+                req, vals = """insert into commente (date, note, utilisateur, id_media, favori) VALUES
+                    (CURRENT_DATE, 5, %s, %s, TRUE)""", (session['active']['pseudo'], mediaId, )
+    
+        with conn.cursor() as cur:
+            cur.execute(req, vals)
+        return redirect(url_for(detail_media(mediaId)))
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/commenter/<int:mediaId>", methods=['GET', 'POST'])
+def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
+    if request.method == 'GET':
+        return render_template("commenter.html", media = get.infos_media(mediaId)[0], UserConnecte = session['active']['nom'] if 'active' in session else None)
+    else:
+        comm, note = request.form.get("comm"), request.form.get("note")
+        if comm == '':
+            comm = None
+        if type(note) != int:
+            note = int(note)
+        if 'active' in session:
+            for favori in get.favs(session['active']['pseudo']):
+                if mediaId in favori:
+                    req, vals= """update commente
+                    set note = %s, texte = %s
+                    where utilisateur = %s, id_media = %s""", (note, comm, session['active']['pseudo'], mediaId,)
+                else:
+                    req, vals = """insert into commente (date, texte, note, utilisateur, id_media)
+                        values (CURRENT_DATE, %s, %s, %s, %s)""", (comm, note, session['active']['pseudo'], mediaId,)
+            with conn.cursor() as cur:
+                cur.execute(req, vals)
+            return redirect(url_for(detail_media(mediaId)))
+        else:
+            return redirect(url_for('login'))
+
+@app.route("/commu")
+def commu():
+    return render_template("commu.html", comms = get.genComms() ,UserConnecte = session['active']['nom'] if 'active' in session else None)
 
 @app.route("/genres")
 def genres():

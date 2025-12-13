@@ -140,7 +140,7 @@ corps {
     margin-top: 2%;
 }
 
-.pageProfil {
+.mainPage {
     display: flex;
     column-gap: 2rem;
     justify-content: space-between;
@@ -179,7 +179,7 @@ corps {
 }
 
 
-.userActivity {
+.activity {
     width: 25%;
     max-width: 350px;
     margin: 0;
@@ -203,4 +203,15 @@ corps {
     margin: 0 auto;
     display: block;
     cursor: pointer;
+}
+
+.communaute{
+    width: 95%;
+    /* max-width: 350px; */
+    margin: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: '#F7EDEB';
+    display: flex-box;
 }

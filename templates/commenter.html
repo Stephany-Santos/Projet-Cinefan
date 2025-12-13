@@ -26,22 +26,21 @@
             </div>
         </div>
     </nav>
+{%if UserConnecte == None%}
+<title>Veuillez vous connecter afin d'enregistrer votre avis.</title>
+<span>Vous avez déjà un compte ? <a href="/login">Connectez-vous</a> - Nouveau.elle sur CinéFan? <a href="/creationcompte">Créez votre compte</a></span>
+{%else%}
+<p class="titre">Commenter sur {{media.titre}}</p>
+    
+    <form method='POST' action="/commenter/{{media.id}}" class="container-formulaire">
+        <label for="comm">Rédigez votre commentaire</label>
+        <textarea id="comm" name="comm" rows="5" cols="50"></textarea>
 
-        <p class="titre">Communauté</p>
-    <main class="communaute">
-        {%for elt in comms%}
-            <div class="commentaire">
-                <p><a href="/media/{{elt.id_media}}">{{elt.titre}}</a> - @{{elt.utilisateur}}</p>
-                <p>{{elt.date}}</p>
-                <p><i>"{{elt.texte}}"</i><p>
-                {%if elt.favori == TRUE%}
-                <p>❤️ - Note : {{elt.note}}/5<p>
-                {%else%}
-                <p>Note : {{elt.note}}/5<p>
-                {%endif%}
-            </div>
-        {%endfor%}
-    </main>
-
+        <label for="note">Votre note pour {{media.titre}} sur 5</label>
+        <input type="range" name="note" min="0" max="5" value="0" required>
+        
+        <p><input type="submit" value="Envoyer"> <input type="reset" value="Réinitialiser"></p>
+    </form>
+{%endif%}
 </body>
 </html>
