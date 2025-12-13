@@ -28,5 +28,15 @@
         </div>
     </nav>
 
+    <div class="en-tete-resultats">
+        <div class="contenu-resultats">
+            <h1>Résultats de recherche</h1>
+            <div class="sous-titre">Terme: "<strong>{{ terme }}</strong>" — 
+                {{ nb_resultats }} résultat{% if nb_resultats != 1 %}s{% endif %} trouvé{% if nb_resultats != 1 %}s{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Le contenu des resultats je ferais après -->
 </body>
 </html>
