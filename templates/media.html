@@ -38,7 +38,7 @@
             </div>
             <div class="...">
                 <h1>{{ media.titre }}</h1>
-                <p class="...">{{ media.genre }} • {{ media.parution }}</p>
+                <p class="..."><a href="/genres/{{media.genre}}">{{ media.genre }}</a> • {{ media.parution }}</p>
                 <p class="...">{{ media.description }}</p>
                 <button class="..." onclick="location.href='/ajouterEnFavori/{{media.id}}'">❤️ Ajouter aux favoris</button>
                 <button class="..."onclick="location.href='/commenter/{{media.id}}'">✍️ Commenter</button>

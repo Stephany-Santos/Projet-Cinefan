@@ -144,7 +144,7 @@ def commu():
 
 @app.route("/genres")
 def genres():
-    return render_template("genres.html")
+    return render_template("genre.html")
     
 @app.route("/genres/<genre_name>")
 def genre_detail(genre_name):
