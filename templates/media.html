@@ -14,7 +14,11 @@
             <div class="nav-right">
                 <a class="navig-mini" href="/commu">Communauté</a>
                 <a class="navig-mini" href="/stats">Statistiques</a>
+                {%if UserConnecte==None%}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+                {%else%}
                 <a class="navig-mini" href="/profil">Profil</a>
+                {%endif%}
                 <form action="/search" method="get" class="barre-recherche">
                     <input type="text" name="q" placeholder="Rechercher">
                     <button type="submit">🔍</button>
@@ -36,7 +40,7 @@
                 <h1>{{ media.titre }}</h1>
                 <p class="...">{{ media.genre }} • {{ media.parution }}</p>
                 <p class="...">{{ media.description }}</p>
-                <button class="...">❤️ Ajouter aux favoris</button>
+                <button class="..." href="/ajouterEnFavori/{{media.id}}">❤️ Ajouter aux favoris</button>
                 <button class="...">✍️ Commenter</button>
             </div>
         </div>

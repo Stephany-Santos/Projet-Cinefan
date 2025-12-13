@@ -8,80 +8,102 @@ import static.python.getdata as get
 conn = db.connect()
 # password_ctx = CryptContext(schemes=['bcrypt'])
 app = Flask(__name__)
-# current_user = {'pseudo': '', 'nom': '', 'bio': '', 'mdp': ''}
 app.secret_key = 'temp'
 
 # ----- Application Flask
 @app.route('/')
 def accueil():
-    return render_template("accueil.html", medias=get.all_media())
+    return render_template("accueil.html", medias=get.all_media(), UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
 
 @app.route('/media/<int:media_id>')
 def detail_media(media_id):
     for media in get.infos_media(media_id):
-        return render_template("media.html", media=media)
+        return render_template("media.html", media=media, UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
 
 @app.route('/rechercher')
 def chercher():
-    return render_template("rechercher.html")
+    return render_template("rechercher.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    return render_template("login.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
 
-@app.route("/profil", methods = ['POST'])
+@app.route("/deconnexion")
+def deconnexion():
+    session.pop('active', None)
+    return redirect(url_for('accueil'))
+
+@app.route("/profil", methods = ['POST', 'GET'])
 def profil():
     if 'active' in session: #si on est déjà connecté afficher le profil..?
-        return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.comms(session['active']['pseudo']), stats = {})
+        return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.comms(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
-        user_input, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
-        for u in get.user(user_input):
-            session['active']=u
-            app.secret_key = session['active']['mdp']
-        if pass2 == app.secret_key:
-            return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.comms(session['active']['pseudo']), stats = {})
+        if request.method == 'POST':
+            user_input, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
+            for u in get.info_user(user_input):
+                session['active']=u
+                app.secret_key = session['active']['mdp']
+            if pass2 == app.secret_key:
+                return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.comms(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
+            else:
+                app.secret_key= None
+                return redirect(url_for('login'))
         else:
-            app.secret_key= None
-            return url_for('login')
+            return redirect(url_for('login'))
             
     # hash_pw = "mdp crypté stocké!"
     # password_ctx.verify("inputmdp", hash_pw)
 
 @app.route("/modifprofil")
 def modifprofil():
-    return render_template("modifprofil.html", info = session['active'])
+    return render_template("modifprofil.html", info = session['active'], UserConnecte = session['active']['nom'] if 'active' in session else None)
 
-@app.route("/modifprofil/<user>", methods=['POST'])
-def modifprofilend():
+@app.route('/modifprofilDone', methods=['POST'])
+def modifprofilDone():
+    pseudo = session['active']['pseudo']
     newName, newBio = request.form.get('nom', type=str), request.form.get('biographie', type=str)
+    if newName == '':
+        newName = session['active']['nom']
+    if newBio == '':
+        newBio = session['active']['biographie']
     with db.connect() as conn:
         with conn.cursor() as cur:
             cur.execute("""update utilisateur
                 set nom = %s,
                 biographie = %s
-                where pseudo = %s""", (newName, newBio,session['active']['pseudo'],))
+                where pseudo = %s""", (newName, newBio, pseudo,))
 
-    session['active']['biographie'], session['active']['nom']= newBio, newName
+    for u in get.info_user(pseudo):
+        session['active']=u
         
-    return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.comms(session['active']['pseudo']), stats = {})
+    return redirect(url_for('profil'))
 
 
-@app.route("/creationcompte")
+@app.route('/creationcompte')
 def creationcompte():
-    return render_template("creationcompte.html", note = '')
+    return render_template("creationcompte.html", note = '', UserConnecte = session['active']['nom'] if 'active' in session else None)
 
 @app.route('/comptecree', methods=['POST'])
 def comptecree():
     nom, mail, pseudo, pass1, pass2 = request.form.get('nom', type=str), request.form.get('email', type=str), request.form.get('username', type=str), request.form.get('password', type=str), request.form.get('passwordConfirm', type=str) 
     if pass1 != pass2:
-        return render_template("creationcompte.html", note = "Les mots de passes ne conrrespondent pas. Veuillez Réessayer.") #redirect(url_for('creation_compte'))
+        return render_template("creationcompte.html", note = "Les mots de passes ne conrrespondent pas. Veuillez Réessayer.", UserConnecte = session['active']['nom'] if 'active' in session else None) #redirect(url_for('creation_compte'))
     
     # hash = password_ctx.hash(pass1)
     with conn.cursor() as cur:
         cur.execute("""insert into utilisateur (pseudo, nom, mail, mdp, typeDeCompte)
                     values (%s, %s, %s, %s, 'standard') """, (pseudo, nom, mail, pass1,))
-        print("User inserted ! try connecting now.")
-    return render_template('comptecree.html')
+    return render_template('comptecree.html', UserConnecte = session['active']['nom'] if 'active' in session else None)
+
+@app.route("/ajouterEnFavori/<int:mediaId>")
+def ajouterEnFavori(mediaId):
+    #le bouton redirect ici. on doit récupérer id du media.
+    print(f"AJOUTER EN FAV {mediaId}")
+    with conn.cursor() as cur:
+        cur.execute("""insert into commente (date, utilisateur, id_media, favori) VALUES
+                    (CURRENT_DATE(), %s, %s, TRUE)""", (session['active']['pseudo'], mediaId, ))
+    #requete sql, puis redirect sur la page de media.
+    return redirect(url_for(f'media/{mediaId}'))
 
 @app.route("/genres")
 def genres():
@@ -90,12 +112,12 @@ def genres():
 @app.route("/genres/<genre_name>")
 def genre_detail(genre_name):
     medias = get.medias_by_genre(genre_name)
-    return render_template("genre_detail.html", genre=genre_name, medias=medias)
+    return render_template("genre_detail.html", genre=genre_name, medias=medias, UserConnecte = session['active']['nom'] if 'active' in session else None)
 
     
 @app.route("/artistes")
 def artistes():
-    return render_template("artistes.html")
+    return render_template("artistes.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
 
 
 if __name__ == '__main__':

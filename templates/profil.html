@@ -14,7 +14,11 @@
             <div class="nav-right">
                 <a class="navig-mini" href="/commu">Communauté</a>
                 <a class="navig-mini" href="/stats">Statistiques</a>
+                {%if UserConnecte==None%}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+                {%else%}
                 <a class="navig-mini" href="/profil">Profil</a>
+                {%endif%}
                 <form action="/search" method="get" class="barre-recherche">
                     <input type="text" name="q" placeholder="Rechercher">
                     <button type="submit">🔍</button>
@@ -22,48 +26,71 @@
             </div>
         </div>
     </nav>
-    <p>{{info}}</p>
-    <section class="mainProfile">
-        <section class="mainP">
-            <article class="basicInfo">
+    <main class="pageProfil">
+        <section class="userProfile">
+            <article id="basicInfo">
                 <div>
-                    <p id='nom_user'>{{info.nom}}</p>
+                    <h2>{{info.nom}}</h2>
                     <p>@{{info.pseudo}}</p>
-                    {%if info.bio == '': %}
+                    {%if info.biographie == '': %}
                         <p>Pas de biographie pour le moment.</p>
                     {%else%}
-                        <p>{{info.bio}}</p>
+                        <p>{{info.biographie}}</p>
                     {%endif%}
                 </div>
             </article>
             <article id='favs'>
-                <p>Favoris</p>
-                {%if favs == {}%}
+                <h4>Favoris</h4>
+                {%if favs == []%}
                     <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
                 {%else%}
-                    {%for movie in favs%}
-                        <p class='movie'> <p>
+                {% for i in favs%}
+                    {%for movie in i%}
+                        <div class="-3">
+                            <div class="afficheFavProfil">
+                                {% if movie.url_image %}
+                                <img src="{{ movie.url_image }}" class="..." alt="{{ movie.alt }}">
+                                {% else %}
+                                <div class="...">📺</div>
+                                {% endif %}
+                                <div class="...">
+                                    <h5 class="...">{{ movie.titre }}</h5>
+                                    <p class="...">{{ movie.genre }} • {{ movie.parution }}</p>
+                                    <a href="/media/{{ movie.id }}" class="...">Voir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    {%endfor%}
                     {%endfor%}
                 {%endif%}
             </article>
         </section>
-        <aside class='user_activity'>
-            <button onclick="location.href='modifprofil'">Modifier profil</button>
+        <aside class='userActivity'>
+            <button onclick="location.href='modifprofil'" id='ProfilBouton'>Modifier profil</button>
             <br>    
             <div>
-                <p>Derniers commentaires</p>
-                {%if comms == {}%}
+                <h4>Derniers commentaires</h4>
+                {%if comms == []%}
                     <p>{{info.nom}} n'a pas encore commenté.</p>
                 {%else%}
-                    {%for text in comms%}
-                        <p class='commentaire'> <p>
+                    {%for elt in comms%}
+                        <div class='commentaire'>
+                        <a href="/media/{{ elt.id }}"><b>{{elt.titre}}</b><a>
+                        <p>{{elt.date}} <p>
+                        <p><i>"{{elt.texte}}"</i><p>
+                        {%if elt.favori == TRUE%}
+                        <p>❤️ - Note : {{elt.note}}/5<p>
+                        {%else%}
+                        <p>Note : {{elt.note}}/5<p>
+                        {%endif%}
+                        </div>
                     {%endfor%}
                 {%endif%}
             </div>
             <br>
             <div>
-                <p>Statistiques personelles </p>
-                {%if stats == {}%}
+                <h4>Statistiques personelles </h4>
+                {%if stats == []%}
                     <p>{{info.nom}} n'a pas assez d'activité pour avoir de statistiques.</p>
                 {%else%}
                     {%for text in comms%}
@@ -71,7 +98,9 @@
                     {%endfor%}
                 {%endif%}
             </div>
+            <button onclick="location.href='deconnexion'" id='ProfilBouton'>Se déconnecter</button>
+
         </aside>
-    </section>
+    </main>
 </body>
 </html>

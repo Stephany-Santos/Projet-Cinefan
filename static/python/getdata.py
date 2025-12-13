@@ -25,7 +25,7 @@ def all_infos(commande):
         for row in lignes:
             info = {colonnes[i]: row[i] for i in range(len(colonnes))}
             infos.append(info)
-        print(infos)
+        # print(infos)
         return infos
     
     except Exception as e:
@@ -86,9 +86,11 @@ def favs(pseudo): #UNFINISHED
     Return:
         favoris (dict): dico des médias favoris
     '''
-    return all_infos(f"""select media.titre from media NATURAL JOIN commente 
+    titres = all_infos(f"""select media.id_media from media NATURAL JOIN commente 
                         where commente.utilisateur = '{pseudo}'
                         and commente.favori = TRUE """)
+    print(f"FAVS{[infos_media(id['id_media']) for id in titres]}")
+    return [infos_media(id['id_media']) for id in titres]
 
 def info_user(user_pseudo):
     '''
@@ -108,8 +110,8 @@ def comms(user):
     '''
     Fonction récupérant les commentaires laissés par un utilisateur
     '''
-    return all_infos(f"""select id_media, note, texte, date
-                from commente
+    return all_infos(f"""select id_media, media.titre, commente.note, commente.texte, commente.date, commente.favori
+                from commente natural join media
                 where utilisateur = '{user}'""")
     
     

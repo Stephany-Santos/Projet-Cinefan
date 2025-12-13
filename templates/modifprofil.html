@@ -14,7 +14,11 @@
             <div class="nav-right">
                 <a class="navig-mini" href="/commu">Communauté</a>
                 <a class="navig-mini" href="/stats">Statistiques</a>
+                {%if UserConnecte==None%}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+                {%else%}
                 <a class="navig-mini" href="/profil">Profil</a>
+                {%endif%}
                 <form action="/search" method="get" class="barre-recherche">
                     <input type="text" name="q" placeholder="Rechercher">
                     <button type="submit">🔍</button>
@@ -23,13 +27,13 @@
         </div>
     </nav>
     <p class='titre'>Modifier le profil</p>
-    <form method="post" action="modifprofil<{{info['pseudo']}}>">
+    <form method="post" action="modifprofilDone">
         <div class="container-formulaire">
         <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" placeholder="{{info['nom']}}" ><br>
+        <input type="text" id="nom" name="nom" placeholder="{{info.nom}}" ><br>
 
         <label for="biographie">Biographie :</label>
-        <textarea id="biographie" name="biographie" rows="4" cols="50" placeholder="{{info['bio']}}">{{info['bio']}}</textarea><br>
+        <textarea id="biographie" name="biographie" rows="4" cols="50" placeholder="{{info.biographie}}">{{info.biographie}}</textarea><br>
             
         <input type="submit" value="Mettre à jour le profil">
         </div>

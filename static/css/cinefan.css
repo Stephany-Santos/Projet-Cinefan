@@ -104,8 +104,25 @@ corps {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* body {
-} */
+.afficheFavProfil{
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    overflow: hidden;
+    max-width: 250px;
+    height: 30%;              
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.affiche:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+}
+
+.afficheFavProfil:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+}
 
 .titre {
     font-size: 2rem;               
@@ -123,50 +140,67 @@ corps {
     margin-top: 2%;
 }
 
-section.mainProfile {
+.pageProfil {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction:row;
-    margin: 0 -1rem;
+    column-gap: 2rem;
+    justify-content: space-between;
     margin:5%;
-    gap: 1rem;
 }
 
-.basicInfo {
-    margin: 0;
-    box-shadow: 0 2px 8px #333;
+.userProfile {
+    height: 100%;
+    width: 100%;
+    display:inline-table;
+    column-gap: 2rem;
+    justify-content: space-between;
+}
+
+#basicInfo {
+    width: 100%;
+    height: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border-radius: 10px;
     padding: 1.5rem;
-}
-
-.mainP {
-    display:block;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 1rem;
-}
-
-#nom_user {
-    font-size: 1.5rem;
-    font-weight: bold;
+    margin-bottom: 1.5rem;
+    background-color: '#F7EDEB';
 }
 
 #favs {
-    margin: 0;
-    box-shadow: 0 2px 8px #333;
+    width: 100%;
+    height: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border-radius: 10px;
     padding: 1.5rem;
+    margin-top: 1.5rem;
+    background-color: '#F7EDEB';
+    /* display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; */
 }
 
-aside.user_activity {
-    position: fixed;
-    right: 2%;
-    top: 100px;
+
+.userActivity {
     width: 25%;
     max-width: 350px;
     margin: 0;
-    box-shadow: 0 2px 8px #333;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
     padding: 1.5rem;
-    background-color: #fff;
+    background-color: '#F7EDEB';
+}
+
+.commentaire {
+    margin-top: 1rem;;
+    margin-bottom: 1rem;;
+}
+
+#ProfilBouton {
+    width: 70%;
+    padding: 0.75rem;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
 }
