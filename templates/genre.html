@@ -1,44 +1,79 @@
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genres</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/cinefan.css') }}">
+    <title>CinéFan - Genres</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 <body>
-
-    <!-- Header -->
-    <header class="barre-de-navigation">
-        <div class="cadre">
-            <a href="#" class="struct-de-navigation">GENRES</a>
+    <!-- Barre de navigation -->
+    <nav class="barre-de-navigation">
+        <div class="cadre-nav">
+            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                {% if UserConnecte == None %}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+                {% else %}
+                <a class="navig-mini" href="/profil">Profil</a>
+                {% endif %}
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="cadre">
-        <h1 class="titre">Genres classiques</h1>
+    <div class="cadre">
+        <h1 class="style-titre">Genres</h1>
 
-        <nav class="ligne">
-            {% set genres = ['Horreur', 'Comédie', 'Drame', 'Policier', 'Enfance', 'Thriller', 'Historique', 'Animation', 'Aventure', 'Romantique'] %}
+        <!-- Catégories spéciales -->
+        <h2>Quelle sera le thème de votre séance de cinéma ?</h2>
+        <div class="ligne">
+            {% for media in categories %}
+            <div class="colonne-3">
+                <div class="affiche">
+                    <h5>{{ media.titre }}</h5>
+                    <a href="/media/{{ media.id_media }}">Voir plus</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        <!-- Les plus consultés -->
+        <h2>Les plus consultés</h2>
+        <div class="ligne">
+            {% for media in top_consultes %}
+            <div class="colonne-3">
+                <div class="affiche">
+                    <h5>{{ media.titre }}</h5>
+                    <a href="/media/{{ media.id_media }}">Voir plus</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Liste complète des genres -->
+        <h2>Tous les genres</h2>
+        <div class="ligne">
             {% for genre in genres %}
-                <div class="colonne-3">
-                    <a class="navig-mini" href="{{ url_for('genre_detail', genre_name=genre) }}">{{ genre }}</a>
+            <div class="colonne-3">
+                <div class="affiche-genre">
+                    <h5>{{ genre.intitule }}</h5>
+                    <p>{{ genre.description }}</p>
+                    <a href="/genres/{{ genre.intitule }}">Voir les médias</a>
                 </div>
+            </div>
             {% endfor %}
-        </nav>
-
-        <h2 class="titre">Catégories spéciales</h2>
-        <nav class="ligne">
-            {% set categories = ['En famille', 'Entre filles', 'Entre mecs', 'Soirée coup de blues', 'Films culturels'] %}
-            {% for cat in categories %}
-                <div class="colonne-3">
-                    <a class="navig-mini" href="{{ url_for('genre_detail', genre_name=cat) }}">{{ cat }}</a>
-                </div>
-            {% endfor %}
-        </nav>
-
-    </main>
-
+        </div>
+    </div>
 </body>
 </html>
 
