@@ -18,7 +18,7 @@ def accueil():
 @app.route('/media/<int:media_id>')
 def detail_media(media_id):
     for media in get.infos_media(media_id):
-        return render_template("media.html", media=media, comms = get.commMedia(media_id) ,UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
+        return render_template("media.html", media=media, comms = get.commMedia(media_id), artiste = get.artisteMedia(media_id), UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
 
 @app.route('/rechercher')
 def chercher():
@@ -142,6 +142,14 @@ def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
 def commu():
     return render_template("commu.html", comms = get.genComms() ,UserConnecte = session['active']['nom'] if 'active' in session else None)
 
+@app.route("/ajoutMedia")
+def ajoutMedia():
+    return render_template("ajoutMedia.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+
+@app.route("/ajoutArtiste")
+def ajoutArtiste():
+    return render_template("ajoutArtiste.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+                           
 @app.route("/genres")
 def genres():
     return render_template("genre.html")

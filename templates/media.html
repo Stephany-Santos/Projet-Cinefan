@@ -44,26 +44,36 @@
                 <button class="..."onclick="location.href='/commenter/{{media.id}}'">✍️ Commenter</button>
             </div>
         </div>
+        <div class="favs">
+            <h4>Artistes ayant travaillé sur {{media.titre}}</h4>
+            {%for a in artiste%}
+                <div class="colonne-3">
+                    <div class="afficheFavProfil">
+                        {% comment %} RECUPERER IMAGE URL ET LA METTRE ICI COMME DANS PROFIL or smt ig {% endcomment %}
+                            <h5 class="...">{{ a.nom }} {{a.prenom}}</h5>
+                            <p class="...">Role • {{ a.role }} </p>
+                            <a href="/artiste/{{ a.id_artiste }}" class="...">Voir plus</a>
+                    </div>
+
+                </div>
+            {%endfor%}
+        </div>
         <aside class="activity">
             <h4>Derniers commentaires</h4>
-                {%if comms == []%}
-                    <p>{{info.nom}} n'a pas encore commenté.</p>
-                {%else%}
-                    {%for elt in comms%}
-                        {%if elt.texte != '' or elt.texte != None%}
-                            <div class='commentaire'>
-                            <p><b>@{{elt.utilisateur}}</b></p>
-                            <p>{{elt.date}} <p>
-                            <p><i>"{{elt.texte}}"</i><p>
-                            {%if elt.favori == TRUE%}
-                            <p>❤️ - Note : {{elt.note}}/5<p>
-                            {%else%}
-                            <p>Note : {{elt.note}}/5<p>
-                            {%endif%}
-                            </div>
+                {%for elt in comms%}
+                    {%if elt.texte != '' or elt.texte != None%}
+                        <div class='commentaire'>
+                        <p><b>@{{elt.utilisateur}}</b></p>
+                        <p>{{elt.date}} <p>
+                        <p><i>"{{elt.texte}}"</i><p>
+                        {%if elt.favori == TRUE%}
+                        <p>❤️ - Note : {{elt.note}}/5<p>
+                        {%else%}
+                        <p>Note : {{elt.note}}/5<p>
                         {%endif%}
-                    {%endfor%}
-                {%endif%}
+                        </div>
+                    {%endif%}
+                {%endfor%}
         </aside>
     </div>
 </body>

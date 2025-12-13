@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Communauté</title>
+<title>Ajouter Artiste</title>
 <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
@@ -26,32 +26,6 @@
             </div>
         </div>
     </nav>
-
-        <p class="titre">Communauté</p>
-    <main class="communaute">
-
-        {%for elt in comms%}
-            <div class="commentaire">
-                <p><a href="/media/{{elt.id_media}}">{{elt.titre}}</a> - @{{elt.utilisateur}}</p>
-                <p>{{elt.date}}</p>
-                <p><i>"{{elt.texte}}"</i><p>
-                {%if elt.favori == TRUE%}
-                <p>❤️ - Note : {{elt.note}}/5<p>
-                {%else%}
-                <p>Note : {{elt.note}}/5<p>
-                {%endif%}
-            </div>
-        {%endfor%}
-    </main>
-    <aside>
-        {%if UserConnecte == None%}
-        <h4>Se connecter pour participer</h4>
-        {%else%}
-        <h4>Participer</h4>
-        <button onclick="location.href='/ajoutMedia'">Ajouter media</buton>
-        <button onclick="location.href='/ajoutArtiste">Ajouter artiste</buton>
-        {%endif%}
-    </aside>
 
 </body>
 </html>

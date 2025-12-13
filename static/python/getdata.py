@@ -151,6 +151,11 @@ def genComms():
         lst.remove(rem)
     return lst
 
+def artisteMedia(idMedia):
+    lst = all_infos(f"""select * from participe natural join  artiste
+                    where participe.id_media = {idMedia}""")
+    return lst
+
 # def getfilm(titre):
 #     '''
 #     Fonction renvoyant un dictionnaire contenant les informations nécessaires pour un film
