@@ -27,5 +27,44 @@
         </div>
     </nav>
 
+    <p class="titre">Ajouter un artiste</p>
+     <form  method="POST" action="ajoutArtiste" class="container-formulaire">
+        <label for="nom">Nom</label>
+        <input type="text" name=" nom" id=" nom" rows="5" cols="50" maxlength="100" required>
+
+        <label for="prenom">Prenom</label>
+        <input type="text" name="prenom" id="prenom" rows="5" cols="50" maxlength="100" required>
+        
+        <label for="realise">Role de l'artiste</label>
+        <input type="text" list="roleList" id="role" name="role">
+        <datalist id="roleList">
+            {% for r in roles %}
+                <option value="{{ a.id_artiste }}">{{ a.nom }} {{ a.prenom }}</option>
+            {% endfor %}
+        </datalist>
+
+        <label for="suite">Cet.te artiste a-t-iel participé.e à un film ? (laissez le champ vierge si non)</label>
+        <input type="text" list="filmList" id="participe" name="realise">
+        <datalist id="filmList">
+            {% for m in medias %}
+                <option value="{{ m.id }}">{{ m.titre }}</option>
+            {% endfor %}
+        </datalist>
+
+        <br>
+        <label for="imgAjout">Souhaitez-vous ajouter une image ? (Attention, les champs suivants ne seront pas pris en compte si vous ne cochez pas la case.)</label>
+        <input type="checkbox" name="imgAjout" id="imgAjout" value="True">
+
+        <label for="fichier">Lien de l'image</label>
+        <input type="url" name="lien" id="lien">
+
+        <label for="fichier">Nom de fichier</label>
+        <input type="text" name="fichier" id="fichier" maxlength="50">
+
+        <label for="fichier">Alt - descriptif cours de l'image</label>
+        <input type="text" name="alt" id="alt">
+        <p><input type="submit" value="Envoyer"> <input type="reset" value="Réinitialiser"></p>
+        
+    </form>
 </body>
 </html>
