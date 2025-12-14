@@ -1,4 +1,3 @@
-{% comment %} page de recherche {% endcomment %}
 <!doctype html>
 <html>
 <head>
@@ -30,13 +29,42 @@
 
     <div class="en-tete-resultats">
         <div class="contenu-resultats">
-            <h1>Résultats de recherche</h1>
+            <h1 class="style-titre">Résultats de recherche</h1>
             <div class="sous-titre">Terme: "<strong>{{ terme }}</strong>" — 
                 {{ nb_resultats }} résultat{% if nb_resultats != 1 %}s{% endif %} trouvé{% if nb_resultats != 1 %}s{% endif %}
             </div>
         </div>
     </div>
 
-    <!-- Le contenu des resultats je ferais après -->
+    <div class="contenu-resultats">
+        {% if nb_resultats == 0 %}
+        <div class="pas-resultats">
+            <p>Aucun résultat trouvé pour "<strong>{{ terme }}</strong>"</p>
+        </div>
+
+        {% else %}
+        <div class="cadre">
+            <div class="ligne">
+                {% for media in resultats %}
+                <div class="colonne-3">
+                    <div class="affiche">
+                        {% if media.url_image %}
+                        <img src="{{ media.url_image }}" class="..." alt="{{ media.alt }}">
+                        {% else %}
+                        <div class="...">📺</div>
+                        {% endif %}
+                        <div class="...">
+                            <h5 class="...">{{ media.titre }}</h5>
+                            <p class="...">{{ media.genre }} • {{ media.parution }}</p>
+                            <a href="/media/{{ media.id }}" class="...">Voir plus</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
 </body>
 </html>
