@@ -179,22 +179,20 @@ def realisateurs_media(media_id):
 def typeMedia():
     '''
     Fonction récupérant tout les types différents de médias'''
-    lst = all_infos("""select distinct type from media""")
-    return lst
+    return all_infos("""select distinct type from media""")
 
 
 def genre():
     '''
     Fonction récupérant tout les types différents de genre'''
-    lst = all_infos("""select intitule from genre""")
-    return lst
+    return all_infos("""select intitule from genre""")
 
 def artiste():
     '''
     Fonction récupérant tout les noms d'artistes
     '''
-    lst = all_infos("""select nom, prenom, id_artiste from artiste""")
-    return lst    
+    return all_infos("""select nom, prenom, id_artiste from artiste""")
+
 def favs(pseudo): #UNFINISHED
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
@@ -301,8 +299,7 @@ def artisteMedia(idMedia):
 
 def artisteRole():
     '''Fonction récupérant les différents rôles des artistes'''
-    lst = all_infos("""select distinct role from participe""")
-    return lst
+    return all_infos("""select distinct role from participe""")
 
 def derniersAjouts():
     '''
@@ -317,7 +314,7 @@ def derniersAjoutsImg():
     '''
     Fonction récupérant les derniers médias ajoutés
     '''
-    lst = all_infos("""select m.id_media AS id,
+    return all_infos("""select m.id_media AS id,
                     m.titre as titre,
                     m.creer_par as mediaCreer, i.creer_par as imgCreer,
                     i.alt as alt, i.lien as lien
@@ -325,4 +322,3 @@ def derniersAjoutsImg():
                     left join image as i on m.id_media = i.media
                     order by m.id_media desc
                     limit 30""")
-    return lst
