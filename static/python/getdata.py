@@ -54,7 +54,6 @@ def all_media():
         LEFT JOIN image i ON m.id_media = i.media;
     """)
 
-
 def infos_media(media_id):
     '''
     Récupère les infos d'un media spécifique
@@ -76,30 +75,64 @@ def infos_media(media_id):
         WHERE m.id_media = {media_id};
     """)
 
-def search_media(terme):
+def search_all(terme):
     '''
-    Recherche des medias par titre
+    Recherche dans tous les types : médias, artistes, personnages
     Arguments:
         terme: le terme de recherche
     Return:
-        Liste de dictionnaires avec les medias correspondants
+        Liste de dictionnaires avec tous les résultats mélangés
     '''
-    
-    return all_infos(f"""
+    resultats = []
+
+    medias = all_infos(f"""
         SELECT DISTINCT
             m.id_media AS id,
-            m.titre,
-            m.description,
-            m.parution,
-            'media' AS type_resultat,
+            m.titre, m.description,
+            m.parution, m.type, m.genre,
             i.fichier AS nom_image,
             i.lien AS url_image,
-            i.alt AS alt
+            i.alt AS alt,
+            'media' AS type_resultat
         FROM media m
         LEFT JOIN image i ON m.id_media = i.media
         WHERE LOWER(m.titre) LIKE LOWER('%{terme}%')
         ORDER BY m.titre ASC;
     """)
+
+    artistes = all_infos(f"""
+        SELECT DISTINCT
+            a.id_artiste AS id,
+            a.nom, a.prenom,
+            'artiste' AS type_resultat
+        FROM artiste a
+        WHERE LOWER(a.nom) LIKE LOWER('%{terme}%') OR LOWER(a.prenom) LIKE LOWER('%{terme}%')
+        ORDER BY a.nom ASC, a.prenom ASC;
+    """)
+
+    personnages = all_infos(f"""
+        SELECT DISTINCT
+            p.id_perso AS id,
+            p.nom, p.prenom,
+            p.description,
+            m.titre,
+            'personnage' AS type_resultat
+        FROM personnage p
+        JOIN media m ON p.media = m.id_media
+        WHERE LOWER(p.nom) LIKE LOWER('%{terme}%') OR LOWER(p.prenom) LIKE LOWER('%{terme}%')
+        ORDER BY p.nom ASC, p.prenom ASC;
+    """)
+
+    if isinstance(medias, list):
+        resultats.extend(medias)
+    if isinstance(artistes, list):
+        resultats.extend(artistes)
+    if isinstance(personnages, list):
+        resultats.extend(personnages)
+
+    return resultats
+
+
 
 def typeMedia():
     '''
