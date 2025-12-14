@@ -132,34 +132,71 @@ def search_all(terme):
 
     return resultats
 
+def personnage_infos(media_id):
+    '''
+    Personnages d'un film + acteur qui les interprète (sans "Prénom Sans"),
+    d'abord acteurs principaux puis secondaires.
+    '''
+    return all_infos(f"""
+        SELECT
+            p.id_perso,
+            p.nom AS perso_nom,
+            p.prenom AS perso_prenom,
+            p.description AS perso_description,
+            a.id_artiste AS id_artiste,
+            a.nom AS artiste_nom,
+            a.prenom AS artiste_prenom,
+            pa.role AS participation_role
+        FROM personnage p
+        JOIN participe pa ON pa.id_perso = p.id_perso
+        JOIN artiste   a  ON pa.id_artiste = a.id_artiste
+        WHERE pa.id_media = {media_id} AND LOWER(pa.role) LIKE 'acteur%%'
+        ORDER BY 
+            CASE 
+                WHEN LOWER(pa.role) = 'acteur principal' THEN 0
+                WHEN LOWER(pa.role) = 'acteur secondaire' THEN 1
+                ELSE 2
+            END,
+            a.nom ASC, a.prenom ASC;
+    """)
+
+
+def realisateurs_media(media_id):
+    '''
+    Réalisateur(s) d'un film à partir de media.realise.
+    '''
+    return all_infos(f"""
+        SELECT
+            a.id_artiste,
+            a.nom,
+            a.prenom
+        FROM media m
+        JOIN artiste a ON m.realise = a.id_artiste
+        WHERE m.id_media = {media_id};
+    """)
 
 
 def typeMedia():
     '''
     Fonction récupérant tout les types différents de médias'''
-    lst = all_infos("""select distinct type from media""")
-    return lst
+    return all_infos("""select distinct type from media""")
 
 def genre():
     '''
     Fonction récupérant tout les types différents de genre'''
-    lst = all_infos("""select intitule from genre""")
-    return lst
+    return all_infos("""select intitule from genre""")
 
 def artiste():
     '''
     Fonction récupérant tout les noms d'artistes
     '''
-    lst = all_infos("""select nom, prenom, id_artiste from artiste""")
-    return lst  
+  return all_infos("""select nom, prenom, id_artiste from artiste""")
 
 def persos():
     '''Fonction récupérant tout les personnages'''
     lst = all_infos("""select * from personange""")
     return lst
 
-
-  
 def favs(pseudo): #UNFINISHED
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
@@ -261,14 +298,12 @@ def genComms():
 
 def artisteMedia(idMedia):
     '''Fonction récupérant les artistes ayant participé à tel média'''
-    lst = all_infos(f"""select * from participe natural join  artiste
+    return all_infos(f"""select * from participe natural join  artiste
                     where participe.id_media = {idMedia}""")
-    return lst
 
 def artisteRole():
     '''Fonction récupérant les différents rôles des artistes'''
-    lst = all_infos("""select distinct role from participe""")
-    return lst
+    return all_infos("""select distinct role from participe""")
 
 def derniersAjouts():
     '''
@@ -283,7 +318,7 @@ def derniersAjoutsImg():
     '''
     Fonction récupérant les derniers médias ajoutés
     '''
-    lst = all_infos("""select m.id_media AS id,
+    return all_infos("""select m.id_media AS id,
                     m.titre as titre,
                     m.creer_par as mediaCreer, i.creer_par as imgCreer,
                     i.alt as alt, i.lien as lien
@@ -292,4 +327,3 @@ def derniersAjoutsImg():
                     order by m.id_media desc
                     limit 30""")
     return lst
-print(artisteRole())
