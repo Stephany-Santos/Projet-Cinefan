@@ -189,12 +189,16 @@ corps {
     background-color: '#F7EDEB';
 }
 
+#ajoutsCommu {
+    width: 50%;
+}
+
 .commentaire {
     margin-top: 1rem;;
     margin-bottom: 1rem;;
 }
 
-#ProfilBouton {
+#bouton {
     width: 70%;
     padding: 0.75rem;
     color: black;
@@ -208,10 +212,23 @@ corps {
 .communaute{
     width: 95%;
     /* max-width: 350px; */
-    margin: 2rem;
+    /* margin: 2rem; */
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     border-radius: 10px;
     padding: 1.5rem;
     background-color: '#F7EDEB';
     display: flex-box;
+}
+
+.menuCreer {
+    width: 25%;
+    max-width: 40%;
+    height: 25%;
+    max-height: 50%;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: '#F7EDEB';
+    text-align: center;
 }

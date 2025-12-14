@@ -49,7 +49,6 @@
             {%for a in artiste%}
                 <div class="colonne-3">
                     <div class="afficheFavProfil">
-                        {% comment %} RECUPERER IMAGE URL ET LA METTRE ICI COMME DANS PROFIL or smt ig {% endcomment %}
                             <h5 class="...">{{ a.nom }} {{a.prenom}}</h5>
                             <p class="...">Role • {{ a.role }} </p>
                             <a href="/artiste/{{ a.id_artiste }}" class="...">Voir plus</a>

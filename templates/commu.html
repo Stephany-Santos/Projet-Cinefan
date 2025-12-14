@@ -28,8 +28,9 @@
     </nav>
 
         <p class="titre">Communauté</p>
-    <main class="communaute">
-
+    <main class="mainPage">
+    <section class="communaute">
+        <h4>Commentaires récents</h4>
         {%for elt in comms%}
             <div class="commentaire">
                 <p><a href="/media/{{elt.id_media}}">{{elt.titre}}</a> - @{{elt.utilisateur}}</p>
@@ -42,16 +43,32 @@
                 {%endif%}
             </div>
         {%endfor%}
-    </main>
-    <aside>
+        
+    </section>
+    <aside class="activity" id="ajoutsCommu">
+        <h4>Derniers ajouts</h4>
+        {%for elt in ajout%}
+        <div class="colonne-3">
+            <div class="afficheFavProfil">
+                    <h5 class="..."><a href="/media/{{elt.id_media}}">{{ elt.titre }}</a></h5>
+                    <p>Ajouté par @{{elt.cree_par}}</p>
+            </div>
+
+        </div>
+        {%endfor%}
+    </aside>
+    <aside class="menuCreer">
         {%if UserConnecte == None%}
         <h4>Se connecter pour participer</h4>
+        <button onclick="location.href='/login'">Cliquer pour se connecter</buton>
         {%else%}
-        <h4>Participer</h4>
-        <button onclick="location.href='/ajoutMedia'">Ajouter media</buton>
-        <button onclick="location.href='/ajoutArtiste">Ajouter artiste</buton>
+        <h4>Participer</h4> <br>
+        <span><button id="bouton" onclick="location.href='/ajoutMedia'">Ajouter media</button></span> <br>
+        <span><button id="bouton"  onclick="location.href='/ajoutArtiste">Ajouter artiste</button></span> <br>
+        <span><button  id="bouton"  onclick="location.href='/ajoutImage">Ajouter image</button></span><br>
+    
         {%endif%}
     </aside>
-
+</main>
 </body>
 </html>

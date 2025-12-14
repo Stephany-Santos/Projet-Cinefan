@@ -140,7 +140,7 @@ def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
 
 @app.route("/commu")
 def commu():
-    return render_template("commu.html", comms = get.genComms() ,UserConnecte = session['active']['nom'] if 'active' in session else None)
+    return render_template("commu.html", comms = get.genComms(), ajout = get.derniersAjouts(),UserConnecte = session['active']['nom'] if 'active' in session else None)
 
 @app.route("/ajoutMedia")
 def ajoutMedia():

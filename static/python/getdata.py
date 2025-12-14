@@ -142,7 +142,7 @@ def genComms():
     Fonction récupérant tout les commentaires triés par ordre chronologique
     '''
     lst = all_infos("""select * from commente natural join media
-                    order by commente.date desc limit 10""")
+                    order by commente.date desc""")
     toRemove = []
     for comm in lst:
         if comm['texte'] == None or comm['texte'] == '':
@@ -156,15 +156,26 @@ def artisteMedia(idMedia):
                     where participe.id_media = {idMedia}""")
     return lst
 
-# def getfilm(titre):
-#     '''
-#     Fonction renvoyant un dictionnaire contenant les informations nécessaires pour un film
-#     Arguments:
-#         titre (str): Le titre du film à rechercher
-#     Return:
-#         item (dict): dictionnaire des informations du film
-#     '''
-#     all = all_media()
-#     for item in all:
-#         if item == titre:
-#             return item
+def derniersAjouts():
+    '''
+    Fonction récupérant les derniers médias ajoutés
+    '''
+    lst = all_infos("""select * from media
+                    order by id_media desc
+                    limit 30""")
+    return lst
+
+def derniersAjoutsImg():
+    '''
+    Fonction récupérant les derniers médias ajoutés
+    '''
+    lst = all_infos("""select m.id_media AS id,
+                    m.titre as titre,
+                    m.creer_par as mediaCreer, i.creer_par as imgCreer,
+                    i.alt as alt, i.lien as lien
+                    from media as m
+                    left join image as i on m.id_media = i.media
+                    order by m.id_media desc
+                    limit 30""")
+    print(lst)
+    return lst
