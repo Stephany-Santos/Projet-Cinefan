@@ -26,6 +26,61 @@
             </div>
         </div>
     </nav>
+    <p class="titre">Ajouter un média</p>
+     <form  method="POST" action="ajoutMedia" class="container-formulaire">
+        <label for="titre">Titre</label>
+        <input type="text" name="titre" id="titre" rows="5" cols="50" maxlength="100" required>
 
+        <label for="desc">Description/Résumé</label>
+        <textarea type="text" name="desc" id="desc" row="5" cols="50"></textarea>
+
+        <label for="date">Date de Parution</label>
+        <input type="date" name="date" id="date">
+        
+        <label for="type">Sélectionnez le type de votre média</label>
+        <select name="type" id="type" required>
+            {%for t in typeMedia%}
+            <option value="{{t.type}}">{{t.type}}</option>
+            {%endfor%}
+        </select>
+
+        <label for="genre">Sélectionnez le genre de votre média</label>
+        <select name="genre" id="genre">
+            {%for g in genre%}
+            <option value="{{g.intitule}}">{{g.intitule}}</option>
+            {%endfor%}
+        </select>
+
+        <label for="realise">Nom-Prénom du réalisateur</label>
+        <input type="text" list="realiseList" id="realise" name="realise">
+        <datalist id="realiseList">
+            {% for a in artiste %}
+                <option value="{{ a.id_artiste }}">{{ a.nom }} {{ a.prenom }}</option>
+            {% endfor %}
+        </datalist>
+
+        <label for="suite">Ce média est-il la suite d'un autre? Insérez le titre (laissez le champ vierge si non)</label>
+        <input type="text" list="suiteList" id="suite" name="realise">
+        <datalist id="suiteList">
+            {% for m in medias %}
+                <option value="{{ m.id }}">{{ m.titre }}</option>
+            {% endfor %}
+        </datalist>
+
+        <br>
+        <label for="imgAjout">Souhaitez-vous ajouter une image ? (Attention, les champs suivants ne seront pas pris en compte si vous ne cochez pas la case.)</label>
+        <input type="checkbox" name="imgAjout" id="imgAjout" value="True">
+
+        <label for="fichier">Lien de l'image</label>
+        <input type="url" name="lien" id="lien">
+
+        <label for="fichier">Nom de fichier</label>
+        <input type="text" name="fichier" id="fichier" maxlength="50">
+
+        <label for="fichier">Alt - descriptif cours de l'image</label>
+        <input type="text" name="alt" id="alt">
+        <p><input type="submit" value="Envoyer"> <input type="reset" value="Réinitialiser"></p>
+        
+    </form>
 </body>
 </html>

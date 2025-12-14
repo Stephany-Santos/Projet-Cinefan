@@ -100,7 +100,26 @@ def search_media(terme):
         WHERE LOWER(m.titre) LIKE LOWER('%{terme}%')
         ORDER BY m.titre ASC;
     """)
-        
+
+def typeMedia():
+    '''
+    Fonction récupérant tout les types différents de médias'''
+    lst = all_infos("""select distinct type from media""")
+    return lst
+
+
+def genre():
+    '''
+    Fonction récupérant tout les types différents de genre'''
+    lst = all_infos("""select intitule from genre""")
+    return lst
+
+def artiste():
+    '''
+    Fonction récupérant tout les noms d'artistes
+    '''
+    lst = all_infos("""select nom, prenom, id_artiste from artiste""")
+    return lst    
 def favs(pseudo): #UNFINISHED
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
@@ -112,7 +131,6 @@ def favs(pseudo): #UNFINISHED
     titres = all_infos(f"""select media.id_media from media NATURAL JOIN commente 
                         where commente.utilisateur = '{pseudo}'
                         and commente.favori = TRUE """)
-    print(f"FAVS{[infos_media(id['id_media']) for id in titres]}")
     return [infos_media(id['id_media']) for id in titres]
 
 def info_user(user_pseudo):
@@ -129,13 +147,13 @@ def info_user(user_pseudo):
         WHERE pseudo = '{user_pseudo}'
     """)
 
-def commUser(user):
+def commUser(pseudo):
     '''
     Fonction récupérant les commentaires laissés par un utilisateur
     '''
     lst = all_infos(f"""select id_media, media.titre, commente.note, commente.texte, commente.date, commente.favori
                 from commente natural join media
-                where utilisateur = '{user}'""")
+                where utilisateur = '{pseudo}'""")
     toRemove = []
     for comm in lst:
         if comm['texte'] == None or comm['texte'] == '':
@@ -144,6 +162,32 @@ def commUser(user):
         lst.remove(rem)
     return lst
     
+def activityUser(pseudo):
+    '''Fonction récupérant les ajouts faits par un utilisateur'''
+    lst1 = all_infos(f"""select m.titre, m.id_media as id
+                    from media as m
+                    where m.cree_par = '{pseudo}'""")
+    lst2 = all_infos(f"""
+                    select CONCAT(p.nom, ' ', p.prenom) as titre, p.id_perso as id
+                    from personnage as p
+                    where p.cree_par = '{pseudo}'""")
+    lst3 = all_infos(f"""select CONCAT(a.nom, ' ', a.prenom) as titre, a.id_artiste as id
+                    from artiste as a
+                    where a.cree_par = '{pseudo}'
+                    """)
+
+    dico = {}
+    if lst1!=[]:
+        dico['media']=lst1
+    
+    if lst2!=[]:
+        dico['perso']=lst2
+    
+    if lst3!=[]:
+        dico['artiste']=lst3
+    print(dico)
+    return dico
+
 def commMedia(id):
     '''
     Fonction récupérant les commentaires laissés sur un media
@@ -151,7 +195,8 @@ def commMedia(id):
     '''
     lst = all_infos(f"""select id_media, commente.utilisateur, commente.note, commente.texte, commente.date, commente.favori
                 from commente natural join media
-                where id_media = '{id}'""")
+                where id_media = '{id}'
+                order by commente.date desc""")
     toRemove = []
     for comm in lst:
         if comm['texte'] == None or comm['texte'] == '':
@@ -175,8 +220,14 @@ def genComms():
     return lst
 
 def artisteMedia(idMedia):
+    '''Fonction récupérant les artistes ayant participé à tel média'''
     lst = all_infos(f"""select * from participe natural join  artiste
                     where participe.id_media = {idMedia}""")
+    return lst
+
+def artisteRole():
+    '''Fonction récupérant les différents rôles des artistes'''
+    lst = all_infos("""select distinct role from participe""")
     return lst
 
 def derniersAjouts():
@@ -200,5 +251,4 @@ def derniersAjoutsImg():
                     left join image as i on m.id_media = i.media
                     order by m.id_media desc
                     limit 30""")
-    print(lst)
     return lst

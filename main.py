@@ -39,7 +39,7 @@ def deconnexion():
 @app.route("/profil", methods = ['POST', 'GET'])
 def profil():
     if 'active' in session: #si on est déjà connecté afficher le profil..?
-        return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
+        return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], activite = get.activityUser(session['active']['pseudo']), UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
         if request.method == 'POST':
             user_input, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
@@ -47,7 +47,7 @@ def profil():
                 session['active']=u
                 app.secret_key = session['active']['mdp']
             if pass2 == app.secret_key:
-                return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], UserConnecte = session['active']['nom'] if 'active' in session else None)
+                return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], activite = get.activityUser(session['active']['pseudo']), UserConnecte = session['active']['nom'] if 'active' in session else None)
             else:
                 app.secret_key= None
                 return redirect(url_for('login'))
@@ -112,7 +112,7 @@ def ajouterEnFavori(mediaId):
     
         with conn.cursor() as cur:
             cur.execute(req, vals)
-        return redirect(url_for(detail_media(mediaId)))
+        return redirect(url_for('detail_media', media_id=mediaId))
     else:
         return redirect(url_for('login'))
 
@@ -137,7 +137,7 @@ def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
                         values (CURRENT_DATE, %s, %s, %s, %s)""", (comm, note, session['active']['pseudo'], mediaId,)
             with conn.cursor() as cur:
                 cur.execute(req, vals)
-            return redirect(url_for(detail_media(mediaId)))
+            return redirect(url_for('detail_media', media_id=mediaId))
         else:
             return redirect(url_for('login'))
 
@@ -145,14 +145,61 @@ def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
 def commu():
     return render_template("commu.html", comms = get.genComms(), ajout = get.derniersAjouts(),UserConnecte = session['active']['nom'] if 'active' in session else None)
 
-@app.route("/ajoutMedia")
+@app.route("/ajoutMedia", methods=['GET', 'POST'])
 def ajoutMedia():
-    return render_template("ajoutMedia.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+    if request.method == 'GET':
+        return render_template("ajoutMedia.html",
+                               medias = get.all_media(),
+                               artiste=get.artiste(),
+                               genre = get.genre(),
+                               typeMedia = get.typeMedia(),
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
+    else:
+        titre = request.form.get('titre')
+        desc = request.form.get('desc')
+        date = request.form.get('date')
+        type_media = request.form.get('type')
+        genre = request.form.get('genre')
+        realise = request.form.get('realise')
+        suite = request.form.get('suite')
+        
+        if suite == '' or suite is None:
+            suite = None
+        req = """insert into media (titre, description, parution, type, genre, realise, suite, cree_par) 
+        values (%s, %s, %s, %s, %s, %s, %s, %s)
+        returning id_media"""
+        vals = (titre, desc, date, type_media, genre, realise, suite, session['active']['pseudo'])
+        with conn.cursor() as cur:
+            cur.execute(req, vals)
+            idMedia = cur.fetchone()[0]
+            cur.execute("""insert into partictipe (id_artiste, id_media, role)
+                        values (%s, %s, %s)""", (realise, idMedia, 'Réalisateur'))
+            if request.form.get('imgAjout') == 'True':
+                lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
+                imgReq, imgVals = """insert into image (fichier, lien, alt, media, cree_par)
+                            values (%s,%s,%s, %s, %s )
+                            """, (fichier, lien, alt, idMedia, session['active']['pseudo'],)
+                cur.execute(imgReq, imgVals)
+            conn.commit()
+        return redirect( url_for('commu'))
 
-@app.route("/ajoutArtiste")
+@app.route("/ajoutArtiste", methods=['POST', 'GET'])
 def ajoutArtiste():
-    return render_template("ajoutArtiste.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
-                           
+    if request.method == 'GET':
+        return render_template("ajoutArtiste.html",
+                               roles = get.artisteRole(),
+                               medias = get.all_media(),
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
+    else:
+        pass
+         
+@app.route("/ajoutIPerso", methods=['POST', 'GET'])
+def ajoutPerso():    
+    if request.method == 'GET':
+        return render_template("ajoutPerso.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+    else:
+        pass
+    
 @app.route("/genres")
 def genres():
     return render_template("genre.html")
