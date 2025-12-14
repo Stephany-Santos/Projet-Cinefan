@@ -194,8 +194,33 @@ def ajoutArtiste():
                                medias = get.all_media(),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
-        pass
-         
+        nom = request.form.get("nom")
+        prenom = request.form.get("prenom")
+        participe = request.form.get("participe")
+        role = request.form.get("role")
+        if participe is None or participe == '':
+            participe = None
+        if role is None or role == '':
+            role = None
+        if nom is None or nom == '':
+            nom = None
+        req = """insert into artiste (nom, prenom, cree_par)
+                values (%s, %s, %s)
+                returning id_artiste"""
+        vals  = (nom, prenom, session['active']['pseudo'],)
+        with conn.cursor() as cur:
+            cur.execute(req, vals)
+            idArtiste = cur.fetchone()[0]
+            if participe is not None or role is not None:
+                cur.execute("""insert into participe (id_artiste, id_media, role)
+                                values (%s, %s, %s)""", (idArtiste, participe, role,))
+            if request.form.get('imgAjout') == 'True':
+                lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
+                imgReq, imgVals = """insert into image (fichier, lien, alt, artiste, cree_par)
+                            values (%s,%s,%s, %s, %s )
+                            """, (fichier, lien, alt, idArtiste, session['active']['pseudo'],)
+                cur.execute(imgReq, imgVals)
+            conn.commit()
 @app.route("/ajoutIPerso", methods=['POST', 'GET'])
 def ajoutPerso():    
     if request.method == 'GET':

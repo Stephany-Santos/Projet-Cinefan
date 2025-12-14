@@ -140,7 +140,6 @@ def typeMedia():
     lst = all_infos("""select distinct type from media""")
     return lst
 
-
 def genre():
     '''
     Fonction récupérant tout les types différents de genre'''
@@ -152,7 +151,15 @@ def artiste():
     Fonction récupérant tout les noms d'artistes
     '''
     lst = all_infos("""select nom, prenom, id_artiste from artiste""")
-    return lst    
+    return lst  
+
+def persos():
+    '''Fonction récupérant tout les personnages'''
+    lst = all_infos("""select * from personange""")
+    return lst
+
+
+  
 def favs(pseudo): #UNFINISHED
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
@@ -285,3 +292,4 @@ def derniersAjoutsImg():
                     order by m.id_media desc
                     limit 30""")
     return lst
+print(artisteRole())
