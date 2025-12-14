@@ -20,9 +20,12 @@ def detail_media(media_id):
     for media in get.infos_media(media_id):
         return render_template("media.html", media=media, comms = get.commMedia(media_id), artiste = get.artisteMedia(media_id), UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
 
-@app.route('/rechercher')
-def chercher():
-    return render_template("rechercher.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+@app.route('/search')
+def search():
+    terme = request.args.get('q', '').strip()
+    resultats = get.search_media(terme)
+    return render_template("resultats_recherche.html", terme=terme, resultats=resultats, nb_resultats=len(resultats),
+                           UserConnecte = session['active']['nom'] if 'active' in session else None)
 
 @app.route("/login")
 def login():

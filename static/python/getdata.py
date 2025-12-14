@@ -76,7 +76,30 @@ def infos_media(media_id):
         WHERE m.id_media = {media_id};
     """)
 
-
+def search_media(terme):
+    '''
+    Recherche des medias par titre
+    Arguments:
+        terme: le terme de recherche
+    Return:
+        Liste de dictionnaires avec les medias correspondants
+    '''
+    
+    return all_infos(f"""
+        SELECT DISTINCT
+            m.id_media AS id,
+            m.titre,
+            m.description,
+            m.parution,
+            'media' AS type_resultat,
+            i.fichier AS nom_image,
+            i.lien AS url_image,
+            i.alt AS alt
+        FROM media m
+        LEFT JOIN image i ON m.id_media = i.media
+        WHERE LOWER(m.titre) LIKE LOWER('%{terme}%')
+        ORDER BY m.titre ASC;
+    """)
         
 def favs(pseudo): #UNFINISHED
     '''
