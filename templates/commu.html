@@ -49,7 +49,7 @@
         <h4>Derniers ajouts</h4>
         {%for elt in ajout%}
         <div class="colonne-3">
-            <div class="afficheFavProfil">
+            <div class="">
                     <h5 class="..."><a href="/media/{{elt.id_media}}">{{ elt.titre }}</a></h5>
                     <p>Ajouté par @{{elt.cree_par}}</p>
             </div>
@@ -59,8 +59,13 @@
     </aside>
     <aside class="menuCreer">
         {%if UserConnecte == None%}
-        <h4>Se connecter pour participer</h4>
-        <button onclick="location.href='/login'">Cliquer pour se connecter</buton>
+        <div class="bloc-header">
+            <h2>Participer</h2>
+        </div>
+        <p class="texte-muted">Connecte-toi pour participer.</p>
+        <button class="btn-principal btn-large" onclick="location.href='/login'">
+            Se connecter
+        </button>
         {%else%}
         <h4>Participer</h4> <br>
         <span><button id="bouton" onclick="location.href='/ajoutMedia'">Ajouter media</button></span> <br>

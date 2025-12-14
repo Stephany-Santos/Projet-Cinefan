@@ -41,28 +41,71 @@
         <div class="pas-resultats">
             <p>Aucun résultat trouvé pour "<strong>{{ terme }}</strong>"</p>
         </div>
-
         {% else %}
-        <div class="cadre">
-            <div class="ligne">
-                {% for media in resultats %}
-                <div class="colonne-3">
-                    <div class="affiche">
-                        {% if media.url_image %}
-                        <img src="{{ media.url_image }}" class="..." alt="{{ media.alt }}">
+
+        <!-- MÉDIAS -->
+        {% set medias = resultats | selectattr('type_resultat', 'equalto', 'media') | list %}
+        {% if medias %}
+        <div class="section-resultats">
+            <h2 style="style-titre">🎬 Films & Séries ({{ medias | length }})</h2>
+            <div class="grille">
+                {% for resultat in medias %}
+                <a href="/media/{{ resultat.id }}" class="cadre-media">
+                    <div class="cadre-media-image">
+                        {% if resultat.url_image %}
+                        <img src="{{ resultat.url_image }}" alt="{{ resultat.alt }}">
                         {% else %}
-                        <div class="...">📺</div>
+                        <div style="...">📺</div>
                         {% endif %}
-                        <div class="...">
-                            <h5 class="...">{{ media.titre }}</h5>
-                            <p class="...">{{ media.genre }} • {{ media.parution }}</p>
-                            <a href="/media/{{ media.id }}" class="...">Voir plus</a>
-                        </div>
                     </div>
+                    <div class="cadre-media-contenu">
+                        <h3>{{ resultat.titre }}</h3>
+                        <div class="cadre-media-info">{{ resultat.genre }} • {{ resultat.parution }}</div>
+                        <div class="cadre-media-description">{{ resultat.description }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- ARTISTES -->
+        {% set artistes = resultats | selectattr('type_resultat', 'equalto', 'artiste') | list %}
+        {% if artistes %}
+        <div class="section-resultats">
+            <h2 style="style-titre">🎭 Artistes ({{ artistes | length }})</h2>
+            <div class="grille">
+                {% for resultat in artistes %}
+                <div class="cadre-artiste">
+                    <div style="...">🎭</div>
+                    <h3>{{ resultat.prenom }} {{ resultat.nom }}</h3>
+                    <div style="...">Artiste</div>
                 </div>
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
+        
+        <!-- PERSONNAGES -->
+        {% set personnages = resultats | selectattr('type_resultat', 'equalto', 'personnage') | list %}
+        {% if personnages %}
+        <div class="section-resultats">
+            <h2 style="style-titre">🧚 Personnages ({{ personnages | length }})</h2>
+            <div class="grille">
+                {% for resultat in personnages %}
+                <div class="cadre-personnage">
+                    <div style="...">🧚</div>
+                    <h3>{{ resultat.prenom }} {{ resultat.nom }}</h3>
+                    <div class="cadre-personnage-info">Dans: <strong>{{ resultat.titre }}</strong></div>
+                    {% if resultat.description %}
+                    <div style="...">{{ resultat.description[:100] }}...</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
         {% endif %}
     </div>
 

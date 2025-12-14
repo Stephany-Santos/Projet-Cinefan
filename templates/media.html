@@ -48,7 +48,8 @@
             <h4>Artistes ayant travaillé sur {{media.titre}}</h4>
             {%for a in artiste%}
                 <div class="colonne-3">
-                    <div class="afficheFavProfil">
+                    <!-- afficheFavProfil -->
+                    <div class=""> 
                             <h5 class="...">{{ a.nom }} {{a.prenom}}</h5>
                             <p class="...">Role • {{ a.role }} </p>
                             <a href="/artiste/{{ a.id_artiste }}" class="...">Voir plus</a>
