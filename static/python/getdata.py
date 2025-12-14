@@ -132,7 +132,53 @@ def search_all(terme):
 
     return resultats
 
+def personnage_infos(media_id):
+    '''
+    Personnages d'un film + acteur qui les interprète (sans "Prénom Sans"),
+    d'abord acteurs principaux puis secondaires.
+    '''
+    return all_infos(f"""
+        SELECT
+            p.id_perso,
+            p.nom AS perso_nom,
+            p.prenom AS perso_prenom,
+            p.description AS perso_description,
+            a.id_artiste AS id_artiste,
+            a.nom AS artiste_nom,
+            a.prenom AS artiste_prenom,
+            pa.role AS participation_role
+        FROM personnage p
+        JOIN participe pa ON pa.id_perso = p.id_perso
+        JOIN artiste   a  ON pa.id_artiste = a.id_artiste
+        WHERE pa.id_media = {media_id} AND LOWER(pa.role) LIKE 'acteur%%'
+        ORDER BY 
+            CASE 
+                WHEN LOWER(pa.role) = 'acteur principal' THEN 0
+                WHEN LOWER(pa.role) = 'acteur secondaire' THEN 1
+                ELSE 2
+            END,
+            a.nom ASC,
+            a.prenom ASC;
+    """)
 
+
+def realisateurs_media(media_id):
+    '''
+    Réalisateur(s) d'un film à partir de media.realise.
+    '''
+    return all_infos(f"""
+        SELECT
+            a.id_artiste,
+            a.nom,
+            a.prenom
+        FROM media m
+        JOIN artiste a ON m.realise = a.id_artiste
+        WHERE m.id_media = {media_id};
+    """)
+
+
+# all_infos(f"""select * from participe natural join  artiste
+#                     where participe.id_media = {idMedia}""")
         
 def favs(pseudo): #UNFINISHED
     '''
@@ -208,9 +254,8 @@ def genComms():
     return lst
 
 def artisteMedia(idMedia):
-    lst = all_infos(f"""select * from participe natural join  artiste
+    return all_infos(f"""select * from participe natural join  artiste
                     where participe.id_media = {idMedia}""")
-    return lst
 
 def derniersAjouts():
     '''

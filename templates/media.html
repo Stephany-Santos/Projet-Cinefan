@@ -45,18 +45,37 @@
             </div>
         </div>
         <div class="favs">
-            <h4>Artistes ayant travaillé sur {{media.titre}}</h4>
-            {%for a in artiste%}
-                <div class="colonne-3">
-                    <!-- afficheFavProfil -->
-                    <div class=""> 
-                            <h5 class="...">{{ a.nom }} {{a.prenom}}</h5>
-                            <p class="...">Role • {{ a.role }} </p>
-                            <a href="/artiste/{{ a.id_artiste }}" class="...">Voir plus</a>
+            <h4>Réalisé par 
+                {% for r in realisateurs %}
+                <a href="/artiste/{{ r.id_artiste }}">{{ r.prenom }} {{ r.nom }}</a>
+                {% endfor %}
+            </h4>
+            <br>
+            <h4>Personnages :</h4>
+            {% for p in personnages %}
+                {% if not (p.perso_prenom == 'Prénom' and p.perso_nom == 'Sans') %}
+                    <div class="colonne-3">
+                        <div class="carte-artiste">
+                            <h5 class="artiste-nom">
+                                {{ p.perso_prenom }} {{ p.perso_nom }}
+                            </h5>
+                            <p class="artiste-role">
+                                Interprété par
+                                <a href="/artiste/{{ p.id_artiste }}">
+                                    {{ p.artiste_prenom }} {{ p.artiste_nom }}
+                                </a>
+                                {% if p.participation_role %}
+                                    • {{ p.participation_role }}
+                                {% endif %}
+                            </p>
+                            <a href="/personnage/{{ p.id_perso }}" class="artiste-lien">
+                                Voir le personnage
+                            </a>
+                        </div>
                     </div>
+                {% endif %}
+            {% endfor %}
 
-                </div>
-            {%endfor%}
         </div>
         <aside class="activity">
             <h4>Derniers commentaires</h4>

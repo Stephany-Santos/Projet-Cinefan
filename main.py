@@ -13,12 +13,17 @@ app.secret_key = 'temp'
 # ----- Application Flask
 @app.route('/')
 def accueil():
-    return render_template("accueil.html", medias=get.all_media(), UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
+    return render_template("accueil.html", medias=get.all_media(), UserConnecte = session['active']['nom'] if 'active' in session else None,
+                           favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
 
 @app.route('/media/<int:media_id>')
 def detail_media(media_id):
     for media in get.infos_media(media_id):
-        return render_template("media.html", media=media, comms = get.commMedia(media_id), artiste = get.artisteMedia(media_id), UserConnecte = session['active']['nom'] if 'active' in session else None ,favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
+        return render_template(
+            "media.html", media=media, comms=get.commMedia(media_id), personnages=get.personnage_infos(media_id), realisateurs=get.realisateurs_media(media_id),
+            UserConnecte=session['active']['nom'] if 'active' in session else None, favs=get.favs(session['active']['pseudo']) if 'active' in session else []
+        )
+
 
 @app.route('/search')
 def search():
