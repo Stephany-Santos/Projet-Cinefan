@@ -179,7 +179,9 @@ def realisateurs_media(media_id):
 def typeMedia():
     '''
     Fonction récupérant tout les types différents de médias'''
-    return all_infos("""select distinct type from media""")
+    lst = all_infos("""select distinct type from media""")
+    return lst
+
 
 def genre():
     '''
@@ -326,4 +328,3 @@ def derniersAjoutsImg():
                     left join image as i on m.id_media = i.media
                     order by m.id_media desc
                     limit 30""")
-    return lst
