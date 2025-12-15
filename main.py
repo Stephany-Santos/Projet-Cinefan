@@ -6,6 +6,7 @@ import static.python.getdata as get
 
 # ----- Variables globales
 conn = db.connect()
+conn.autocommit = True
 # password_ctx = CryptContext(schemes=['bcrypt'])
 app = Flask(__name__)
 app.secret_key = 'temp'
@@ -109,17 +110,19 @@ def comptecree():
 @app.route("/ajouterEnFavori/<int:mediaId>")
 def ajouterEnFavori(mediaId):
     if 'active' in session:
+        req, vals = '', ''
         for favori in get.favs(session['active']['pseudo']):
             if mediaId in favori:
                 req, vals= """update commente
                 set favori = TRUE
                 where utilisateur = %s, id_media = %s""", (session['active']['pseudo'], mediaId,)
-            else:
-                req, vals = """insert into commente (date, note, utilisateur, id_media, favori) VALUES
-                    (CURRENT_DATE, 5, %s, %s, TRUE)""", (session['active']['pseudo'], mediaId, )
-    
+        if req == '' and vals == '':
+            req, vals = """insert into commente (date, note, utilisateur, id_media, favori) VALUES
+                (CURRENT_DATE, 5, %s, %s, TRUE)""", (session['active']['pseudo'], mediaId, )
+
         with conn.cursor() as cur:
             cur.execute(req, vals)
+             
         return redirect(url_for('detail_media', media_id=mediaId))
     else:
         return redirect(url_for('login'))
@@ -135,16 +138,18 @@ def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
         if type(note) != int:
             note = int(note)
         if 'active' in session:
+            req, vals = '', ''
             for favori in get.favs(session['active']['pseudo']):
                 if mediaId in favori:
                     req, vals= """update commente
                     set note = %s, texte = %s
                     where utilisateur = %s, id_media = %s""", (note, comm, session['active']['pseudo'], mediaId,)
-                else:
-                    req, vals = """insert into commente (date, texte, note, utilisateur, id_media)
-                        values (CURRENT_DATE, %s, %s, %s, %s)""", (comm, note, session['active']['pseudo'], mediaId,)
+            if req == '' and vals == '':
+                req, vals = """insert into commente (date, texte, note, utilisateur, id_media)
+                    values (CURRENT_DATE, %s, %s, %s, %s)""", (comm, note, session['active']['pseudo'], mediaId,)
             with conn.cursor() as cur:
                 cur.execute(req, vals)
+                 
             return redirect(url_for('detail_media', media_id=mediaId))
         else:
             return redirect(url_for('login'))
@@ -180,7 +185,7 @@ def ajoutMedia():
         with conn.cursor() as cur:
             cur.execute(req, vals)
             idMedia = cur.fetchone()[0]
-            cur.execute("""insert into partictipe (id_artiste, id_media, role)
+            cur.execute("""insert into participe (id_artiste, id_media, role)
                         values (%s, %s, %s)""", (realise, idMedia, 'Réalisateur'))
             if request.form.get('imgAjout') == 'True':
                 lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')

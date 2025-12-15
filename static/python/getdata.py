@@ -192,7 +192,7 @@ def artiste():
     '''
     Fonction récupérant tout les noms d'artistes
     '''
-  return all_infos("""select nom, prenom, id_artiste from artiste""")
+    return all_infos("""select nom, prenom, id_artiste from artiste""")
 
 def persos():
     '''Fonction récupérant tout les personnages'''
