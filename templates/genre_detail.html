@@ -8,11 +8,24 @@
 </head>
 <body>
 
-<header class="barre-de-navigation">
-    <div class="cadre">
-        <a href="{{ url_for('genres') }}" class="struct-de-navigation">GENRES</a>
-    </div>
-</header>
+    <nav class="barre-de-navigation">
+        <div class="cadre-nav">
+            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                {%if UserConnecte==None%}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+                {%else%}
+                <a class="navig-mini" href="/profil">Profil</a>
+                {%endif%}
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
 <main class="cadre">
     <h1 class="titre">{{ genre }}</h1>
@@ -21,6 +34,7 @@
         {% for media in medias %}
             <div class="colonne-3 affiche">
                 <h3>{{ media.titre }}</h3>
+                <p><a href="/media/{{media.id}}">Voir plus</a></p>
                 <!-- ajouter image / résumé si dispo -->
             </div>
         {% endfor %}

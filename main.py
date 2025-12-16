@@ -164,7 +164,7 @@ def ajoutMedia():
         return render_template("ajoutMedia.html",
                                medias = get.all_media(),
                                artiste=get.artiste(),
-                               genre = get.genre(),
+                               genre = get.all_genres(),
                                typeMedia = get.typeMedia(),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
@@ -238,16 +238,29 @@ def ajoutPerso():
     else:
         pass
     
+    
 @app.route("/genres")
 def genres():
-    return render_template("genre.html")
-    
+    themes = get.themes(5)       # Thèmes de séances cinéma
+    top_consultes = get.top_genres(5)  # Genres les plus consultés
+    genres = get.all_genres()              # Tous les genres
+
+    return render_template(
+        "genre.html",
+        categories=themes,
+        top_consultes=top_consultes,
+        genres=genres,
+        UserConnecte = session['active']['nom'] if 'active' in session else None)
+
+
 @app.route("/genres/<genre_name>")
 def genre_detail(genre_name):
-    medias = get.medias_by_genre(genre_name)
-    return render_template("genre_detail.html", genre=genre_name, medias=medias, UserConnecte = session['active']['nom'] if 'active' in session else None)
+    return render_template(
+        "genre_detail.html",
+        genre=genre_name,
+        medias=get.medias_by_genre(genre_name),
+        UserConnecte = session['active']['nom'] if 'active' in session else None)
 
-    
 @app.route("/artistes")
 def artistes():
     return render_template("artistes.html", UserConnecte = session['active']['nom'] if 'active' in session else None)

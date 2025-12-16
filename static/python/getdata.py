@@ -183,10 +183,38 @@ def typeMedia():
     return lst
 
 
-def genre():
-    '''
-    Fonction récupérant tout les types différents de genre'''
-    return all_infos("""select intitule from genre""")
+
+def all_genres():
+    """Retourne tous les genres"""
+    return all_infos("SELECT intitule, description FROM genre ORDER BY intitule;")
+
+def themes(limit=5):
+    """Renvoie les thèmes de séances cinéma à afficher"""
+    return all_infos(f"""
+        SELECT intitule, description
+        FROM genre
+        ORDER BY intitule
+        LIMIT {limit};
+    """)
+
+def top_genres(limit=5):
+    """Renvoie les genres les plus consultés par les utilisateurs"""
+    return all_infos(f"""
+        SELECT m.genre AS intitule, COUNT(*) AS nb_consultes
+        FROM commente c
+        JOIN media m ON c.id_media = m.id_media
+        GROUP BY m.genre
+        ORDER BY nb_consultes DESC
+        LIMIT {limit};
+    """)
+
+def medias_by_genre(genre_name):
+    """Retourne tous les médias d’un genre spécifique"""
+    return all_infos(f"""
+        SELECT id_media AS id, titre, description, parution, type
+        FROM media
+        WHERE genre = '{genre_name}';
+    """)
 
 def artiste():
     '''
