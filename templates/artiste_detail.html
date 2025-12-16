@@ -28,8 +28,8 @@
     </nav>
     
     <div class="cadre">
-        <h1 class="style-titre">{{ artiste.prenom }} {{ artiste.nom }}</h1>
-        <div class="cadre-artiste-image">
+        <h1 class="titre">{{ artiste.prenom }} {{ artiste.nom }}</h1>
+        <div class="cadre">
             {% if artiste.url_image %}
             <img src="{{ artiste.url_image }}" alt="{{ artiste.alt }}">
             {% else %}
