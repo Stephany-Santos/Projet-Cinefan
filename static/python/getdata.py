@@ -179,7 +179,8 @@ def realisateurs_media(media_id):
 def typeMedia():
     '''
     Fonction récupérant tout les types différents de médias'''
-    return all_infos("""select distinct type from media""")
+    lst = all_infos("""select distinct type from media""")
+    return lst
 
 
 def genre():
@@ -192,6 +193,11 @@ def artiste():
     Fonction récupérant tout les noms d'artistes
     '''
     return all_infos("""select nom, prenom, id_artiste from artiste""")
+
+def persos():
+    '''Fonction récupérant tout les personnages'''
+    lst = all_infos("""select * from personange""")
+    return lst
 
 def favs(pseudo): #UNFINISHED
     '''

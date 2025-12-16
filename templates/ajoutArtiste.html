@@ -30,24 +30,26 @@
     <p class="titre">Ajouter un artiste</p>
      <form  method="POST" action="ajoutArtiste" class="container-formulaire">
         <label for="nom">Nom</label>
-        <input type="text" name=" nom" id=" nom" rows="5" cols="50" maxlength="100" required>
+        <input type="text" name=" nom" id=" nom" rows="5" cols="50" maxlength="100">
 
         <label for="prenom">Prenom</label>
         <input type="text" name="prenom" id="prenom" rows="5" cols="50" maxlength="100" required>
         
+        
+
+        <label for="participe">Cet.te artiste a-t-iel participé.e à un film ? (laissez le champ vierge si non)</label>
+        <input type="text" list="filmList" id="participe" name="participe">
+        <datalist id="filmList">
+            {% for m in medias %}
+                <option value="{{ m.id }}">{{ m.titre }}</option>
+            {% endfor %}
+        </datalist>
+
         <label for="realise">Role de l'artiste</label>
         <input type="text" list="roleList" id="role" name="role">
         <datalist id="roleList">
             {% for r in roles %}
-                <option value="{{ a.id_artiste }}">{{ a.nom }} {{ a.prenom }}</option>
-            {% endfor %}
-        </datalist>
-
-        <label for="suite">Cet.te artiste a-t-iel participé.e à un film ? (laissez le champ vierge si non)</label>
-        <input type="text" list="filmList" id="participe" name="realise">
-        <datalist id="filmList">
-            {% for m in medias %}
-                <option value="{{ m.id }}">{{ m.titre }}</option>
+                <option value="{{ r.role }}">{{ r.role }}</option>
             {% endfor %}
         </datalist>
 

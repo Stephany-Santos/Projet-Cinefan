@@ -6,6 +6,7 @@ import static.python.getdata as get
 
 # ----- Variables globales
 conn = db.connect()
+conn.autocommit = True
 # password_ctx = CryptContext(schemes=['bcrypt'])
 app = Flask(__name__)
 app.secret_key = 'temp'
@@ -109,17 +110,19 @@ def comptecree():
 @app.route("/ajouterEnFavori/<int:mediaId>")
 def ajouterEnFavori(mediaId):
     if 'active' in session:
+        req, vals = '', ''
         for favori in get.favs(session['active']['pseudo']):
             if mediaId in favori:
                 req, vals= """update commente
                 set favori = TRUE
                 where utilisateur = %s, id_media = %s""", (session['active']['pseudo'], mediaId,)
-            else:
-                req, vals = """insert into commente (date, note, utilisateur, id_media, favori) VALUES
-                    (CURRENT_DATE, 5, %s, %s, TRUE)""", (session['active']['pseudo'], mediaId, )
-    
+        if req == '' and vals == '':
+            req, vals = """insert into commente (date, note, utilisateur, id_media, favori) VALUES
+                (CURRENT_DATE, 5, %s, %s, TRUE)""", (session['active']['pseudo'], mediaId, )
+
         with conn.cursor() as cur:
             cur.execute(req, vals)
+             
         return redirect(url_for('detail_media', media_id=mediaId))
     else:
         return redirect(url_for('login'))
@@ -135,16 +138,18 @@ def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
         if type(note) != int:
             note = int(note)
         if 'active' in session:
+            req, vals = '', ''
             for favori in get.favs(session['active']['pseudo']):
                 if mediaId in favori:
                     req, vals= """update commente
                     set note = %s, texte = %s
                     where utilisateur = %s, id_media = %s""", (note, comm, session['active']['pseudo'], mediaId,)
-                else:
-                    req, vals = """insert into commente (date, texte, note, utilisateur, id_media)
-                        values (CURRENT_DATE, %s, %s, %s, %s)""", (comm, note, session['active']['pseudo'], mediaId,)
+            if req == '' and vals == '':
+                req, vals = """insert into commente (date, texte, note, utilisateur, id_media)
+                    values (CURRENT_DATE, %s, %s, %s, %s)""", (comm, note, session['active']['pseudo'], mediaId,)
             with conn.cursor() as cur:
                 cur.execute(req, vals)
+                 
             return redirect(url_for('detail_media', media_id=mediaId))
         else:
             return redirect(url_for('login'))
@@ -180,7 +185,7 @@ def ajoutMedia():
         with conn.cursor() as cur:
             cur.execute(req, vals)
             idMedia = cur.fetchone()[0]
-            cur.execute("""insert into partictipe (id_artiste, id_media, role)
+            cur.execute("""insert into participe (id_artiste, id_media, role)
                         values (%s, %s, %s)""", (realise, idMedia, 'Réalisateur'))
             if request.form.get('imgAjout') == 'True':
                 lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
@@ -199,8 +204,33 @@ def ajoutArtiste():
                                medias = get.all_media(),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
-        pass
-         
+        nom = request.form.get("nom")
+        prenom = request.form.get("prenom")
+        participe = request.form.get("participe")
+        role = request.form.get("role")
+        if participe is None or participe == '':
+            participe = None
+        if role is None or role == '':
+            role = None
+        if nom is None or nom == '':
+            nom = None
+        req = """insert into artiste (nom, prenom, cree_par)
+                values (%s, %s, %s)
+                returning id_artiste"""
+        vals  = (nom, prenom, session['active']['pseudo'],)
+        with conn.cursor() as cur:
+            cur.execute(req, vals)
+            idArtiste = cur.fetchone()[0]
+            if participe is not None or role is not None:
+                cur.execute("""insert into participe (id_artiste, id_media, role)
+                                values (%s, %s, %s)""", (idArtiste, participe, role,))
+            if request.form.get('imgAjout') == 'True':
+                lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
+                imgReq, imgVals = """insert into image (fichier, lien, alt, artiste, cree_par)
+                            values (%s,%s,%s, %s, %s )
+                            """, (fichier, lien, alt, idArtiste, session['active']['pseudo'],)
+                cur.execute(imgReq, imgVals)
+            conn.commit()
 @app.route("/ajoutIPerso", methods=['POST', 'GET'])
 def ajoutPerso():    
     if request.method == 'GET':
