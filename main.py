@@ -265,6 +265,10 @@ def genre_detail(genre_name):
 def artistes():
     return render_template("artistes.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
 
+@app.route("/stats")
+def stats():
+    return render_template("stats.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
