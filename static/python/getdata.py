@@ -211,9 +211,16 @@ def top_genres(limit=5):
 def medias_by_genre(genre_name):
     """Retourne tous les médias d’un genre spécifique"""
     return all_infos(f"""
-        SELECT id_media AS id, titre, description, parution, type
-        FROM media
-        WHERE genre = '{genre_name}';
+        SELECT
+            m.id_media AS id,
+            m.titre, m.description,
+            m.parution, m.type, m.genre,
+            i.fichier AS nom_image,
+            i.lien AS url_image,
+            i.alt AS alt
+        FROM media m
+        LEFT JOIN image i ON m.id_media = i.media
+        WHERE m.genre = '{genre_name}';
     """)
 
 def artiste():
