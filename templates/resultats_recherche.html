@@ -52,21 +52,22 @@
                 <div class="ligne">
                     {% for resultat in medias %}
                     <div class="colonne-3">
-                        <a href="/media/{{ resultat.id }}" class="cadre-media">
-                            <div class="affiche">
-                                {% if resultat.url_image %}
-                                <img src="{{ resultat.url_image }}" alt="{{ resultat.alt }}">
-                                {% else %}
-                                <div style="...">📺</div>
-                                {% endif %}
-                            
-                                <div class="style-titre">
-                                    <h3>{{ resultat.titre }}</h3>
-                                    <div class="...">{{ resultat.genre }} • {{ resultat.parution }}</div>
-                                    <div class="...">{{ resultat.description }}</div>
+                        <div class="affiche">
+                            <a href="/media/{{ resultat.id }}" class="cadre-media">
+                                <div class="cadre-media-image">
+                                    {% if resultat.url_image %}
+                                    <img src="{{ resultat.url_image }}" alt="{{ resultat.alt }}">
+                                    {% else %}
+                                    <div style="...">📺</div>
+                                    {% endif %}
                                 </div>
+                            </a>
+                            <div class="style-titre">
+                                <h3>{{ resultat.titre }}</h3>
+                                <div class="...">{{ resultat.genre }} • {{ resultat.parution }}</div>
+                                <div class="...">{{ resultat.description }}</div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
