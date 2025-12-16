@@ -46,18 +46,21 @@
                     <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
                 {%else%}
                 {% for i in favs%}
-                    {%for movie in i%}
+                    {%for media in i%}
                         <div class="colonne-3">
-                            <div class="afficheFavProfil">
-                                {% if movie.url_image %}
-                                <img src="{{ movie.url_image }}" class="..." alt="{{ movie.alt }}">
-                                {% else %}
-                                <div class="...">📺</div>
-                                {% endif %}
-                                <div class="...">
-                                    <h5 class="...">{{ movie.titre }}</h5>
-                                    <p class="...">{{ movie.genre }} • {{ movie.parution }}</p>
-                                    <a href="/media/{{ movie.id }}" class="...">Voir plus</a>
+                                <div class="affiche">
+                                <a href="/media/{{ media.id }}" class="cadre-media">
+                                    <div class="cadre-media-image">
+                                        {% if media.url_image %}
+                                        <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                                        {% else %}
+                                        <div style="...">📺</div>
+                                        {% endif %}
+                                    </div>
+                                </a>
+                                <div class="cadre-media-contenu">
+                                    <h5 class="...">{{ media.titre }}</h5>
+                                    <p class="...">{{ media.genre }} • {{ media.parution }}</p>
                                 </div>
                             </div>
                         </div>

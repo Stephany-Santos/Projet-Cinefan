@@ -69,38 +69,38 @@ def medias_by_genre(genre_name):
 
 #changement page statistiques
 
-commandes sql
+# commandes sql
 
-Nombreux moyen d'artistes par film :
+# Nombreux moyen d'artistes par film :
 
-SELECT AVG(nb_artistes) AS moyenne_artistes
-FROM (
-    SELECT m.id, COUNT(DISTINCT p.id_artiste) AS nb_artistes
-    FROM media m
-    LEFT JOIN participe p ON m.id = p.id_media
-    WHERE m.type = 'film'
-    GROUP BY m.id
-) AS stats;
-
-
-Nombreux moyen de films realisés par un artiste
-
-SELECT a.id, a.nom, a.prenom, COUNT(m.id) AS nb_films
-FROM artiste a
-JOIN media m ON m.realise = a.id
-WHERE m.type = 'film'
-GROUP BY a.id, a.nom, a.prenom;
-
-Nombreux moyen de commentaires par film 
+# SELECT AVG(nb_artistes) AS moyenne_artistes
+# FROM (
+#     SELECT m.id, COUNT(DISTINCT p.id_artiste) AS nb_artistes
+#     FROM media m
+#     LEFT JOIN participe p ON m.id = p.id_media
+#     WHERE m.type = 'film'
+#     GROUP BY m.id
+# ) AS stats;
 
 
+# Nombreux moyen de films realisés par un artiste
 
-SELECT AVG(nb_commentaires) AS moyenne_commentaires
-FROM (
-    SELECT m.id, COUNT(c.id_media) AS nb_commentaires
-    FROM media m
-    LEFT JOIN commente c ON m.id = c.id_media
-    WHERE m.type = 'film'
-    GROUP BY m.id
-) AS stats;
+# SELECT a.id, a.nom, a.prenom, COUNT(m.id) AS nb_films
+# FROM artiste a
+# JOIN media m ON m.realise = a.id
+# WHERE m.type = 'film'
+# GROUP BY a.id, a.nom, a.prenom;
+
+# Nombreux moyen de commentaires par film 
+
+
+
+# SELECT AVG(nb_commentaires) AS moyenne_commentaires
+# FROM (
+#     SELECT m.id, COUNT(c.id_media) AS nb_commentaires
+#     FROM media m
+#     LEFT JOIN commente c ON m.id = c.id_media
+#     WHERE m.type = 'film'
+#     GROUP BY m.id
+# ) AS stats;
 
