@@ -83,11 +83,13 @@
             <h2 style="style-titre">🎭 Artistes ({{ artistes | length }})</h2>
             <div class="cadre">
                 {% for resultat in artistes %}
+                <a href="/artiste/{{ resultat.id }}" class="cadre-media">
                 <div class="affiche">
                     <div style="...">🎭</div>
                     <h3>{{ resultat.prenom }} {{ resultat.nom }}</h3>
                     <div style="...">Artiste</div>
                 </div>
+                </a>
                 {% endfor %}
             </div>
         </div>
