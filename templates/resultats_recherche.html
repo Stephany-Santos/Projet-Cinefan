@@ -48,23 +48,28 @@
         {% if medias %}
         <div class="section-resultats">
             <h2 style="style-titre">🎬 Films & Séries ({{ medias | length }})</h2>
-            <div class="grille">
-                {% for resultat in medias %}
-                <a href="/media/{{ resultat.id }}" class="cadre-media">
-                    <div class="cadre-media-image">
-                        {% if resultat.url_image %}
-                        <img src="{{ resultat.url_image }}" alt="{{ resultat.alt }}">
-                        {% else %}
-                        <div style="...">📺</div>
-                        {% endif %}
+            <div class="cadre">
+                <div class="ligne">
+                    {% for resultat in medias %}
+                    <div class="colonne-3">
+                        <a href="/media/{{ resultat.id }}" class="cadre-media">
+                            <div class="affiche">
+                                {% if resultat.url_image %}
+                                <img src="{{ resultat.url_image }}" alt="{{ resultat.alt }}">
+                                {% else %}
+                                <div style="...">📺</div>
+                                {% endif %}
+                            
+                                <div class="style-titre">
+                                    <h3>{{ resultat.titre }}</h3>
+                                    <div class="...">{{ resultat.genre }} • {{ resultat.parution }}</div>
+                                    <div class="...">{{ resultat.description }}</div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="cadre-media-contenu">
-                        <h3>{{ resultat.titre }}</h3>
-                        <div class="cadre-media-info">{{ resultat.genre }} • {{ resultat.parution }}</div>
-                        <div class="cadre-media-description">{{ resultat.description }}</div>
-                    </div>
-                </a>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
         {% endif %}
@@ -74,9 +79,9 @@
         {% if artistes %}
         <div class="section-resultats">
             <h2 style="style-titre">🎭 Artistes ({{ artistes | length }})</h2>
-            <div class="grille">
+            <div class="cadre">
                 {% for resultat in artistes %}
-                <div class="cadre-artiste">
+                <div class="affiche">
                     <div style="...">🎭</div>
                     <h3>{{ resultat.prenom }} {{ resultat.nom }}</h3>
                     <div style="...">Artiste</div>
@@ -91,12 +96,12 @@
         {% if personnages %}
         <div class="section-resultats">
             <h2 style="style-titre">🧚 Personnages ({{ personnages | length }})</h2>
-            <div class="grille">
+            <div class="cadre">
                 {% for resultat in personnages %}
-                <div class="cadre-personnage">
+                <div class="affiche">
                     <div style="...">🧚</div>
                     <h3>{{ resultat.prenom }} {{ resultat.nom }}</h3>
-                    <div class="cadre-personnage-info">Dans: <strong>{{ resultat.titre }}</strong></div>
+                    <div class="...">Dans: <strong>{{ resultat.titre }}</strong></div>
                     {% if resultat.description %}
                     <div style="...">{{ resultat.description[:100] }}...</div>
                     {% endif %}
