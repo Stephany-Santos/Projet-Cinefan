@@ -75,6 +75,26 @@ def infos_media(media_id):
         WHERE m.id_media = {media_id};
     """)
 
+def infos_artiste(artiste_id):
+    '''
+    Récupère les infos d'un artiste spécifique
+    Arguments:
+        media_id: l'ID du artiste à récupérer
+    Return:
+        Liste contenant un dictionnaire avec les infos du artiste
+    '''
+    return all_infos(f"""
+        SELECT
+            a.id_artiste AS id,
+            a.nom, a.prenom,
+            i.fichier AS nom_image,
+            i.lien AS url_image,
+            i.alt AS alt
+        FROM artiste a
+        LEFT JOIN image i ON a.id_artiste = i.artiste
+        WHERE a.id_artiste = {artiste_id};
+    """)
+
 def search_all(terme):
     '''
     Recherche dans tous les types : médias, artistes, personnages

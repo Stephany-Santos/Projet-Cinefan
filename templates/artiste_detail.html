@@ -1,12 +1,12 @@
-<header class="barre-de-navigation">
-    <div class="cadre">
-        <a href="#" class="struct-de-navigation">ARTISTES</a>
-    </div>
-</header>
-
-<main class="cadre">
-    <h1 class="titre">Artistes</h1>
-
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinéFan - artistes</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+</head>
+<body>
     <nav class="barre-de-navigation">
         <div class="cadre-nav">
             <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
@@ -26,7 +26,16 @@
             </div>
         </div>
     </nav>
-
-
-
-</main>
+    
+    <div class="cadre">
+        <h1 class="style-titre">{{ artiste.prenom }} {{ artiste.nom }}</h1>
+        <div class="cadre-artiste-image">
+            {% if artiste.url_image %}
+            <img src="{{ artiste.url_image }}" alt="{{ artiste.alt }}">
+            {% else %}
+            <div style="...">🧚‍♀️</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

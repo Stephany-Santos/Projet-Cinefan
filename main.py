@@ -24,6 +24,14 @@ def detail_media(media_id):
             "media.html", media=media, comms=get.commMedia(media_id), personnages=get.personnage_infos(media_id), realisateurs=get.realisateurs_media(media_id),
             UserConnecte=session['active']['nom'] if 'active' in session else None, favs=get.favs(session['active']['pseudo']) if 'active' in session else []
         )
+    
+@app.route('/artiste/<int:artiste_id>')
+def detail_artiste(artiste_id):
+    for artiste in get.infos_artiste(artiste_id):
+        return render_template(
+            "artiste_detail.html", artiste=artiste,
+            UserConnecte=session['active']['nom'] if 'active' in session else None, favs=get.favs(session['active']['pseudo']) if 'active' in session else []
+        )
 
 
 @app.route('/search')
