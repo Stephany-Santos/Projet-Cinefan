@@ -7,9 +7,24 @@
 <main class="cadre">
     <h1 class="titre">Artistes</h1>
 
-    <nav class="ligne">
-        <div class="colonne-3"><a class="navig-mini" href="#">Réalisateurs</a></div>
-        <div class="colonne-3"><a class="navig-mini" href="#">Acteurs</a></div>
+    <nav class="barre-de-navigation">
+        <div class="cadre-nav">
+            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                <a class="navig-mini" href="/genres">Genres</a>
+                {%if UserConnecte==None%}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+                {%else%}
+                <a class="navig-mini" href="/profil">Profil</a>
+                {%endif%}
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+        </div>
     </nav>
 
     <section class="ligne">
