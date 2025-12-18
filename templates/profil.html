@@ -113,7 +113,7 @@
                     <p>{{info.nom}} n'a pas assez d'activité pour avoir de statistiques.</p>
                 {%else%}
                     {%for text in comms%}
-                        <p class='stats'> <p>
+                        <p class='stats'> Cet utilisateur à laissé {{text.nombreDeCritiques }} commentaires.<p>
                     {%endfor%}
                 {%endif%}
             </div>

@@ -1,8 +1,9 @@
-import psycopg2
-import psycopg2.extras
-import db as db
+# import psycopg2
+# import psycopg2.extras
+# import db as db
+import static.python.getdata as get
 
-def critiques_per_user(user):
+def critiques_per_user(pseudo):
     '''
     Récupère le nombre de critiques écrites par chaque membre du club.
     Arguments:
@@ -10,11 +11,11 @@ def critiques_per_user(user):
     Return:
         int: Le nombre de critiques écrites par l'utilisateur
     '''
-    with db.connect as conn:
-        with conn.cursor() as cur:
-            cur.execute('SELECT utilisateur.pseudo, COUNT(commente.utilisateur) AS nombreDeCritiques FROM utilisateur LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur WHERE utilisateur = %s GROUP BY utilisateur.pseudo', (user,))
-            resultat = cur.fetchone()
-    return resultat[0]
+    print(get.all_infos(f"SELECT COUNT(commente.utilisateur) AS nombreDeCritiques FROM utilisateur LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur WHERE utilisateur = {pseudo} GROUP BY utilisateur.pseudo"))
+    return get.all_infos(f"""SELECT COUNT(commente.utilisateur) AS nombreDeCritiques
+                         FROM utilisateur LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur
+                         WHERE utilisateur = {pseudo}
+                         GROUP BY utilisateur.pseudo""")
 
 
 # -- Pour chaque acteur, le nombre de films de chaque genre dans lesquels il a joué,

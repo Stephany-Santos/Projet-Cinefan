@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 # from passlib.context import CryptContext
 import db as db
 import static.python.getdata as get
+import static.python.filtres as filtre
 
 # ----- Variables globales
 conn = db.connect()
@@ -57,7 +58,13 @@ def deconnexion():
 @app.route("/profil", methods = ['POST', 'GET'])
 def profil():
     if 'active' in session: #si on est déjà connecté afficher le profil..?
-        return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], activite = get.activityUser(session['active']['pseudo']), UserConnecte = session['active']['nom'] if 'active' in session else None)
+        return render_template("profil.html",
+                               info = session['active'],
+                               favs = get.favs(session['active']['pseudo']),
+                               comms = get.commUser(session['active']['pseudo']),
+                               stats = filtre.critiques_per_user(session['active']['pseudo']),
+                               activite = get.activityUser(session['active']['pseudo']),
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
         if request.method == 'POST':
             user_input, pass2 = request.form.get('user', type=str), request.form.get('password', type=str)
@@ -65,7 +72,13 @@ def profil():
                 session['active']=u
                 app.secret_key = session['active']['mdp']
             if pass2 == app.secret_key:
-                return render_template("profil.html", info = session['active'], favs = get.favs(session['active']['pseudo']), comms = get.commUser(session['active']['pseudo']), stats = [], activite = get.activityUser(session['active']['pseudo']), UserConnecte = session['active']['nom'] if 'active' in session else None)
+                return render_template("profil.html",
+                                       info = session['active'],
+                                       favs = get.favs(session['active']['pseudo']),
+                                       comms = get.commUser(session['active']['pseudo']),
+                                       stats = filtre.critiques_per_user(session['active']['pseudo']),
+                                       activite = get.activityUser(session['active']['pseudo']),
+                                       UserConnecte = session['active']['nom'] if 'active' in session else None)
             else:
                 app.secret_key= None
                 return redirect(url_for('login'))
@@ -186,6 +199,7 @@ def ajoutMedia():
         
         if suite == '' or suite is None:
             suite = None
+        # if get.favs(session['active']['pseudo'])[0]
         req = """insert into media (titre, description, parution, type, genre, realise, suite, cree_par) 
         values (%s, %s, %s, %s, %s, %s, %s, %s)
         returning id_media"""
