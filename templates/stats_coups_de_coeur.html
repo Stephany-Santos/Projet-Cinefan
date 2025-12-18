@@ -1,0 +1,13 @@
+{% extends "stats.html" %}
+
+{% block stats_content %}
+<h2>Coups de coeur récents</h2>
+<div class="stats-grid">
+    {% for media in stats %}
+        <div class="media-card">
+            <h3>{{ media.titre }}</h3>
+            <p>Nombre de favoris : {{ media.nb_favoris }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<h1>Thèmes de séance cinéma</h1>
+<div class="ligne">
+    {% for media in categories %}
+    <div class="colonne-3">
+        <div class="affiche">
+            {% if media.url_image %}
+            <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+            {% endif %}
+            <h5>{{ media.titre }}</h5>
+        </div>
+    </div>
+    {% endfor %}
+</div>

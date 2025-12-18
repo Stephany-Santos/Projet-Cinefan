@@ -1,0 +1,14 @@
+{% extends "stats.html" %}
+
+{% block stats_content %}
+<h2>Les étoiles montantes</h2>
+<div class="stats-grid">
+    {% for media in stats %}
+        <div class="media-card">
+            <h3>{{ media.titre }}</h3>
+            <p>Note moyenne : {{ media.note_moyenne|round(2) }}</p>
+            <p>Nombre de commentaires : {{ media.nb_comments }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

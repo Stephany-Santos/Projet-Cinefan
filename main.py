@@ -263,25 +263,31 @@ def ajoutPerso():
     
 @app.route("/genres")
 def genres():
-    themes = get.themes(5)       # Thèmes de séances cinéma
-    top_consultes = get.top_genres(5)  # Genres les plus consultés
-    genres = get.all_genres()              # Tous les genres
-
+    categories = get.themes(5)
+    top_consultes = get.top_genres(5)
+    genres = get.all_genres()
     return render_template(
         "genre.html",
-        categories=themes,
+        categories=categories,
         top_consultes=top_consultes,
         genres=genres,
-        UserConnecte = session['active']['nom'] if 'active' in session else None)
+        UserConnecte=session['active']['nom'] if 'active' in session else None
+    )
+@app.route("/themes")
+def themes_page():
+    categories = get.themes(20)
+    return render_template("themes.html", categories=categories, UserConnecte=session['active']['nom'] if 'active' in session else None)
 
+@app.route("/top-consultes")
+def top_consultes_page():
+    top_consultes = get.top_genres(20)
+    return render_template("top_consultes.html", top_consultes=top_consultes, UserConnecte=session['active']['nom'] if 'active' in session else None)
 
-@app.route("/genres/<genre_name>")
-def genre_detail(genre_name):
-    return render_template(
-        "genre_detail.html",
-        genre=genre_name,
-        medias=get.medias_by_genre(genre_name),
-        UserConnecte = session['active']['nom'] if 'active' in session else None)
+@app.route("/genres/all")
+def genres_all():
+    genres = get.all_genres()
+    return render_template("genres_all.html", genres=genres, UserConnecte=session['active']['nom'] if 'active' in session else None)
+
 
 @app.route("/artistes")
 def artistes():
@@ -289,7 +295,32 @@ def artistes():
 
 @app.route("/stats")
 def stats():
-    return render_template("stats.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+    return render_template("stats.html", UserConnecte=session['active']['nom'] if 'active' in session else None)
+
+@app.route("/stats/mieux-notes")
+def stats_mieux_notes():
+    # récupère les médias les mieux notés
+    resultats = get.mieux_notes()  # fonction à créer dans getdata.py
+    return render_template("stats_mieux_notes.html", stats=resultats, sous_menu="mieux-notes",
+                           UserConnecte=session['active']['nom'] if 'active' in session else None)
+
+@app.route("/stats/plus-regardes")
+def stats_plus_regardes():
+    resultats = get.plus_regardes()
+    return render_template("stats_plus_regardes.html", stats=resultats, sous_menu="plus-regardes",
+                           UserConnecte=session['active']['nom'] if 'active' in session else None)
+
+@app.route("/stats/coups-de-coeur")
+def stats_coups_de_coeur():
+    resultats = get.coups_de_coeur()
+    return render_template("stats_coups_de_coeur.html", stats=resultats, sous_menu="coups-de-coeur",
+                           UserConnecte=session['active']['nom'] if 'active' in session else None)
+
+@app.route("/stats/etoiles-montantes")
+def stats_etoiles_montantes():
+    resultats = get.etoiles_montantes()
+    return render_template("stats_etoiles_montantes.html", stats=resultats, sous_menu="etoiles-montantes",
+                           UserConnecte=session['active']['nom'] if 'active' in session else None)
 
 
 if __name__ == '__main__':
