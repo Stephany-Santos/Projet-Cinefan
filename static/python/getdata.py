@@ -383,3 +383,62 @@ def derniersAjoutsImg():
                     left join image as i on m.id_media = i.media
                     order by m.id_media desc
                     limit 30""")
+    # --- Stats ---
+def mieux_notes(limit=10):
+    return all_infos(f"""
+        SELECT m.id_media, m.titre, AVG(c.note) AS moyenne
+        FROM media m
+        JOIN commente c ON m.id_media = c.id_media
+        GROUP BY m.id_media, m.titre
+        ORDER BY moyenne DESC
+        LIMIT {limit};
+    """)
+
+def plus_regardes(limit=10):
+    return all_infos(f"""
+        SELECT m.id_media, m.titre, COUNT(c.id_media) AS nb_vues
+        FROM media m
+        JOIN commente c ON m.id_media = c.id_media
+        GROUP BY m.id_media, m.titre
+        ORDER BY nb_vues DESC
+        LIMIT {limit};
+    """)
+
+def coups_de_coeur(limit=10):
+    return all_infos(f"""
+        SELECT m.id_media, m.titre, COUNT(c.favori) AS nb_fav
+        FROM media m
+        JOIN commente c ON m.id_media = c.id_media
+        WHERE c.favori = TRUE
+        GROUP BY m.id_media, m.titre
+        ORDER BY nb_fav DESC
+        LIMIT {limit};
+    """)
+
+def etoiles_montantes(limit=10):
+    return all_infos(f"""
+        SELECT m.id_media, m.titre, AVG(c.note) AS moyenne
+        FROM media m
+        JOIN commente c ON m.id_media = c.id_media
+        WHERE c.date >= CURRENT_DATE - INTERVAL '30 days'
+        GROUP BY m.id_media, m.titre
+        ORDER BY moyenne DESC
+        LIMIT {limit};
+    """)
+
+# --- Genres & thèmes ---
+def all_genres():
+    return all_infos("SELECT intitule, description FROM genre ORDER BY intitule;")
+
+def themes(limit=5):
+    return all_infos(f"SELECT intitule, description FROM genre ORDER BY intitule LIMIT {limit};")
+
+def top_genres(limit=5):
+    return all_infos(f"""
+        SELECT m.genre AS intitule, COUNT(*) AS nb_consultes
+        FROM commente c
+        JOIN media m ON c.id_media = m.id_media
+        GROUP BY m.genre
+        ORDER BY nb_consultes DESC
+        LIMIT {limit};
+    """)
