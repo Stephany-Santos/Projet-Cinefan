@@ -1,13 +1,49 @@
-{% extends "stats.html" %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les plus regardés - Statistiques</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+</head>
 
-{% block stats_content %}
-<h2>Les plus regardés</h2>
+<body>
+
+<nav class="barre-de-navigation">
+    <div class="cadre-nav">
+        <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+        <div class="nav-right">
+            <a class="navig-mini" href="/commu">Communauté</a>
+            <a class="navig-mini" href="/stats">Statistiques</a>
+            <a class="navig-mini" href="/genres">Genres</a>
+
+            {% if UserConnecte == None %}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+            {% else %}
+                <a class="navig-mini" href="/profil">Profil</a>
+            {% endif %}
+
+            <form action="/search" method="get" class="barre-recherche">
+                <input type="text" name="q" placeholder="Rechercher">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<h1>Les plus regardés</h1>
+
 <div class="stats-grid">
     {% for media in stats %}
         <div class="media-card">
+            {% if media.url_image %}
+                <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+            {% endif %}
             <h3>{{ media.titre }}</h3>
             <p>Nombre de consultations : {{ media.nb_consultations }}</p>
         </div>
     {% endfor %}
 </div>
-{% endblock %}
+
+</body>
+</html>
