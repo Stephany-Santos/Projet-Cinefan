@@ -3,10 +3,12 @@
     {% for media in top_consultes %}
     <div class="colonne-3">
         <div class="affiche">
-            {% if media.url_image %}
-            <img src="{{ media.url_image }}" alt="{{ media.alt }}">
-            {% endif %}
-            <h5>{{ media.titre }}</h5>
+            <a href="/media/{{ media.id }}">
+                {% if media.url_image %}
+                    <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                {% endif %}
+                <h5>{{ media.titre }}</h5>
+            </a>
         </div>
     </div>
     {% endfor %}
