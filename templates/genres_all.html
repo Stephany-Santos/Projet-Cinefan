@@ -3,8 +3,10 @@
     {% for genre in genres %}
     <div class="colonne-3">
         <div class="affiche-genre">
-            <h5>{{ genre.intitule }}</h5>
-            <p>{{ genre.description }}</p>
+            <a href="{{ url_for('genre_detail', genre_id=genre.id) }}">
+                <h5>{{ genre.intitule }}</h5>
+                <p>{{ genre.description }}</p>
+            </a>
         </div>
     </div>
     {% endfor %}
