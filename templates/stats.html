@@ -1,44 +1,61 @@
-<!--    Vous devez fournir des
-informations statistiques, tels le nombre de films ou/et séries produites par un réalisateur,
-le nombre moyen de messages postés par jour par l’ensemble des usagers et par un seul
-usager.   
-   derniers commentaires laissés sur wtv    -->
 <!doctype html>
-<html>
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Statistiques</title>
-<link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinéFan - Statistiques</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="barre-de-navigation">
-        <div class="cadre-nav">
-            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
-            <div class="nav-right">
-                <a class="navig-mini" href="/commu">Communauté</a>
-                <a class="navig-mini" href="/stats">Statistiques</a>
-                <a class="navig-mini" href="/genres">Genres</a>
-                {%if UserConnecte==None%}
-                <a class="navig-mini" href="/profil">Se connecter</a>
-                {%else%}
-                <a class="navig-mini" href="/profil">Profil</a>
-                {%endif%}
-                <form action="/search" method="get" class="barre-recherche">
-                    <input type="text" name="q" placeholder="Rechercher">
-                    <button type="submit">🔍</button>
-                </form>
-            </div>
-        </div>
-    </nav>
 
-    
-    <section class="ligne">
-        <div class="colonne-3"><a class="navig-mini" href="#">Les mieux notés</a></div>
-        <div class="colonne-3"><a class="navig-mini" href="#">Les plus regardés</a></div>
-        <div class="colonne-3"><a class="navig-mini" href="#">Coups de coeur récents</a></div>
-        <div class="colonne-3"><a class="navig-mini" href="#">Les étoiles montantes</a></div>
-    </section>
+<nav class="barre-de-navigation">
+    <div class="cadre-nav">
+        <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+        <div class="nav-right">
+            <a class="navig-mini" href="/commu">Communauté</a>
+            <a class="navig-mini" href="/stats">Statistiques</a>
+            <a class="navig-mini" href="/genres">Genres</a>
+
+            {% if UserConnecte == None %}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+            {% else %}
+                <a class="navig-mini" href="/profil">Profil</a>
+            {% endif %}
+
+            <form action="/search" method="get" class="barre-recherche">
+                <input type="text" name="q" placeholder="Rechercher">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="cadre">
+
+    <h1 class="titre">Statistiques</h1>
+
+    <div class="sous-menu-genres">
+        <a href="{{ url_for('stats_mieux_notes') }}" class="sous-menu-link">
+            <h2>Les mieux notés</h2>
+        </a>
+
+        <a href="{{ url_for('stats_plus_regardes') }}" class="sous-menu-link">
+            <h2>Les plus regardés</h2>
+        </a>
+
+        <a href="{{ url_for('stats_coups_de_coeur') }}" class="sous-menu-link">
+            <h2>Coups de cœur</h2>
+        </a>
+
+        <a href="{{ url_for('stats_etoiles_montantes') }}" class="sous-menu-link">
+            <h2>Étoiles montantes</h2>
+        </a>
+    </div>
+
+
+
+</div>
+
 </body>
 </html>
