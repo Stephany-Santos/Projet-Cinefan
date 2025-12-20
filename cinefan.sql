@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS media CASCADE;
 DROP TABLE IF EXISTS artiste CASCADE;
 DROP TABLE IF EXISTS genre CASCADE;
 DROP TABLE IF EXISTS utilisateur CASCADE;
+DROP TABLE IF EXISTS media_genre CASCADE;
+
 
 -- CREATE TABLES
 CREATE TABLE genre (
@@ -84,4 +86,10 @@ CREATE TABLE participe (
     id_perso  INT DEFAULT 0 REFERENCES personnage(id_perso),
     role VARCHAR(50) NOT NULL,
     PRIMARY KEY (id_artiste, id_media, id_perso, role)
+);
+
+CREATE TABLE media_genre (
+    id_media INT REFERENCES media(id_media) ON DELETE CASCADE,
+    intitule_genre VARCHAR(50) REFERENCES genre(intitule) ON DELETE CASCADE,
+    PRIMARY KEY (id_media, intitule_genre)
 );
