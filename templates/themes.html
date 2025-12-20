@@ -1,12 +1,15 @@
+<!-- templates/themes.html -->
 <h1>Thèmes de séance cinéma</h1>
 <div class="ligne">
-    {% for media in categories %}
+    {% for theme in categories %}
     <div class="colonne-3">
         <div class="affiche">
-            {% if media.url_image %}
-            <img src="{{ media.url_image }}" alt="{{ media.alt }}">
-            {% endif %}
-            <h5>{{ media.titre }}</h5>
+            <a href="{{ url_for('genre_detail', genre_id=theme.id) }}">
+                {% if theme.url_image %}
+                    <img src="{{ theme.url_image }}" alt="{{ theme.alt }}">
+                {% endif %}
+                <h5>{{ theme.titre }}</h5>
+            </a>
         </div>
     </div>
     {% endfor %}
