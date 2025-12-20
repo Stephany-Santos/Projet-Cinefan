@@ -1,14 +1,53 @@
-{% extends "stats.html" %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Étoiles montantes - Statistiques</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+</head>
 
-{% block stats_content %}
-<h2>Les étoiles montantes</h2>
+<body>
+
+<!-- BANNIÈRE CINÉFAN -->
+<nav class="barre-de-navigation">
+    <div class="cadre-nav">
+        <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+        <div class="nav-right">
+            <a class="navig-mini" href="/commu">Communauté</a>
+            <a class="navig-mini" href="/stats">Statistiques</a>
+            <a class="navig-mini" href="/genres">Genres</a>
+
+            {% if UserConnecte == None %}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+            {% else %}
+                <a class="navig-mini" href="/profil">Profil</a>
+            {% endif %}
+
+            <form action="/search" method="get" class="barre-recherche">
+                <input type="text" name="q" placeholder="Rechercher">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Titre principal -->
+<h1>Étoiles montantes</h1>
+
+<!-- Contenu principal : liste des médias étoiles montantes -->
 <div class="stats-grid">
     {% for media in stats %}
         <div class="media-card">
+            {% if media.url_image %}
+                <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+            {% endif %}
             <h3>{{ media.titre }}</h3>
             <p>Note moyenne : {{ media.note_moyenne|round(2) }}</p>
             <p>Nombre de commentaires : {{ media.nb_comments }}</p>
         </div>
     {% endfor %}
 </div>
-{% endblock %}
+
+</body>
+</html>
