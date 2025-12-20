@@ -1,4 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les plus consultés - CinéFan</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="barre-de-navigation">
+    <div class="cadre-nav">
+        <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+        <div class="nav-right">
+            <a class="navig-mini" href="/commu">Communauté</a>
+            <a class="navig-mini" href="/stats">Statistiques</a>
+            <a class="navig-mini" href="/genres">Genres</a>
+
+            {% if UserConnecte == None %}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+            {% else %}
+                <a class="navig-mini" href="/profil">Profil</a>
+            {% endif %}
+
+            <form action="/search" method="get" class="barre-recherche">
+                <input type="text" name="q" placeholder="Rechercher">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
 <h1>Les plus consultés</h1>
+
 <div class="ligne">
     {% for media in top_consultes %}
     <div class="colonne-3">
@@ -13,3 +47,7 @@
     </div>
     {% endfor %}
 </div>
+
+</body>
+</html>
+
