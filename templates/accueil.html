@@ -26,29 +26,80 @@
             </div>
         </div>
     </nav>
+
+
     <div class="cadre">
-        <h1 class="titre">🎬 Films & Séries</h1>
-        <div class="ligne">
-            {% for media in medias %}
-            <div class="colonne-3">
-                <div class="affiche">
-                    <a href="/media/{{ media.id }}" class="cadre-media">
-                        <div class="cadre-media-image">
-                            {% if media.url_image %}
-                            <img src="{{ media.url_image }}" alt="{{ media.alt }}">
-                            {% else %}
-                            <div style="...">📺</div>
-                            {% endif %}
-                        </div>
-                    </a>
-                    <div class="cadre-media-contenu">
-                        <h5 class="...">{{ media.titre }}</h5>
-                        <p class="...">{{ media.genre }} • {{ media.parution }}</p>
-                    </div>
-                </div>
+        <!-- Section FILMS -->
+        <section class="section-accueil">
+            <div class="section-titre-ligne">
+                <h2 class="titre-section">🎬 Films</h2>
             </div>
-            {% endfor %}
-        </div>
+            <div class="grille-medias">
+                {% for media in films %}
+                <a href="/media/{{ media.id }}" class="cadre-media">
+                    <div class="cadre-media-image">
+                        {% if media.url_image %}
+                        <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                        {% else %}
+                        <div style="font-size: 48px;">📺</div>
+                        {% endif %}
+                    </div>
+                    <div class="cadre-media-contenu">
+                        <h3>{{ media.titre }}</h3>
+                        <div class="cadre-media-info">{{ media.genre }} • {{ media.parution }}</div>
+                        <div class="cadre-media-description">{{ media.description }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <button onclick="location.href='{{ url_for('liste_films') }}'" id="bouton">Voir plus</button>
+        </section>
+
+
+        <!-- Section SERIES -->
+        <section class="section-accueil">
+            <div class="section-titre-ligne">
+                <h2 class="titre-section">📺 Séries</h2>
+            </div>
+            <div class="grille-medias">
+                {% for media in series %}
+               <a href="/media/{{ media.id }}" class="cadre-media">
+                    <div class="cadre-media-image">
+                        {% if media.url_image %}
+                        <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                        {% else %}
+                        <div style="font-size: 48px;">📺</div>
+                        {% endif %}
+                    </div>
+                    <div class="cadre-media-contenu">
+                        <h3>{{ media.titre }}</h3>
+                        <div class="cadre-media-info">{{ media.genre }} • {{ media.parution }}</div>
+                        <div class="cadre-media-description">{{ media.description }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <button onclick="location.href='{{ url_for('liste_series') }}'" id="bouton">Voir plus</button>
+        </section>
+
+        <!-- Section ACTEURS -->
+        <section class="section-accueil">
+            <div class="section-titre-ligne">
+                <h2 class="titre-section">🎭 Artistes</h2>
+            </div>
+            <div class="grille-medias">
+                {% for artiste in artistes %}
+                <a href="/artiste/{{ artiste.id }}" class="cadre-media">
+                <div class="affiche">
+                    <div style="...">🎭</div>
+                    <h3>{{ artiste.prenom }} {{ artiste.nom }}</h3>
+                    <div style="...">Artiste</div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+            <button onclick="location.href='{{ url_for('liste_artistes') }}'" id="bouton">Voir plus</button>
+        </section>
     </div>
 </body>
 </html>
