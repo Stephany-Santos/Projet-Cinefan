@@ -9,25 +9,6 @@ conn.autocommit = True
 # password_ctx = CryptContext(schemes=['bcrypt'])
 app = Flask(__name__)
 app.secret_key = 'temp'
-
-def calcul_badge_activite(pseudo):
-    nb_comms = len(get.commUser(pseudo))
-    nb_favs = len(get.favs(pseudo))
-    activite = get.activityUser(pseudo)
-    nb_ajouts = sum(len(v) for v in activite.values()) if activite else 0
-
-    total = nb_comms + nb_favs + nb_ajouts
-
-    if total >= 50:
-        return {"emoji": "🏆", "label": "Meilleur contributeur"}
-    elif total >= 25:
-        return {"emoji": "🔥", "label": "Très actif"}
-    elif total >= 10:
-        return {"emoji": "✨", "label": "Actif"}
-    elif total >= 1:
-        return {"emoji": "🌱", "label": "Peu actif"}
-    else:
-        return {"emoji": "💤", "label": "Pas très actif"}
         
 
 @app.route("/")
@@ -129,6 +110,7 @@ def profilDe(pseudo):
                                comms = get.commUser(infos['pseudo']),
                                stats = filtre.critiques_per_user(infos['pseudo']),
                                activite = get.activityUser(infos['pseudo']),
+                               activiteBadge = filtre.calcul_badge_activite(infos['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
 
 @app.route("/profil", methods = ['POST', 'GET'])
@@ -140,6 +122,7 @@ def profil():
                                comms = get.commUser(session['active']['pseudo']),
                                stats = filtre.critiques_per_user(session['active']['pseudo']),
                                activite = get.activityUser(session['active']['pseudo']),
+                               activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
         if request.method == 'POST':

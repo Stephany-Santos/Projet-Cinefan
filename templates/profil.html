@@ -33,13 +33,16 @@
             <article id="basicInfo">
                 <div>
                     <h2>{{info.nom}}
+                        {{ activiteBadge.emoji }}
                         {%if info.typededompte == 'admin':%}
                         🛠️
                         {%elif info.typedecompte == 'source':%}
                         ✔️
                         {%endif%}
                     </h2>
-                    <p>@{{info.pseudo}}</p>
+                    <p>@{{info.pseudo}} - {{ activiteBadge.label }}</p>
+
+
                     {%if info.biographie == '': %}
                         <p>Pas de biographie pour le moment.</p>
                     {%else%}
