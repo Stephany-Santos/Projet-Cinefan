@@ -1,125 +1,109 @@
 <!doctype html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profil de {{info.nom}}</title>
+<title>Profil de {{ info.nom }}</title>
 <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="barre-de-navigation">
-        <div class="cadre-nav">
-            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
-            <div class="nav-right">
-                <a class="navig-mini" href="/commu">Communauté</a>
-                <a class="navig-mini" href="/stats">Statistiques</a>
-                <a class="navig-mini" href="/genres">Genres</a>
-                {%if UserConnecte==None%}
-                <a class="navig-mini" href="/profil">Se connecter</a>
-                {%else%}
-                <a class="navig-mini" href="/profil">Profil</a>
-                {%endif%}
-                <form action="/search" method="get" class="barre-recherche">
-                    <input type="text" name="q" placeholder="Rechercher">
-                    <button type="submit">🔍</button>
-                </form>
-            </div>
+
+<nav class="barre-de-navigation">
+    <div class="cadre-nav">
+        <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+        <div class="nav-right">
+            <a class="navig-mini" href="/commu">Communauté</a>
+            <a class="navig-mini" href="/stats">Statistiques</a>
+            <a class="navig-mini" href="/genres">Genres</a>
+            <a class="navig-mini" href="/profil">Profil</a>
         </div>
-    </nav>
-    <main class="mainPage">
-        <section class="userProfile">
-            <article id="basicInfo">
-                <div>
-                    <h2>{{info.nom}}</h2>
-                    <p>@{{info.pseudo}}</p>
-                    {%if info.biographie == '': %}
-                        <p>Pas de biographie pour le moment.</p>
-                    {%else%}
-                        <p>{{info.biographie}}</p>
-                    {%endif%}
-                </div>
-            </article>
-            <article id='favs'>
-                <h4>Favoris</h4>
-                {%if favs == []%}
-                    <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
-                {%else%}
-                {% for i in favs%}
-                    {%for media in i%}
-                        <div class="colonne-3">
-                                <div class="affiche">
-                                <a href="/media/{{ media.id }}" class="cadre-media">
-                                    <div class="cadre-media-image">
-                                        {% if media.url_image %}
-                                        <img src="{{ media.url_image }}" alt="{{ media.alt }}">
-                                        {% else %}
-                                        <div style="...">📺</div>
-                                        {% endif %}
-                                    </div>
-                                </a>
-                                <div class="cadre-media-contenu">
-                                    <h5 class="...">{{ media.titre }}</h5>
-                                    <p class="...">{{ media.genre }} • {{ media.parution }}</p>
+    </div>
+</nav>
+
+<main class="mainPage">
+
+<section class="userProfile">
+    <article id="basicInfo">
+        <div>
+            <h2>
+                {{ info.nom }}
+                <span title="{{ badge.label }}">{{ badge.emoji }}</span>
+            </h2>
+            <p>@{{ info.pseudo }}</p>
+            <p class="badge-label">{{ badge.label }}</p>
+
+            {% if info.biographie %}
+                <p>{{ info.biographie }}</p>
+            {% else %}
+                <p>Pas de biographie pour le moment.</p>
+            {% endif %}
+        </div>
+    </article>
+
+    <article id="favs">
+        <h4>Favoris</h4>
+
+        {% if favs == [] %}
+            <p>{{ info.nom }} n'a pas encore ajouté de favoris.</p>
+        {% else %}
+            {% for i in favs %}
+                {% for media in i %}
+                    <div class="colonne-3">
+                        <div class="affiche">
+                            <a href="/media/{{ media.id }}" class="cadre-media">
+                                <div class="cadre-media-image">
+                                    {% if media.lien %}
+                                        <img src="{{ media.lien }}" alt="{{ media.alt }}">
+                                    {% else %}
+                                        <div>📺</div>
+                                    {% endif %}
                                 </div>
+                            </a>
+                            <div class="cadre-media-contenu">
+                                <h5>{{ media.titre }}</h5>
+                                <p>{{ media.genre }} • {{ media.parution }}</p>
                             </div>
                         </div>
-                    {%endfor%}
-                    {%endfor%}
-                {%endif%}
-            </article>
-        </section>
-        {%if activite != []%}
-        <section class="activity" id="ajoutsCommu">
-            <h4>Ajouts</h4>
-            {%for cat, vals in activite.items()%}
-                {%for elt in vals%}
-                    <div class="commentaire">
-                        <p>{{elt.titre}}</p>
-                        <p><a href="/{{cat}}/{{elt.id}}">Voir plus</a></p>
                     </div>
-                {%endfor%}
-            {%endfor%}
-        </section>
-        {%endif%}
-        <aside class='activity'>
-            <button onclick="location.href='modifprofil'" id='bouton'>Modifier profil</button>
-            <br>    
-            <div>
-                <h4>Derniers commentaires</h4>
-                {%if comms == []%}
-                    <p>{{info.nom}} n'a pas encore commenté.</p>
-                {%else%}
-                    {%for elt in comms%}
-                        {%if elt.texte != '' or elt.texte != None%}
-                            <div class='commentaire'>
-                            <a href="/media/{{ elt.id }}"><b>{{elt.titre}}</b><a>
-                            <p>{{elt.date}} <p>
-                            <p><i>"{{elt.texte}}"</i><p>
-                            {%if elt.favori == TRUE%}
-                            <p>❤️ - Note : {{elt.note}}/5<p>
-                            {%else%}
-                            <p>Note : {{elt.note}}/5<p>
-                            {%endif%}
-                            </div>
-                        {%endif%}
-                    {%endfor%}
-                {%endif%}
-            </div>
-            <br>
-            <div>
-                <h4>Statistiques personelles </h4>
-                {%if stats == []%}
-                    <p>{{info.nom}} n'a pas assez d'activité pour avoir de statistiques.</p>
-                {%else%}
-                    {%for text in comms%}
-                        <p class='stats'> Cet utilisateur à laissé {{text.nombreDeCritiques }} commentaires.<p>
-                    {%endfor%}
-                {%endif%}
-            </div>
-            <button onclick="location.href='deconnexion'" id='bouton'>Se déconnecter</button>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </article>
+</section>
 
-        </aside>
-    </main>
+{% if activite != [] %}
+<section class="activity" id="ajoutsCommu">
+    <h4>Ajouts</h4>
+    {% for cat, vals in activite.items() %}
+        {% for elt in vals %}
+            <div class="commentaire">
+                <p>{{ elt.titre }}</p>
+                <p><a href="/{{ cat }}/{{ elt.id }}">Voir plus</a></p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</section>
+{% endif %}
+
+<aside class="activity">
+    <button onclick="location.href='modifprofil'" id="bouton">Modifier profil</button>
+
+    <h4>Derniers commentaires</h4>
+    {% for elt in comms %}
+        {% if elt.texte %}
+            <div class="commentaire">
+                <a href="/media/{{ elt.id }}"><b>{{ elt.titre }}</b></a>
+                <p>{{ elt.date }}</p>
+                <p><i>"{{ elt.texte }}"</i></p>
+                <p>Note : {{ elt.note }}/5</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <button onclick="location.href='deconnexion'" id="bouton">Se déconnecter</button>
+</aside>
+
+</main>
 </body>
 </html>
