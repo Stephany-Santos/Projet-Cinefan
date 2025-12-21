@@ -48,12 +48,13 @@
                     {%endif%}
                 </div>
             </article>
-            <article id='favs'>
-                <h4>Favoris</h4>
+            <h4 class="titre">Favoris</h4>
                 {%if favs == []%}
                     <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
                 {%else%}
-                {% for i in favs%}
+            <!-- <article id='favs'> -->
+                <div class = grille-medias>
+                {% for i in favs[:6]%}
                     <div class="grille-medias">
                         {%for media in i%}
                             <a href="/media/{{ media.id }}" class="cadre-media">
@@ -74,13 +75,14 @@
                         </div>
                     {%endfor%}
                 {%endif%}
-            </article>
+                </div>
+            <!-- </article> -->
         </section>
         {%if activite != []%}
         <section class="activity" id="ajoutsCommu">
             <h4>Ajouts</h4>
             {%for cat, vals in activite.items()%}
-                {%for elt in vals%}
+                {%for elt in vals[:8]%}
                     <div class="commentaire">
                         <p>{{elt.titre}}</p>
                         <p><a href="/{{cat}}/{{elt.id}}">Voir plus</a></p>

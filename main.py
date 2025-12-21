@@ -107,7 +107,7 @@ def profilDe(pseudo):
     return render_template("profilDe.html",
                                info = infos,
                                favs = get.favs(infos['pseudo']),
-                               comms = get.commUser(infos['pseudo']),
+                               comms = get.commUser(infos['pseudo'])[:5],
                                stats = filtre.critiques_per_user(infos['pseudo']),
                                activite = get.activityUser(infos['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(infos['pseudo']),
@@ -119,7 +119,7 @@ def profil():
         return render_template("profil.html",
                                info = session['active'],
                                favs = get.favs(session['active']['pseudo']),
-                               comms = get.commUser(session['active']['pseudo']),
+                               comms = get.commUser(session['active']['pseudo'])[:5],
                                stats = filtre.critiques_per_user(session['active']['pseudo']),
                                activite = get.activityUser(session['active']['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
@@ -131,13 +131,13 @@ def profil():
                 session['active']=u
                 app.secret_key = session['active']['mdp']
             if pass2 == app.secret_key:
-                print(filtre.critiques_per_user(session['active']['pseudo']))
                 return render_template("profil.html",
                                        info = session['active'],
                                        favs = get.favs(session['active']['pseudo']),
-                                       comms = get.commUser(session['active']['pseudo']),
+                                       comms = get.commUser(session['active']['pseudo'])[:5],
                                        stats = filtre.critiques_per_user(session['active']['pseudo']),
                                        activite = get.activityUser(session['active']['pseudo']),
+                                       activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
                                        UserConnecte = session['active']['nom'] if 'active' in session else None)
             else:
                 app.secret_key= None
