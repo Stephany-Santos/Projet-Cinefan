@@ -1081,10 +1081,6 @@ INSERT INTO personnage (nom, prenom, description, cree_par, media) VALUES
 ('Richard', 'Mary', 'Personnage dans Godzilla', 'julien', 200)
 ON CONFLICT DO NOTHING;
 
--- ===== IMAGES (Pexels - Libres de droits) =====
-
-
-SET client_encoding to UTF8;
 
 -- ===== IMAGES POUR MÉDIAS (Affiches de films/séries) =====
 

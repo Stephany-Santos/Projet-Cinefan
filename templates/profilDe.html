@@ -78,11 +78,16 @@
                 </div>
             <!-- </article> -->
         </section>
-        {%if activite != []%}
+        {%if ajouts != []%}
         <section class="activity" id="ajoutsCommu">
             <h4>Ajouts</h4>
+<<<<<<< HEAD
             {%for cat, vals in activite.items()%}
                 {%for elt in vals[:8]%}
+=======
+            {%for cat, vals in ajouts.items()%}
+                {%for elt in vals%}
+>>>>>>> 42705a222b260a8f7ee42bb7cfb80b0db2d9c8d3
                     <div class="commentaire">
                         <p>{{elt.titre}}</p>
                         <p><a href="/{{cat}}/{{elt.id}}">Voir plus</a></p>
@@ -125,8 +130,6 @@
                     {%endfor%}
                 {%endif%}
             </div>
-            <button onclick="location.href='deconnexion'" id='bouton'>Se déconnecter</button>
-
         </aside>
     </main>
 </body>

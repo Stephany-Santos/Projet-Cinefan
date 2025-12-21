@@ -109,7 +109,7 @@ def profilDe(pseudo):
                                favs = get.favs(infos['pseudo']),
                                comms = get.commUser(infos['pseudo'])[:5],
                                stats = filtre.critiques_per_user(infos['pseudo']),
-                               activite = get.activityUser(infos['pseudo']),
+                               ajouts = get.activityUser(infos['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(infos['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
 
@@ -121,7 +121,7 @@ def profil():
                                favs = get.favs(session['active']['pseudo']),
                                comms = get.commUser(session['active']['pseudo'])[:5],
                                stats = filtre.critiques_per_user(session['active']['pseudo']),
-                               activite = get.activityUser(session['active']['pseudo']),
+                               ajouts = get.activityUser(session['active']['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
