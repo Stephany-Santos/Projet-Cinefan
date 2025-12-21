@@ -16,6 +16,27 @@ def critiques_per_user(pseudo):
                          WHERE utilisateur = {pseudo}
                          GROUP BY utilisateur.pseudo""")
 
+def calcul_badge_activite(pseudo):
+    nb_comms = len(get.commUser(pseudo))
+    print(f"{get.commUser(pseudo)} : {nb_comms}")
+    nb_favs = len(get.favs(pseudo))
+    print(f"{get.favs(pseudo)} : {nb_favs}")
+    activite = get.activityUser(pseudo)
+    print(f"{get.activityUser(pseudo)} : {activite}")
+    nb_ajouts = sum(len(v) for v in activite.values()) if activite else 0
+
+    total = nb_comms + nb_favs + nb_ajouts
+
+    if total >= 50:
+        return {"emoji": "🏆", "label": "Meilleur contributeur.ice"}
+    elif total >= 25:
+        return {"emoji": "🔥", "label": "Très actif.ve"}
+    elif total >= 10:
+        return {"emoji": "✨", "label": "Actif.ve"}
+    elif total >= 1:
+        return {"emoji": "🌱", "label": "Peu actif.ve"}
+    else:
+        return {"emoji": "💤", "label": "Pas très actif.ve"}
 
 # -- Pour chaque acteur, le nombre de films de chaque genre dans lesquels il a joué,
 # -- trié par nombre de films descendant.
