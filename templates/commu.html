@@ -16,9 +16,9 @@
                 <a class="navig-mini" href="/stats">Statistiques</a>
                 <a class="navig-mini" href="/genres">Genres</a>
                 {%if UserConnecte==None%}
-                <a class="navig-mini" href="/profil">Se connecter</a>
+                <a class="navig-mini" href="/profil/">Se connecter</a>
                 {%else%}
-                <a class="navig-mini" href="/profil">Profil</a>
+                <a class="navig-mini" href="/profil/">Profil</a>
                 {%endif%}
                 <form action="/search" method="get" class="barre-recherche">
                     <input type="text" name="q" placeholder="Rechercher">
@@ -34,7 +34,7 @@
         <h4>Commentaires récents</h4>
         {%for elt in comms%}
             <div class="commentaire">
-                <p><a href="/media/{{elt.id_media}}">{{elt.titre}}</a> - @{{elt.utilisateur}}</p>
+                <p><a href="/media/{{elt.id_media}}">{{elt.titre}}</a> - <a href="/profilDe/{{elt.utilisateur}}">@{{elt.utilisateur}}</a></p>
                 <p>{{elt.date}}</p>
                 <p><i>"{{elt.texte}}"</i><p>
                 {%if elt.favori == TRUE%}
@@ -52,7 +52,7 @@
         <div class="colonne-3">
             <div class="">
                     <h5 class="..."><a href="/media/{{elt.id_media}}">{{ elt.titre }}</a></h5>
-                    <p>Ajouté par @{{elt.cree_par}}</p>
+                    <p>Ajouté par <a href="/profilDe/{{elt.cree_par}}">@{{elt.cree_par}}</a></p>
             </div>
 
         </div>

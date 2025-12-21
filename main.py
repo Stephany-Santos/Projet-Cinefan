@@ -31,7 +31,6 @@ def calcul_badge_activite(pseudo):
         
 
 @app.route('/')
-
 def accueil():
     return render_template("accueil.html", medias=get.all_media(), UserConnecte = session['active']['nom'] if 'active' in session else None,
                            favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
@@ -73,6 +72,17 @@ def deconnexion():
     session.pop('active', None)
     return redirect(url_for('accueil'))
 
+@app.route("/profilDe/<pseudo>")
+def profilDe(pseudo):
+    infos = get.info_user(pseudo)[0]
+    return render_template("profilDe.html",
+                               info = infos,
+                               favs = get.favs(infos['pseudo']),
+                               comms = get.commUser(infos['pseudo']),
+                               stats = filtre.critiques_per_user(infos['pseudo']),
+                               activite = get.activityUser(infos['pseudo']),
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
+
 @app.route("/profil", methods = ['POST', 'GET'])
 def profil():
     if 'active' in session: #si on est déjà connecté afficher le profil..?
@@ -102,9 +112,6 @@ def profil():
                 return redirect(url_for('login'))
         else:
             return redirect(url_for('login'))
-            
-    # hash_pw = "mdp crypté stocké!"
-    # password_ctx.verify("inputmdp", hash_pw)
 
 @app.route("/modifprofil")
 def modifprofil():

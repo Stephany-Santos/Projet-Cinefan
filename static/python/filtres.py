@@ -11,7 +11,6 @@ def critiques_per_user(pseudo):
     Return:
         int: Le nombre de critiques écrites par l'utilisateur
     '''
-    print(get.all_infos(f"SELECT COUNT(commente.utilisateur) AS nombreDeCritiques FROM utilisateur LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur WHERE utilisateur = {pseudo} GROUP BY utilisateur.pseudo"))
     return get.all_infos(f"""SELECT COUNT(commente.utilisateur) AS nombreDeCritiques
                          FROM utilisateur LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur
                          WHERE utilisateur = {pseudo}

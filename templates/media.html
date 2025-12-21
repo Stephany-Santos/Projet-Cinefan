@@ -83,11 +83,11 @@
                 {%for elt in comms%}
                     {%if elt.texte != '' or elt.texte != None%}
                         <div class='commentaire'>
-                        <p><b>@{{elt.utilisateur}}</b></p>
+                        <p><b><a href="/profilDe/{{elt.utilisateur}}">@{{elt.utilisateur}}</a></b></p>
                         <p>{{elt.date}} <p>
                         <p><i>"{{elt.texte}}"</i><p>
                         {%if elt.favori == TRUE%}
-                        <p>❤️ - Note : {{elt.note}}/5<p>
+                            <p>❤️ - Note : {{elt.note}}/5<p>
                         {%else%}
                         <p>Note : {{elt.note}}/5<p>
                         {%endif%}

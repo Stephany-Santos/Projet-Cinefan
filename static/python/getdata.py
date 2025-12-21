@@ -25,7 +25,6 @@ def all_infos(commande):
         for row in lignes:
             info = {colonnes[i]: row[i] for i in range(len(colonnes))}
             infos.append(info)
-        # print(infos)
         return infos
     
     except Exception as e:
@@ -253,7 +252,7 @@ def persos():
     '''Fonction récupérant tout les personnages'''
     return all_infos("""select * from personnage""")
 
-def favs(pseudo): #UNFINISHED
+def favs(pseudo):
     '''
     Récupère les médias favoris d'un utilisateur à partir de son pseudo
     Arguments:
@@ -274,8 +273,13 @@ def info_user(user_pseudo):
     Return:
         dictionnaire des informations de l'utilisateur
     '''
-    return all_infos(f"""
+    print(all_infos(f"""
         SELECT pseudo, mdp, nom, biographie 
+        FROM utilisateur
+        WHERE pseudo = '{user_pseudo}'
+    """))
+    return all_infos(f"""
+        SELECT pseudo, mdp, nom, biographie, typedecompte
         FROM utilisateur
         WHERE pseudo = '{user_pseudo}'
     """)
@@ -318,7 +322,6 @@ def activityUser(pseudo):
     
     if lst3!=[]:
         dico['artiste']=lst3
-    print(dico)
     return dico
 
 def commMedia(id):
