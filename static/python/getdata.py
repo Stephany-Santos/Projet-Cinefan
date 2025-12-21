@@ -273,11 +273,6 @@ def info_user(user_pseudo):
     Return:
         dictionnaire des informations de l'utilisateur
     '''
-    print(all_infos(f"""
-        SELECT pseudo, mdp, nom, biographie 
-        FROM utilisateur
-        WHERE pseudo = '{user_pseudo}'
-    """))
     return all_infos(f"""
         SELECT pseudo, mdp, nom, biographie, typedecompte
         FROM utilisateur

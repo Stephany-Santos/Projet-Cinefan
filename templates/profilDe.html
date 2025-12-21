@@ -77,10 +77,10 @@
                 {%endif%}
             </article>
         </section>
-        {%if activite != []%}
+        {%if ajouts != []%}
         <section class="activity" id="ajoutsCommu">
             <h4>Ajouts</h4>
-            {%for cat, vals in activite.items()%}
+            {%for cat, vals in ajouts.items()%}
                 {%for elt in vals%}
                     <div class="commentaire">
                         <p>{{elt.titre}}</p>
@@ -124,8 +124,6 @@
                     {%endfor%}
                 {%endif%}
             </div>
-            <button onclick="location.href='deconnexion'" id='bouton'>Se déconnecter</button>
-
         </aside>
     </main>
 </body>
