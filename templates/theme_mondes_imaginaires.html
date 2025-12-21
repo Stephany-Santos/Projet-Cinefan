@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mondes imaginaires - CinéFan</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="barre-de-navigation">
+    <div class="cadre-nav">
+        <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+        <div class="nav-right">
+            <a class="navig-mini" href="/commu">Communauté</a>
+            <a class="navig-mini" href="/stats">Statistiques</a>
+            <a class="navig-mini" href="/genres">Genres</a>
+
+            {% if UserConnecte == None %}
+                <a class="navig-mini" href="/profil">Se connecter</a>
+            {% else %}
+                <a class="navig-mini" href="/profil">Profil</a>
+            {% endif %}
+
+            <form action="/search" method="get" class="barre-recherche">
+                <input type="text" name="q" placeholder="Rechercher">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<h1>Mondes imaginaires</h1>
+
+<div class="ligne">
+    {% for media in medias %}
+    <div class="colonne-3">
+        <div class="affiche">
+            <a href="{{ url_for('detail_media', media_id=media.id) }}">
+                {% if media.url_image %}
+                    <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                {% endif %}
+                <h5>{{ media.titre }}</h5>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
