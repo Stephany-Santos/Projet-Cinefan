@@ -123,9 +123,7 @@ def profil():
                                info = session['active'],
                                favs = get.favs(session['active']['pseudo']),
                                comms = get.commUser(session['active']['pseudo']),
-                               stats = [filtre.critiques_per_user(session['active']['pseudo']),
-                                        filtre.critiques_per_genre(session['active']['pseudo']),
-                                        filtre.genrePref(session['active']['pseudo'])],
+                               stats = filtre.critiques_per_user(session['active']['pseudo']),
                                ajouts = get.activityUser(session['active']['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
@@ -136,13 +134,13 @@ def profil():
                 session['active']=u
                 app.secret_key = session['active']['mdp']
             if pass2 == app.secret_key:
-                print(filtre.critiques_per_user(session['active']['pseudo']))
                 return render_template("profil.html",
                                        info = session['active'],
                                        favs = get.favs(session['active']['pseudo']),
-                                       comms = get.commUser(session['active']['pseudo']),
+                                       comms = get.commUser(session['active']['pseudo'])[:5],
                                        stats = filtre.critiques_per_user(session['active']['pseudo']),
                                        activite = get.activityUser(session['active']['pseudo']),
+                                       activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
                                        UserConnecte = session['active']['nom'] if 'active' in session else None)
             else:
                 app.secret_key= None

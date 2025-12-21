@@ -50,40 +50,41 @@
                     {%endif%}
                 </div>
             </article>
-            <article id='favs'>
-                <h4>Favoris</h4>
-                {%if favs == []%}
-                    <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
-                {%else%}
-                {% for i in favs%}
-                    {%for media in i%}
-                        <div class="colonne-3">
-                                <div class="affiche">
-                                <a href="/media/{{ media.id }}" class="cadre-media">
-                                    <div class="cadre-media-image">
-                                        {% if media.url_image %}
-                                        <img src="{{ media.url_image }}" alt="{{ media.alt }}">
-                                        {% else %}
-                                        <div style="...">📺</div>
-                                        {% endif %}
-                                    </div>
-                                </a>
-                                <div class="cadre-media-contenu">
-                                    <h5 class="...">{{ media.titre }}</h5>
-                                    <p class="...">{{ media.genre }} • {{ media.parution }}</p>
+            <h4>Favoris</h4>
+            {%if favs == []%}
+                <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
+            {%else%}
+            <!-- <article id='favs'> -->
+                <div class = grille-medias>
+                {% for i in favs[:6]%}
+                    <div class="grille-medias">
+                        {%for media in i%}
+                            <a href="/media/{{ media.id }}" class="cadre-media">
+                                <div class="cadre-media-image">
+                                    {% if media.url_image %}
+                                    <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                                    {% else %}
+                                    <div style="font-size: 48px;">📺</div>
+                                    {% endif %}
                                 </div>
-                            </div>
+                                <div class="cadre-media-contenu">
+                                    <h3>{{ media.titre }}</h3>
+                                    <div class="cadre-media-info">{{ media.genre }} • {{ media.parution }}</div>
+                                    <div class="cadre-media-description">{{ media.description }}</div>
+                                </div>
+                            </a>
+                            {% endfor %}
                         </div>
                     {%endfor%}
-                    {%endfor%}
                 {%endif%}
-            </article>
+                </div>
+            <!-- </article> -->
         </section>
         {%if ajouts != []%}
         <section class="activity" id="ajoutsCommu">
             <h4>Ajouts</h4>
-            {%for cat, vals in ajouts.items()%}
-                {%for elt in vals%}
+            {%for cat, vals in activite.items()%}
+                {%for elt in vals[:8]%}
                     <div class="commentaire">
                         <p>{{elt.titre}}</p>
                         <p><a href="/{{cat}}/{{elt.id}}">Voir plus</a></p>
