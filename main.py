@@ -123,7 +123,9 @@ def profil():
                                info = session['active'],
                                favs = get.favs(session['active']['pseudo']),
                                comms = get.commUser(session['active']['pseudo']),
-                               stats = filtre.critiques_per_user(session['active']['pseudo']),
+                               stats = [filtre.critiques_per_user(session['active']['pseudo']),
+                                        filtre.critiques_per_genre(session['active']['pseudo']),
+                                        filtre.genrePref(session['active']['pseudo'])],
                                ajouts = get.activityUser(session['active']['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
