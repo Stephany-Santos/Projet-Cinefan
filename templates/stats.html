@@ -36,22 +36,62 @@
     <h1 class="titre">Statistiques</h1>
 
     <div class="sous-menu-genres">
-        <a href="{{ url_for('stats_mieux_notes') }}" class="sous-menu-link">
             <h2>Les mieux notés</h2>
-        </a>
+        <div class="ligne">
+            {% for media in notes %}
+            
+                <div class="colonne-3">
+                    <div class="commentaire">
+                    <h3>{{ media.titre }}</h3>
+                    <p>Note moyenne : {{ media.moyenne }}</p>
+                    <a href="/media/{{ media.id_media }}">Voir plus</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
-        <a href="{{ url_for('stats_plus_regardes') }}" class="sous-menu-link">
             <h2>Les plus regardés</h2>
-        </a>
+        <div class="ligne">
+            {% for media in regarde %}
+                <div class="colonne-3">
+                    <div class="commentaire">
+                    <h3>{{ media.titre }}</h3>
+                    <p>Nombre de consultations : {{ media.nb_vues }}</p>
+                    <a href="/media/{{ media.id_media }}">Voir plus</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
-        <a href="{{ url_for('stats_coups_de_coeur') }}" class="sous-menu-link">
             <h2>Coups de cœur</h2>
-        </a>
+        <div class="ligne">
+            {% for media in coeur %}
+            <div class="colonne-3">
+                <div class="commentaire">
+                <h3>{{ media.titre }}</h3>
+                <p>Nombre de favoris : {{ media.nb_fav }}</p>
+                <a href="/media/{{ media.id_media }}">Voir plus</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-        <a href="{{ url_for('stats_etoiles_montantes') }}" class="sous-menu-link">
+        <a href="{{ url_for('stats_etoiles_montantes') }}" >
             <h2>Étoiles montantes</h2>
         </a>
-    </div>
+        <div class="stats-grid">
+            {% for media in etoile %}
+                <div class="media-card">
+                    {% if media.url_image %}
+                        <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                    {% endif %}
+                    <h3>{{ media.titre }}</h3>
+                    <p>Note moyenne : {{ media.note_moyenne|round(2) }}</p>
+                    <p>Nombre de commentaires : {{ media.nb_comments }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
 
 
 

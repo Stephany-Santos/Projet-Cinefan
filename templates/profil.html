@@ -98,7 +98,7 @@
             <div>
                 <h4>Derniers commentaires</h4>
                 {%if comms == []%}
-                    <p>{{info.nom}} n'a pas encore commenté.</p>
+                    <p>Vous n'avez pas encore commenté.</p>
                 {%else%}
                     {%for elt in comms%}
                         {%if elt.texte != '' or elt.texte != None%}
@@ -120,10 +120,24 @@
             <div>
                 <h4>Statistiques personelles </h4>
                 {%if stats == []%}
-                    <p>{{info.nom}} n'a pas assez d'activité pour avoir de statistiques.</p>
+                    <p>Vous n'avez pas assez d'activité pour avoir de statistiques.</p>
                 {%else%}
-                    {%for text in comms%}
-                        <p class='stats'> Cet utilisateur à laissé {{text.nombreDeCritiques }} commentaires.<p>
+                    {%for text in stats[0]%}
+                        <p> Vous avez laissé {{ text.nombredecritiques }} commentaires,
+                    {%endfor%}
+                    {%if stats[1] != []%}
+                        {%for genre in stats[1]%}
+                         et votre genre le plus commenté est {{ genre.genre }} avec {{ genre.nombredecritiques }} commentaires!
+                        {%endfor%}
+                    {%endif%}
+                        </p>
+                    {%if stats[2] != []%}
+                        <p> Votre genre préféré est {{ stats[2].intitule_genre }} avec une moyenne de {{stats[2].moyenne_note}}/5.
+                    {%endif%}
+                {%endif%}
+                {%if ajouts[0] != {}%}
+                    {%for cat, vals in ajouts.items()%}
+                        <p class='stats'> Vous avez ajouté {{ vals|length }} {{ cat }}.<p>
                     {%endfor%}
                 {%endif%}
             </div>

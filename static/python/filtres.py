@@ -1,6 +1,3 @@
-# import psycopg2
-# import psycopg2.extras
-# import db as db
 import static.python.getdata as get
 
 def critiques_per_user(pseudo):
@@ -11,15 +8,46 @@ def critiques_per_user(pseudo):
     Return:
         int: Le nombre de critiques écrites par l'utilisateur
     '''
-    allCritiques = get.all_infos(f"""SELECT COUNT(commente.utilisateur) AS nombreDeCritiques
-                         FROM utilisateur LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur
-                         WHERE utilisateur = '{pseudo}'
-                         GROUP BY utilisateur.pseudo""")
-    
     return get.all_infos(f"""SELECT COUNT(commente.utilisateur) AS nombreDeCritiques
                          FROM utilisateur LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur
                          WHERE utilisateur = '{pseudo}'
                          GROUP BY utilisateur.pseudo""")
+
+def critiques_per_genre(pseudo):
+    '''
+    Récupère le nombre de critiques écrites par chaque membre du club pour chaque genre.
+    Arguments:
+        user (str): Le pseudo de l'utilisateur
+    Return:
+        list of dict: Liste des genres et du nombre de critiques écrites par l'utilisateur pour chaque genre
+    '''
+    return get.all_infos(f"""SELECT media.genre, COUNT(commente.utilisateur) AS nombreDeCritiques
+                         FROM utilisateur
+                         LEFT JOIN commente ON utilisateur.pseudo = commente.utilisateur
+                         LEFT JOIN media ON commente.id_media = media.id_media
+                         WHERE utilisateur.pseudo = '{pseudo}'
+                         GROUP BY media.genre
+                         ORDER BY nombreDeCritiques DESC
+                         LIMIT 1""")
+
+def genrePref(pseudo):
+    '''
+    Récupère le genre préféré d'un utilisateur en fonction du nombre de critiques écrites.
+    Arguments:
+        user (str): Le pseudo de l'utilisateur
+    Return:
+        dict: Le genre préféré et le nombre de critiques écrites pour ce genre
+    '''
+    result = get.all_infos(f"""SELECT mg.intitule_genre, ROUND(AVG(c.note), 1) as moyenne_note
+                            FROM commente c
+                            JOIN media m ON c.id_media = m.id_media
+                            JOIN media_genre mg ON m.id_media = mg.id_media
+                            WHERE c.utilisateur = '{pseudo}' 
+                            GROUP BY mg.intitule_genre
+                            ORDER BY moyenne_note DESC
+                            LIMIT 1;
+                            """)
+    return result[0] if result else None
 
 def calcul_badge_activite(pseudo):
     nb_comms = len(get.commUser(pseudo))

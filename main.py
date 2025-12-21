@@ -99,6 +99,7 @@ def login():
 @app.route("/deconnexion")
 def deconnexion():
     session.pop('active', None)
+    app.secret_key = ''
     return redirect(url_for('accueil'))
 
 @app.route("/profilDe/<pseudo>")
@@ -108,7 +109,9 @@ def profilDe(pseudo):
                                info = infos,
                                favs = get.favs(infos['pseudo']),
                                comms = get.commUser(infos['pseudo']),
-                               stats = filtre.critiques_per_user(infos['pseudo']),
+                               stats = [filtre.critiques_per_user(infos['pseudo']), 
+                                        filtre.critiques_per_genre(infos['pseudo']),
+                                        filtre.genrePref(infos['pseudo'])],
                                ajouts = get.activityUser(infos['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(infos['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
@@ -120,7 +123,9 @@ def profil():
                                info = session['active'],
                                favs = get.favs(session['active']['pseudo']),
                                comms = get.commUser(session['active']['pseudo']),
-                               stats = filtre.critiques_per_user(session['active']['pseudo']),
+                               stats = [filtre.critiques_per_user(session['active']['pseudo']),
+                                        filtre.critiques_per_genre(session['active']['pseudo']),
+                                        filtre.genrePref(session['active']['pseudo'])],
                                ajouts = get.activityUser(session['active']['pseudo']),
                                activiteBadge = filtre.calcul_badge_activite(session['active']['pseudo']),
                                UserConnecte = session['active']['nom'] if 'active' in session else None)
@@ -387,15 +392,16 @@ def genres():
         genres=genres,
         UserConnecte=session['active']['nom'] if 'active' in session else None
     )
+    
+@app.route("/genres/<genre>")
+def genre_page(genre):
+    medias = get.medias_by_genre(genre)
+    return render_template("genre_detail.html", medias=medias, genre=genre, UserConnecte=session['active']['nom'] if 'active' in session else None)
+
 @app.route("/themes")
 def themes_page():
     categories = get.themes(20)
     return render_template("themes.html", categories=categories, UserConnecte=session['active']['nom'] if 'active' in session else None)
-
-@app.route("/top-consultes")
-def top_consultes_page():
-    top_consultes = get.top_genres(20)
-    return render_template("top_consultes.html", top_consultes=top_consultes, UserConnecte=session['active']['nom'] if 'active' in session else None)
 
 @app.route("/genres/all")
 def genres_all():
@@ -409,25 +415,12 @@ def artistes():
 
 @app.route("/stats")
 def stats():
-    return render_template("stats.html", UserConnecte=session['active']['nom'] if 'active' in session else None)
-
-@app.route("/stats/mieux-notes")
-def stats_mieux_notes():
-    # récupère les médias les mieux notés
-    resultats = get.mieux_notes()  # fonction à créer dans getdata.py
-    return render_template("stats_mieux_notes.html", stats=resultats, sous_menu="mieux-notes",
-                           UserConnecte=session['active']['nom'] if 'active' in session else None)
-
-@app.route("/stats/plus-regardes")
-def stats_plus_regardes():
-    resultats = get.plus_regardes()
-    return render_template("stats_plus_regardes.html", stats=resultats, sous_menu="plus-regardes",
-                           UserConnecte=session['active']['nom'] if 'active' in session else None)
-
-@app.route("/stats/coups-de-coeur")
-def stats_coups_de_coeur():
-    resultats = get.coups_de_coeur()
-    return render_template("stats_coups_de_coeur.html", stats=resultats, sous_menu="coups-de-coeur",
+    print(get.etoiles_montantes())
+    return render_template("stats.html",
+                           notes=get.mieux_notes(),
+                            regarde=get.plus_regardes(),
+                            coeur=get.coups_de_coeur(),
+                            etoile=get.etoiles_montantes(),
                            UserConnecte=session['active']['nom'] if 'active' in session else None)
 
 @app.route("/stats/etoiles-montantes")

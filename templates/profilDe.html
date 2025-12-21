@@ -76,7 +76,7 @@
                 {%endif%}
             </article>
         </section>
-        {%if ajouts != []%}
+        {%if ajouts[0] != {}%}
         <section class="activity" id="ajoutsCommu">
             <h4>Ajouts</h4>
             {%for cat, vals in ajouts.items()%}
@@ -118,8 +118,24 @@
                 {%if stats == []%}
                     <p>{{info.nom}} n'a pas assez d'activité pour avoir de statistiques.</p>
                 {%else%}
-                    {%for text in comms%}
-                        <p class='stats'> Cet utilisateur à laissé {{text.nombreDeCritiques }} commentaires.<p>
+                    {%for text in stats[0]%}
+                        <p> {{info.nom}} à laissé {{ text.nombredecritiques }} commentaires,
+                    {%endfor%}
+                    {%if stats[1] != []%}
+                        {%for genre in stats[1]%}
+                         et son genre le plus commenté est {{ genre.genre }} avec {{ genre.nombredecritiques }} commentaires!
+                        {%endfor%}
+                    {%endif%}
+                        </p>
+                    {%if stats[2] != []%}
+                        <p> Son genre préféré est 
+                            {{ stats[2].intitule_genre }} avec une moyenne de {{stats[2].moyenne_note}}/5.
+                            
+                    {%endif%}
+                {%endif%}
+                {%if ajouts[0] != {}%}
+                    {%for cat, vals in ajouts.items()%}
+                        <p class='stats'> {{info.nom}} à ajouté {{ vals|length }} {{ cat }}.<p>
                     {%endfor%}
                 {%endif%}
             </div>

@@ -576,7 +576,7 @@ def derniersAjoutsImg():
     # --- Stats ---
 def mieux_notes(limit=10):
     return all_infos(f"""
-        SELECT m.id_media, m.titre, AVG(c.note) AS moyenne
+        SELECT m.id_media, m.titre, ROUND(AVG(c.note)) AS moyenne
         FROM media m
         JOIN commente c ON m.id_media = c.id_media
         GROUP BY m.id_media, m.titre
@@ -607,10 +607,10 @@ def coups_de_coeur(limit=10):
 
 def etoiles_montantes(limit=10):
     return all_infos(f"""
-        SELECT m.id_media, m.titre, AVG(c.note) AS moyenne
+        SELECT m.id_media, m.titre, (AVG(c.note)) AS moyenne
         FROM media m
         JOIN commente c ON m.id_media = c.id_media
-        WHERE c.date >= CURRENT_DATE - INTERVAL '30 days'
+        WHERE c.date >= CURRENT_DATE - INTERVAL '6 months'
         GROUP BY m.id_media, m.titre
         ORDER BY moyenne DESC
         LIMIT {limit};

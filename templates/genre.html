@@ -39,26 +39,27 @@
         </a>
 
         <div class="ligne">
-            {% for media in categories %}
+            {% for g in categories %}
             <div class="colonne-3">
-                <div class="affiche">
-                    <h5>{{ media.titre }}</h5>
-                    <a href="/media/{{ media.id_media }}">Voir plus</a>
+                <div class="commentaire">
+                    <h4>{{ g.intitule }}</h4>
+                    <div class="cadre-media-description">
+                        <p>{{ g.description }}</p>
+                    </div>
+                    <a href="/genres/{{ g.intitule }}">Voir plus</a>
                 </div>
             </div>
             {% endfor %}
         </div>
 
-        <a href="{{ url_for('top_consultes_page') }}" class="sous-menu-link">
             <h2>Les plus consultés</h2>
-        </a>
 
         <div class="ligne">
-            {% for media in top_consultes %}
+            {% for g in top_consultes %}
             <div class="colonne-3">
-                <div class="affiche">
-                    <h5>{{ media.titre }}</h5>
-                    <a href="/media/{{ media.id_media }}">Voir plus</a>
+                <div class="commentaire">
+                    <h4>{{ g.intitule }}</h4>
+                    <a href="/genre/{{ g.intitule }}">Voir plus</a>
                 </div>
             </div>
             {% endfor %}
