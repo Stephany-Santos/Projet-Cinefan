@@ -23,16 +23,8 @@ def critiques_per_user(pseudo):
 
 def calcul_badge_activite(pseudo):
     nb_comms = len(get.commUser(pseudo))
-<<<<<<< HEAD
-    # print(f"{get.commUser(pseudo)} : {nb_comms}")
-    nb_favs = len(get.favs(pseudo))
-    # print(f"{get.favs(pseudo)} : {nb_favs}")
-    activite = get.activityUser(pseudo)
-    # print(f"{get.activityUser(pseudo)} : {activite}")
-=======
     nb_favs = len(get.favs(pseudo))
     activite = get.activityUser(pseudo)
->>>>>>> 42705a222b260a8f7ee42bb7cfb80b0db2d9c8d3
     nb_ajouts = sum(len(v) for v in activite.values()) if activite else 0
 
     total = nb_comms + nb_favs + nb_ajouts
