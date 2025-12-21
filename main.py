@@ -404,6 +404,57 @@ def stats_etoiles_montantes():
     return render_template("stats_etoiles_montantes.html", stats=resultats, sous_menu="etoiles-montantes",
                            UserConnecte=session['active']['nom'] if 'active' in session else None)
 
+@app.route("/themes/horreur-psychologique")
+def theme_horreur_psychologique():
+    medias = get.medias_by_genres([
+        'Horreur',
+        'Thriller',
+        'Thriller Psychologique',
+        'Psychologique',
+        'Action-Horreur'
+    ])
+
+    return render_template(
+        "theme_horreur_psychologique.html",
+        medias=medias,
+        titre="Horreur et drames psychologiques",
+        UserConnecte=session['active']['nom'] if 'active' in session else None
+    )
+@app.route("/themes/comedies")
+def theme_comedies():
+    medias = get.medias_by_genres([
+        'Comédie',
+        'Comédie Romantique',
+        'Animation'
+    ])
+
+    return render_template(
+        "theme_comedies.html",
+        medias=medias,
+        titre="Comédies",
+        UserConnecte=session['active']['nom'] if 'active' in session else None
+    )
+
+
+@app.route("/themes/mondes-imaginaires")
+def theme_mondes_imaginaires():
+    medias = get.medias_by_genres([
+        'Science-Fiction',
+        'Fantasy',
+        'Cyberpunk',
+        'Steampunk',
+        'Super-héros',
+        'Magie Noire',
+        'Post-Apocalyptique'
+    ])
+
+    return render_template(
+        "theme_mondes_imaginaires.html",
+        medias=medias,
+        titre="Mondes imaginaires",
+        UserConnecte=session['active']['nom'] if 'active' in session else None
+    )
+
 
 if __name__ == '__main__':
     app.run(debug=True)
