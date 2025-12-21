@@ -160,8 +160,9 @@ def commenter(mediaId): #BUGUE TOUJUOURS UN PEU, DONT TOUCH IG???
             note = int(note)
         if 'active' in session:
             req, vals = '', ''
-            for favori in get.favs(session['active']['pseudo']):
-                if mediaId in favori:
+            favs = get.favs(session['active']['pseudo'])[0]['media'][0]
+            for favori in favs:
+                if mediaId == favori['id']:
                     req, vals= """update commente
                     set note = %s, texte = %s
                     where utilisateur = %s, id_media = %s""", (note, comm, session['active']['pseudo'], mediaId,)
@@ -199,23 +200,25 @@ def ajoutMedia():
         
         if suite == '' or suite is None:
             suite = None
-        # if get.favs(session['active']['pseudo'])[0]
-        req = """insert into media (titre, description, parution, type, genre, realise, suite, cree_par) 
-        values (%s, %s, %s, %s, %s, %s, %s, %s)
-        returning id_media"""
-        vals = (titre, desc, date, type_media, genre, realise, suite, session['active']['pseudo'])
+            req = """insert into media (titre, description, parution, type, genre, realise, suite, cree_par) 
+            values (%s, %s, %s, %s, %s, %s, %s, %s)
+            returning id_media"""
+            vals = (titre, desc, date, type_media, genre, realise, suite, session['active']['pseudo'])
+        
+        if request.form.get('imgAjout') == 'True':
+            lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
+            imgReq, imgVals = """insert into image (fichier, lien, alt, media, cree_par)
+                        values (%s,%s,%s, %s, %s )
+                        """, (fichier, lien, alt, idMedia, session['active']['pseudo'],)   
+        
         with conn.cursor() as cur:
             cur.execute(req, vals)
             idMedia = cur.fetchone()[0]
             cur.execute("""insert into participe (id_artiste, id_media, role)
                         values (%s, %s, %s)""", (realise, idMedia, 'Réalisateur'))
             if request.form.get('imgAjout') == 'True':
-                lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
-                imgReq, imgVals = """insert into image (fichier, lien, alt, media, cree_par)
-                            values (%s,%s,%s, %s, %s )
-                            """, (fichier, lien, alt, idMedia, session['active']['pseudo'],)
                 cur.execute(imgReq, imgVals)
-            conn.commit()
+                
         return redirect( url_for('commu'))
 
 @app.route("/ajoutArtiste", methods=['POST', 'GET'])
@@ -228,38 +231,92 @@ def ajoutArtiste():
     else:
         nom = request.form.get("nom")
         prenom = request.form.get("prenom")
-        participe = request.form.get("participe")
-        role = request.form.get("role")
-        if participe is None or participe == '':
-            participe = None
-        if role is None or role == '':
-            role = None
-        if nom is None or nom == '':
-            nom = None
-        req = """insert into artiste (nom, prenom, cree_par)
-                values (%s, %s, %s)
+        bio = request.form.get("desc")
+        req = """insert into artiste (nom, prenom, biographie, cree_par)
+                values (%s, %s, %s, %s)
                 returning id_artiste"""
-        vals  = (nom, prenom, session['active']['pseudo'],)
+        vals  = (nom if nom != '' else None, prenom, bio if bio !='' else None,session['active']['pseudo'],)
+        
         with conn.cursor() as cur:
             cur.execute(req, vals)
             idArtiste = cur.fetchone()[0]
-            if participe is not None or role is not None:
-                cur.execute("""insert into participe (id_artiste, id_media, role)
-                                values (%s, %s, %s)""", (idArtiste, participe, role,))
             if request.form.get('imgAjout') == 'True':
                 lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
                 imgReq, imgVals = """insert into image (fichier, lien, alt, artiste, cree_par)
                             values (%s,%s,%s, %s, %s )
                             """, (fichier, lien, alt, idArtiste, session['active']['pseudo'],)
                 cur.execute(imgReq, imgVals)
-            conn.commit()
-@app.route("/ajoutIPerso", methods=['POST', 'GET'])
+        return redirect( url_for('commu'))
+             
+
+@app.route("/ajoutPerso", methods=['POST', 'GET'])
 def ajoutPerso():    
     if request.method == 'GET':
-        return render_template("ajoutPerso.html", UserConnecte = session['active']['nom'] if 'active' in session else None)
+        return render_template("ajoutPerso.html",
+                               artistes = get.artiste(),
+                               medias = get.all_media(),
+                               role = get.artisteRole(),
+                               notice = '',
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
     else:
-        pass
-    
+        nom, prenom, bio = request.form.get('nom'), request.form.get('prenom'), request.form.get('desc')
+        a, m, r = request.form.get('artiste'), request.form.get('media'), request.form.get('role')
+        if a == '' and m == '' and r == '':
+             return render_template("ajoutPerso.html",
+                               artistes = get.artiste(),
+                               medias = get.all_media(),
+                               role = get.artisteRole(),
+                               notice = 'Veuillez connecter votre personnage à au moins une page.',
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
+        else:
+            req = """insert into personnage (nom, prenom, description, media, cree_par)
+                    values (%s,%s,%s, %s, %s)
+                    returning id_perso"""
+            vals = (nom, prenom, bio,
+                    m if m != '' else None,
+                    session['active']['pseudo'],)
+            
+            with conn.cursor() as cur:
+                cur.execute(req, vals)
+                idPerso = cur.fetchone()[0]
+                if request.form.get('imgAjout') == 'True':
+                    lien, fichier, alt = request.form.get('lien'), request.form.get('fichier'),request.form.get('alt')
+                    imgReq, imgVals = """insert into image (fichier, lien, alt, artiste, cree_par)
+                                values (%s,%s,%s, %s, %s )
+                                """, (fichier, lien, alt, idPerso, session['active']['pseudo'],)
+                    cur.execute(imgReq, imgVals)
+                cur.execute("""insert into participe (id_artiste, id_media, id_perso, role)
+                                values (%s, %s, %s, %s)""", (a if a != '' else None, m if m != '' else None, idPerso, r if r != '' else None,))
+                    
+            return redirect(url_for('commu'))
+@app.route("/ajoutImg", methods=['POST', 'GET'])
+def ajoutImg():    
+    if request.method == 'GET':
+        return render_template("ajoutImg.html",
+                               artistes = get.artiste(),
+                               medias = get.all_media(),
+                               persos = get.persos(),
+                               notice = '',
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
+    else:
+        lien, fichier, alt = request.form.get('lien'),request.form.get('fichier'),request.form.get('alt')
+        a, m, p = request.form.get('artiste'), request.form.get('media'), request.form.get('perso')
+        if a == '' and m == '' and p == '':
+             return render_template("ajoutImg.html",
+                               artistes = get.artiste(),
+                               medias = get.all_media(),
+                               persos = get.persos(),
+                               notice = 'Veuillez connecter votre image à au moins une page.',
+                               UserConnecte = session['active']['nom'] if 'active' in session else None)
+        else:
+            req = """insert into image (fichier, lien, alt, artiste, media, personnage, cree_par)
+                    values (%s,%s,%s, %s, %s, %s, %s )
+                    """
+            vals = (fichier, lien, alt, a if a != '' else None, m if m != '' else None, p if p != '' else None, session['active']['pseudo'],)
+            with conn.cursor() as cur:
+                cur.execute(req, vals)
+            return redirect(url_for('commu'))
+            
     
 @app.route("/genres")
 def genres():

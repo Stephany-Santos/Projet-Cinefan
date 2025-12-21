@@ -251,8 +251,7 @@ def artiste():
 
 def persos():
     '''Fonction récupérant tout les personnages'''
-    lst = all_infos("""select * from personange""")
-    return lst
+    return all_infos("""select * from personnage""")
 
 def favs(pseudo): #UNFINISHED
     '''
@@ -360,7 +359,11 @@ def artisteMedia(idMedia):
 
 def artisteRole():
     '''Fonction récupérant les différents rôles des artistes'''
-    return all_infos("""select distinct role from participe""")
+    dico = all_infos("""select distinct role from participe""")
+    lst = []
+    for d in dico:
+        lst.append(d['role'])
+    return lst
 
 def derniersAjouts():
     '''

@@ -33,7 +33,7 @@
         <input type="text" name="titre" id="titre" rows="5" cols="50" maxlength="100" required>
 
         <label for="desc">Description/Résumé</label>
-        <textarea type="text" name="desc" id="desc" row="5" cols="50"></textarea>
+        <textarea type="text" name="desc" id="desc" row="50" cols="50"></textarea>
 
         <label for="date">Date de Parution</label>
         <input type="date" name="date" id="date">
@@ -46,13 +46,13 @@
         </select>
 
         <label for="genre">Sélectionnez le genre de votre média</label>
-        <select name="genre" id="genre">
+        <select name="genre" id="genre" multiple size = "10" required>
             {%for g in genre%}
             <option value="{{g.intitule}}">{{g.intitule}}</option>
             {%endfor%}
         </select>
 
-        <label for="realise">Nom-Prénom du réalisateur</label>
+        <label for="realise">Réalisateur</label>
         <input type="text" list="realiseList" id="realise" name="realise">
         <datalist id="realiseList">
             {% for a in artiste %}
@@ -78,7 +78,7 @@
         <label for="fichier">Nom de fichier</label>
         <input type="text" name="fichier" id="fichier" maxlength="50">
 
-        <label for="fichier">Alt - descriptif cours de l'image</label>
+        <label for="fichier">Descriptif court de l'image</label>
         <input type="text" name="alt" id="alt">
         <p><input type="submit" value="Envoyer"> <input type="reset" value="Réinitialiser"></p>
         

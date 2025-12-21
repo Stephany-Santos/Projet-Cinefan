@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ajouter Artiste</title>
+<title>Ajouter Image</title>
 <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
 </head>
 
@@ -28,21 +28,11 @@
         </div>
     </nav>
 
-    <p class="titre">Ajouter un artiste</p>
-     <form  method="POST" action="ajoutArtiste" class="container-formulaire">
-        <label for="nom">Nom</label>
-        <input type="text" name="nom" id="nom" rows="5" cols="50" maxlength="100">
-
-        <label for="prenom">Prenom</label>
-        <input type="text" name="prenom" id="prenom" rows="5" cols="50" maxlength="100" required>
-        
-        <label for="desc">Biographie</label>
-        <textarea type="text" name="desc" id="desc" row="50" cols="50"></textarea>
-
-        <br>
-        <label for="imgAjout">Souhaitez-vous ajouter une image ? (Attention, les champs suivants ne seront pas pris en compte si vous ne cochez pas la case.)</label>
-        <input type="checkbox" name="imgAjout" id="imgAjout" value="True">
-
+    <p class="titre">Ajouter une image</p>
+    {%if notice != ''%}
+        <p>{{ notice }}</p>
+    {%endif%}
+     <form  method="POST" action="ajoutImg" class="container-formulaire">
         <label for="fichier">Lien de l'image</label>
         <input type="url" name="lien" id="lien">
 
@@ -51,8 +41,32 @@
 
         <label for="fichier">Descriptif court de l'image</label>
         <input type="text" name="alt" id="alt">
-        <p><input type="submit" value="Envoyer"> <input type="reset" value="Réinitialiser"></p>
         
+        <label for="artiste">Artiste</label>
+        <input type="text" list="artisteList" id="artiste" name="artiste">
+        <datalist id="artisteList">
+            {% for a in artistes %}
+                <option value="{{ a.id_artiste }}">{{ a.nom }} {{ a.prenom }}</option>
+            {% endfor %}
+        </datalist>
+
+        <label for="media">Film/Série</label>
+        <input type="text" list="mediaList" id="media" name="media">
+        <datalist id="mediaList">
+            {% for m in medias %}
+                <option value="{{ m.id }}">{{ m.titre }}</option>
+            {% endfor %}
+        </datalist>
+
+        <label for="personnage">Personnage</label>
+        <input type="text" list="persoList" id="perso" name="perso">
+        <datalist id="persoList">
+            {% for p in persos %}
+                <option value="{{ p.id_perso }}">{{ p.nom }} {{ p.prenom }}</option>
+            {% endfor %}
+        </datalist>
+        <p><input type="submit" value="Envoyer"> <input type="reset" value="Réinitialiser"></p>
+
     </form>
 </body>
 </html>

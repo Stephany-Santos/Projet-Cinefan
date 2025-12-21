@@ -1,7 +1,7 @@
 * {
     margin: 0;         
     padding: 0;         
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 corps {
@@ -140,8 +140,8 @@ corps {
 .container-formulaire {
     gap: 1rem;
     display: flex;
-    /* flex:content; */
-    flex-direction: column;
+    flex-flow : column wrap;
+    justify-content: center;
     margin: 5%;
     margin-top: 2%;
     max-width: 75%;
@@ -220,4 +220,21 @@ corps {
     padding: 1.5rem;
     background-color: '#F7EDEB';
     display: flex-box;
+}
+
+/* Détails pour ajout média */
+.tag {
+    display: inline-block;
+    background: palegoldenrod;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 3px;
+}
+.tag button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
 }
