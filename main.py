@@ -30,18 +30,66 @@ def calcul_badge_activite(pseudo):
         return {"emoji": "💤", "label": "Pas très actif"}
         
 
-@app.route('/')
+@app.route("/")
 def accueil():
-    return render_template("accueil.html", medias=get.all_media(), UserConnecte = session['active']['nom'] if 'active' in session else None,
-                           favs = get.favs(session['active']['pseudo']) if 'active' in session else [])
+    medias = get.all_media()
+    artistes_ = get.all_artistes()
+
+    films  = [m for m in medias if m["type"] == "Film"][:12]
+    series = [m for m in medias if m["type"] == "Série"][:12]
+    artistes = [m for m in artistes_][:12]
+
+    return render_template("accueil.html", films=films, series=series, artistes=artistes,
+            UserConnecte=session['active']['nom'] if 'active' in session else None, 
+            favs=get.favs(session['active']['pseudo']) if 'active' in session else [])
 
 @app.route('/media/<int:media_id>')
 def detail_media(media_id):
     for media in get.infos_media(media_id):
         return render_template(
             "media.html", media=media, comms=get.commMedia(media_id), personnages=get.personnage_infos(media_id), realisateurs=get.realisateurs_media(media_id),
-            UserConnecte=session['active']['nom'] if 'active' in session else None, favs=get.favs(session['active']['pseudo']) if 'active' in session else []
-        )
+            UserConnecte=session['active']['nom'] if 'active' in session else None, 
+            favs=get.favs(session['active']['pseudo']) if 'active' in session else [])
+
+
+@app.route("/films")
+def liste_films():
+    page = request.args.get("page", 1, type=int)
+    par_page = 25
+
+    total = get.nb_films()
+    films = get.films_page(page=page, par_page=par_page)
+    total_pages = (total + par_page - 1) // par_page
+
+    return render_template("liste_films.html",films=films, page=page, total_pages=total_pages,
+            UserConnecte=session['active']['nom'] if 'active' in session else None, 
+            favs=get.favs(session['active']['pseudo']) if 'active' in session else [])
+
+@app.route("/series")
+def liste_series():
+    page = request.args.get("page", 1, type=int)
+    par_page = 25
+
+    total = get.nb_series()
+    series = get.series_page(page=page, par_page=par_page)
+    total_pages = (total + par_page - 1) // par_page
+
+    return render_template("liste_series.html", series=series,page=page, total_pages=total_pages,
+            UserConnecte=session['active']['nom'] if 'active' in session else None, 
+            favs=get.favs(session['active']['pseudo']) if 'active' in session else [])
+
+@app.route("/artistes")
+def liste_artistes():
+    page = request.args.get("page", 1, type=int)
+    par_page = 25
+
+    total = get.nb_artistes()
+    artistes = get.artistes_page(page=page, par_page=par_page)
+    total_pages = (total + par_page - 1) // par_page
+
+    return render_template("liste_artistes.html", artistes=artistes,page=page,total_pages=total_pages,
+            UserConnecte=session['active']['nom'] if 'active' in session else None, 
+            favs=get.favs(session['active']['pseudo']) if 'active' in session else [])
     
 @app.route('/artiste/<int:artiste_id>')
 def detail_artiste(artiste_id):
@@ -100,6 +148,7 @@ def profil():
                 session['active']=u
                 app.secret_key = session['active']['mdp']
             if pass2 == app.secret_key:
+                print(filtre.critiques_per_user(session['active']['pseudo']))
                 return render_template("profil.html",
                                        info = session['active'],
                                        favs = get.favs(session['active']['pseudo']),

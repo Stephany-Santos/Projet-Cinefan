@@ -1,7 +1,7 @@
 * {
     margin: 0;         
     padding: 0;         
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
 }
 
 corps {
@@ -11,27 +11,27 @@ corps {
     background-color: #f8f9fa;
 }
 
-.barre-de-navigation {
-    background-color: #212529; 
-    padding: 1rem 0;         
-}
 
-.struct-de-navigation {
-    font-size: 1.5rem;               
-    font-weight: bold;           
-    color: #fff;             
-    text-decoration: none;         
+.barre-de-navigation {
+    background: #212529;
+    padding: 0.8rem 0;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    top: 0;
+    z-index: 10;
 }
 
 .cadre-nav {
+    max-width: 1450px;
+    margin: 0 auto;
+    /* padding: 0 1.5rem; */
     display: flex;
-    align-items: center;
+    /* align-items: center; */
 }
 
-.navig-mini {
-    font-size: 1rem;               
-    font-weight: bold;           
-    color: #fff;             
+.struct-de-navigation {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -42,10 +42,77 @@ corps {
     gap: 12px;
 }
 
-.barre-recherche input {
-    width: 160px;
+.navig-mini {
+    font-size: 1rem;
+    font-weight: 550;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.3rem 0.3rem;
+    border-radius: 999px;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
+.navig-mini:hover {
+    background-color: rgba(37, 99, 235, 0.1);
+    color: #1e51df;
+    transform: translateY(-1px);
+}
+
+.page-navig {
+    font-size: 1rem;
+    font-weight: 550;
+    color: #000000;
+    text-decoration: none;
+    padding: 0.3rem 0.5rem;
+    border-radius: 999px;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.page-navig:hover {
+    background-color: rgba(37, 99, 235, 0.1);
+    color: #0d00ff;
+    transform: translateY(-1px);
+}
+
+.page-actuelle {
+    background-color: rgba(37, 99, 235, 0.1);
+    padding: 0.3rem 0.5rem;
+    border-radius: 999px;
+}
+
+.barre-recherche input {
+    width: 180px;
+}
+
+/* --------- Grille globale / layout --------- */
+
+.mainPage {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr;
+    gap: 2rem;
+}
+
+/* --------- Titres --------- */
+
+.titre {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #111827;
+    text-align: center;
+    margin: 2rem 0 0.5rem;
+}
+
+.style-titre {
+    color: #111827;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    padding: 25px 0 0;
+}
+
+/* --------- Conteneurs --------- */
 
 .cadre {
     max-width: 1500px;
@@ -53,10 +120,106 @@ corps {
     padding: 0 1rem;
 }
 
-.style-titre {
-    color: #212529;
-    margin-bottom: 2rem;
-    font-weight: 600;
+.grille-medias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.cadre-media {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.cadre-media:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+.cadre-media.cadre-media--no-hover:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
+.cadre-media-image {
+    width: 100%;
+    height: 350px;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cadre-media-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cadre-media-contenu {
+    padding: 15px;
+}
+
+.cadre-media h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+.cadre-media-info {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.cadre-media-description {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cadre-artiste-perso {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.cadre-artiste-perso:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.cadre-artiste-perso h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.cadre-artiste-perso-info {
+    font-size: 15px;
+    color: #000000;
+    margin-top: 8px;
+    font-style: italic;
 }
 
 .ligne {
@@ -94,122 +257,65 @@ corps {
     }
 }
 
-.affiche {
-    background: white; 
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-    overflow: hidden;
-    max-width: 250px;
-    max-height: 375px;
-    img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+/* --------- cadres “affiche” --------- */
 
-.afficheFavProfil{
-    background: white; 
+.affiche,
+.afficheFavProfil {
+    background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     overflow: hidden;
     max-width: 250px;
-    height: 30%;              
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.2s ease;
+    border: 1px solid #e5e7eb;
 }
 
-.affiche:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+.affiche {
+    height: 100%;
 }
 
+.afficheFavProfil {
+    height: auto;
+}
+
+.affiche:hover,
 .afficheFavProfil:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    /* border-color: #60a5fa; */
 }
 
-.titre {
-    font-size: 2rem;               
-    font-weight: bold;           
-    color: #212529;             
-    text-align: center;         
-    margin: 2rem 0;
-}
+/* --------- Formulaires --------- */
 
 .container-formulaire {
-    gap: 1rem;
     display: flex;
-    flex-flow : column wrap;
-    justify-content: center;
+    flex-direction: column;
     margin: 5%;
     margin-top: 2%;
-    max-width: 75%;
 }
 
-.mainPage {
-    display: flex;
-    column-gap: 2rem;
-    justify-content: space-between;
-    margin:5%;
-}
+/* --------- Profil utilisateur --------- */
 
 .userProfile {
     height: 100%;
     width: 100%;
-    display:inline-table;
+    display: inline-table;
     column-gap: 2rem;
     justify-content: space-between;
 }
 
-#basicInfo {
-    width: 100%;
-    height: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    background-color: '#F7EDEB';
-}
-
+#basicInfo,
 #favs {
     width: 100%;
     height: 50%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 10px;
+    border-radius: 14px;
     padding: 1.5rem;
-    margin-top: 1.5rem;
-    background-color: '#F7EDEB';
-    /* display: flex;
-    flex-wrap: wrap;
-    gap: 1rem; */
+    margin-bottom: 1.5rem;
+    background: #ffffff;
 }
 
-.activity {
-    width: 30%;
-    max-width: 350px;
-    margin: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    padding: 1.5rem;
-    background-color: '#F7EDEB';
-}
-
-.commentaire {
-    margin-top: 1rem;;
-    margin-bottom: 1rem;;
-}
-
-#ProfilBouton {
-    width: 70%;
-    padding: 0.75rem;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    margin: 0 auto;
-    display: block;
-    cursor: pointer;
-}
+/* --------- Blocs de la page communauté --------- */
 
 .communaute{
     width: 95%;
@@ -222,19 +328,105 @@ corps {
     display: flex-box;
 }
 
-/* Détails pour ajout média */
-.tag {
-    display: inline-block;
-    background: palegoldenrod;
-    color: white;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 3px;
+.activity {
+    width: 30%;
+    max-width: 350px;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: '#F7EDEB';
 }
-.tag button {
-    background: none;
+
+.menuCreer {
+    box-shadow: 0 8px 24px rgba(35, 39, 50, 0.06);
+    border-radius: 16px;
+    padding: 1.5rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+.communaute {
+    width: 100%;
+}
+
+.activity {
+    width: 100%;
+    max-width: 350px;
+    margin: 0;
+}
+
+/* précision pour l’ID si besoin */
+#ajoutsCommu {
+    width: 100%;
+}
+
+/* colonne “participer” */
+.menuCreer {
+    width: 100%;
+    max-width: 400px;
+    margin: 0;
+    text-align: center;
+}
+
+/* --------- Commentaires --------- */
+
+.commentaire {
+    margin: 1rem 0;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    background: #f1f1f1;
+    /* border-left: 4px solid #3b82f6; */
+    box-shadow: 0 4px 10px rgba(232, 239, 255, 0.06);
+}
+
+.commentaire a {
+    color: #111827;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.commentaire a:hover {
+    text-decoration: underline;
+}
+
+.commentaire p {
+    color: #374151;
+}
+
+/* --------- Boutons --------- */
+
+#bouton {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1a3b70, #353681);
     border: none;
-    color: white;
+    border-radius: 999px;
+    margin: 0.4rem auto;
+    display: block;
     cursor: pointer;
-    margin-left: 5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+#bouton:hover {
+    transform: translateY(-0.5px);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.18);
+    background: linear-gradient(135deg, #2058cf, #423cc2);
+}
+
+/* --------- Responsive layout communauté --------- */
+
+@media (max-width: 900px) {
+    .mainPage {
+        grid-template-columns: 1fr;
+    }
+
+    .activity,
+    .menuCreer {
+        width: 100%;
+        max-width: 100%;
+    }
 }

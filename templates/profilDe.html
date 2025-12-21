@@ -53,25 +53,24 @@
                     <p>{{info.nom}} n'a pas encore ajouté de favoris.</p>
                 {%else%}
                 {% for i in favs%}
-                    {%for media in i%}
-                        <div class="colonne-3">
-                                <div class="affiche">
-                                <a href="/media/{{ media.id }}" class="cadre-media">
-                                    <div class="cadre-media-image">
-                                        {% if media.url_image %}
-                                        <img src="{{ media.url_image }}" alt="{{ media.alt }}">
-                                        {% else %}
-                                        <div style="...">📺</div>
-                                        {% endif %}
-                                    </div>
-                                </a>
-                                <div class="cadre-media-contenu">
-                                    <h5 class="...">{{ media.titre }}</h5>
-                                    <p class="...">{{ media.genre }} • {{ media.parution }}</p>
+                    <div class="grille-medias">
+                        {%for media in i%}
+                            <a href="/media/{{ media.id }}" class="cadre-media">
+                                <div class="cadre-media-image">
+                                    {% if media.url_image %}
+                                    <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                                    {% else %}
+                                    <div style="font-size: 48px;">📺</div>
+                                    {% endif %}
                                 </div>
-                            </div>
+                                <div class="cadre-media-contenu">
+                                    <h3>{{ media.titre }}</h3>
+                                    <div class="cadre-media-info">{{ media.genre }} • {{ media.parution }}</div>
+                                    <div class="cadre-media-description">{{ media.description }}</div>
+                                </div>
+                            </a>
+                            {% endfor %}
                         </div>
-                    {%endfor%}
                     {%endfor%}
                 {%endif%}
             </article>

@@ -74,6 +74,20 @@ def infos_media(media_id):
         WHERE m.id_media = {media_id};
     """)
 
+def all_artistes():
+    return all_infos(f"""
+        SELECT
+            a.id_artiste AS id,
+            a.nom, a.prenom, a.biographie,
+            i.fichier AS nom_image,
+            i.lien AS url_image,
+            i.alt AS alt,
+            p.role
+        from artiste a
+        left join image i on a.id_artiste = i.artiste
+        left join participe p on a.id_artiste = p.id_artiste
+    """)
+
 def infos_artiste(artiste_id):
     '''
     Récupère les infos d'un artiste spécifique
@@ -85,7 +99,7 @@ def infos_artiste(artiste_id):
     return all_infos(f"""
         SELECT
             a.id_artiste AS id,
-            a.nom, a.prenom,
+            a.nom, a.prenom, a.biographie,
             i.fichier AS nom_image,
             i.lien AS url_image,
             i.alt AS alt
@@ -193,6 +207,181 @@ def realisateurs_media(media_id):
         JOIN artiste a ON m.realise = a.id_artiste
         WHERE m.id_media = {media_id};
     """)
+
+def films_home(limit=10):
+    return all_infos(f"""
+        SELECT DISTINCT
+            m.id_media AS id,
+            m.titre, m.description,
+            m.parution, m.type, m.genre,
+            i.fichier AS nom_image,
+            i.lien AS url_image,
+            i.alt AS alt,
+        from media m
+        left join image i on m.id_media = i.media
+        WHERE LOWER(m.type) LIKE LOWER('%Film%')
+        order by m.id_media desc
+        limit {limit}
+    """)
+
+def nb_films():
+    res = all_infos("""
+        SELECT COUNT(*) AS nb
+        FROM media m
+        WHERE LOWER(m.type) LIKE LOWER('%Film%')
+    """)
+    return res[0]["nb"]
+
+
+def films_page(page=1, par_page=25):
+    offset = (page - 1) * par_page
+    return all_infos(f"""
+        SELECT DISTINCT
+            m.id_media AS id,
+            m.titre,
+            m.description,
+            m.parution,
+            m.type,
+            m.genre,
+            i.fichier AS nom_image,
+            i.lien    AS url_image,
+            i.alt     AS alt
+        FROM media m
+        LEFT JOIN image i ON m.id_media = i.media
+        WHERE LOWER(m.type) LIKE LOWER('%Film%')
+        ORDER BY m.id_media DESC
+        LIMIT {par_page} OFFSET {offset};
+    """)
+
+
+def series_home(limit=10):
+    return all_infos(f"""
+        select
+            m.id_media as id,
+            m.titre,
+            m.parution,
+            g.nom_genre as genre,
+            i.lien as url_image,
+            i.alt as alt
+        from media m
+        left join genre g on m.genre = g.id_genre
+        left join image i on m.id_media = i.media
+        WHERE LOWER(m.type) LIKE LOWER('%Série%')
+        order by m.id_media desc
+        limit {limit}
+    """)
+
+def nb_series():
+    res = all_infos("""
+        SELECT COUNT(*) AS nb
+        FROM media m
+        WHERE LOWER(m.type) LIKE LOWER('%Série%')
+    """)
+    return res[0]["nb"]
+
+
+def series_page(page=1, par_page=25):
+    offset = (page - 1) * par_page
+    return all_infos(f"""
+        SELECT DISTINCT
+            m.id_media AS id,
+            m.titre, m.description, m.parution,
+            m.type, m.genre,
+            i.fichier AS nom_image,
+            i.lien    AS url_image,
+            i.alt     AS alt
+        FROM media m
+        LEFT JOIN image i ON m.id_media = i.media
+        WHERE LOWER(m.type) LIKE LOWER('%Série%')
+        ORDER BY m.id_media DESC
+        LIMIT {par_page} OFFSET {offset};
+    """)
+
+def artistes_home(limit=10):
+    return all_infos(f"""
+        select
+            a.id_artiste as id,
+            a.prenom, a.nom,
+            i.lien as url_image,
+            i.alt as alt,
+            p.role
+        from artiste a
+        left join image i on a.id_artiste = i.artiste
+        left join participe p on a.id_artiste = p.id_artiste
+
+        order by a.id_artiste desc
+        limit {limit}
+    """)
+
+def nb_artistes():
+    res = all_infos("""
+        SELECT COUNT(DISTINCT a.id_artiste) AS nb
+        FROM artiste a
+        left join participe p on a.id_artiste = p.id_artiste
+    """)
+    return res[0]["nb"]
+
+
+def artistes_page(page=1, par_page=25):
+    offset = (page - 1) * par_page
+    return all_infos(f"""
+        SELECT DISTINCT
+            a.id_artiste AS id,
+            a.prenom, a.nom,
+            i.fichier AS nom_image,
+            i.lien    AS url_image,
+            i.alt     AS alt
+        FROM artiste a
+        LEFT JOIN image i ON a.id_artiste = i.artiste
+        ORDER BY a.id_artiste DESC
+        LIMIT {par_page} OFFSET {offset};
+    """)
+
+
+def realisateurs_home(limit=10):
+    return all_infos(f"""
+        select
+            a.id_artiste as id,
+            a.prenom,
+            a.nom,
+            i.lien as url_image,
+            i.alt as alt
+        from artiste a
+        left join image i on a.id_artiste = i.artiste
+        where a.type_artiste = 'realisateur'
+        order by a.id_artiste desc
+        limit {limit}
+    """)
+
+def nb_realisateurs():
+    res = all_infos("""
+        SELECT COUNT(DISTINCT a.id_artiste) AS nb
+        FROM artiste a
+        JOIN participe pa ON pa.id_artiste = a.id_artiste
+        WHERE pa.role LIKE 'Realisateur %';
+    """)
+    return res[0]["nb"]
+
+
+def realisateurs_page(page=1, par_page=25):
+    offset = (page - 1) * par_page
+    return all_infos(f"""
+        SELECT DISTINCT
+            a.id_artiste AS id,
+            a.prenom,
+            a.nom,
+            pa.role,
+            i.fichier AS nom_image,
+            i.lien    AS url_image,
+            i.alt     AS alt
+        FROM artiste a
+        JOIN participe pa ON pa.id_artiste = a.id_artiste
+        LEFT JOIN image i ON a.id_artiste = i.artiste
+        WHERE pa.role LIKE 'Realisateur %%'
+        ORDER BY a.id_artiste DESC
+        LIMIT {par_page} OFFSET {offset};
+    """)
+
 
 
 def typeMedia():

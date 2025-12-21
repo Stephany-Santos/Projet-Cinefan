@@ -1,0 +1,240 @@
+* {
+    margin: 0;         
+    padding: 0;         
+    /* box-sizing: border-box; */
+}
+
+corps {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    line-height: 1.5; 
+    color: #333;          
+    background-color: #f8f9fa;
+}
+
+.barre-de-navigation {
+    background-color: #212529; 
+    padding: 1rem 0;         
+}
+
+.struct-de-navigation {
+    font-size: 1.5rem;               
+    font-weight: bold;           
+    color: #fff;             
+    text-decoration: none;         
+}
+
+.cadre-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navig-mini {
+    font-size: 1rem;               
+    font-weight: bold;           
+    color: #fff;             
+    text-decoration: none;
+}
+
+.nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.barre-recherche input {
+    width: 160px;
+}
+
+
+.cadre {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.style-titre {
+    color: #212529;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.ligne {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem;
+}
+
+.colonne-3 {
+    flex: 0 0 20%;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.colonne-4 {
+    flex: 0 0 33%;
+}
+
+.colonne-8 {
+    flex: 0 0 66%;
+}
+
+@media (max-width: 768px) {
+    .colonne-3 {
+        flex: 0 0 50%;
+    }
+    .colonne-4, .colonne-8 {
+        flex: 0 0 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .colonne-3 {
+        flex: 0 0 50%;
+    }
+}
+
+.affiche {
+    background: white; 
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    overflow: hidden;
+    max-width: 250px;
+    max-height: 375px;
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.afficheFavProfil{
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    overflow: hidden;
+    max-width: 250px;
+    height: 30%;              
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.affiche:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+}
+
+.afficheFavProfil:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+}
+
+.titre {
+    font-size: 2rem;               
+    font-weight: bold;           
+    color: #212529;             
+    text-align: center;         
+    margin: 2rem 0;
+}
+
+.container-formulaire {
+    gap: 1rem;
+    display: flex;
+    flex-flow : column wrap;
+    justify-content: center;
+    margin: 5%;
+    margin-top: 2%;
+    max-width: 75%;
+}
+
+.mainPage {
+    display: flex;
+    column-gap: 2rem;
+    justify-content: space-between;
+    margin:5%;
+}
+
+.userProfile {
+    height: 100%;
+    width: 100%;
+    display:inline-table;
+    column-gap: 2rem;
+    justify-content: space-between;
+}
+
+#basicInfo {
+    width: 100%;
+    height: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: '#F7EDEB';
+}
+
+#favs {
+    width: 100%;
+    height: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    background-color: '#F7EDEB';
+    /* display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; */
+}
+
+.activity {
+    width: 30%;
+    max-width: 350px;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: '#F7EDEB';
+}
+
+.commentaire {
+    margin-top: 1rem;;
+    margin-bottom: 1rem;;
+}
+
+#ProfilBouton {
+    width: 70%;
+    padding: 0.75rem;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+}
+
+.communaute{
+    width: 95%;
+    /* max-width: 350px; */
+    margin: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    background-color: '#F7EDEB';
+    display: flex-box;
+}
+
+/* Détails pour ajout média */
+.tag {
+    display: inline-block;
+    background: palegoldenrod;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 3px;
+}
+.tag button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+}

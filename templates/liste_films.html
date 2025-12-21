@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Films – CinéFan</title>
+    <link href="{{ url_for('static', filename='css/cinefan.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav class="barre-de-navigation">
+        <div class="cadre-nav">
+            <a class="struct-de-navigation" href="/">🎬 CinéFan</a>
+            <div class="nav-right">
+                <a class="navig-mini" href="/commu">Communauté</a>
+                <a class="navig-mini" href="/stats">Statistiques</a>
+                <a class="navig-mini" href="/genres">Genres</a>
+                {% if UserConnecte == None %}
+                    <a class="navig-mini" href="/profil">Se connecter</a>
+                {% else %}
+                    <a class="navig-mini" href="/profil">Profil</a>
+                {% endif %}
+                <form action="/search" method="get" class="barre-recherche">
+                    <input type="text" name="q" placeholder="Rechercher">
+                    <button type="submit">🔍</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="cadre">
+        <h1 class="titre">🎬 Films</h1>
+
+        <div class="grille-medias">
+            {% for media in films %}
+            <a href="/media/{{ media.id }}" class="cadre-media">
+                <div class="cadre-media-image">
+                    {% if media.url_image %}
+                    <img src="{{ media.url_image }}" alt="{{ media.alt }}">
+                    {% else %}
+                    <div style="font-size: 48px;">📺</div>
+                    {% endif %}
+                </div>
+                <div class="cadre-media-contenu">
+                    <h3>{{ media.titre }}</h3>
+                    <div class="cadre-media-info">{{ media.genre }} • {{ media.parution }}</div>
+                    <div class="cadre-media-description">{{ media.description }}</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        
+        <div class="cadre-nav">
+        <div class="nav-right">
+            {% if page > 1 %}
+                <a class="page-navig" href="{{ url_for('liste_films', page=page-1) }}">&laquo; Précédent</a>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+                {% if p == page %}
+                    <span class="page-actuelle">{{ p }}</span>
+                {% else %}
+                    <a class="page-navig" href="{{ url_for('liste_films', page=p) }}">{{ p }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page < total_pages %}
+                <a class="page-navig" href="{{ url_for('liste_films', page=page+1) }}">Suivant &raquo;</a>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+</body>
+</html>
