@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import db as db
 import static.python.getdata as get
 import static.python.filtres as filtre
+import os
 
 conn = db.connect()
 conn.autocommit = True
@@ -482,4 +483,5 @@ def theme_mondes_imaginaires():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
