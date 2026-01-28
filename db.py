@@ -5,7 +5,11 @@ import os
 def connect():
   conn = psycopg2.connect(
     # ---- using remote database
-    url = os.environ["CINEFANDATABASE_URL"],
+    host="dpg-d5sv4j75r7bs73bai5l0-a",
+    dbname="cinefan-db",
+    user="cinefandb_user",
+    password="kRGteTX0EQ4caE4XXZw2SeXMdx5yJy0A",
+    port=5432,
     # ---- using local database
     # dbname = 'postgres',
     # user = 'postgres',
